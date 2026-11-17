@@ -176,6 +176,30 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
 #rotate p{font-family:'IM Fell English SC',serif;font-size:20px;letter-spacing:.08em}
 #rotate small{color:#7a6e5c;font-style:italic}
 
+/* ---------- capitolo III ---------- */
+#fame{position:absolute;top:calc(34px + var(--sat));left:calc(12px + var(--sal));display:none;align-items:center;gap:7px;pointer-events:none}
+#fame.on{display:flex}
+#fame svg{width:22px;height:22px;filter:drop-shadow(0 0 4px rgba(192,40,63,.8))}
+#fame .bar{width:clamp(110px,18vw,180px);height:9px;border-radius:5px;background:rgba(10,2,5,.8);border:1px solid rgba(168,132,63,.4);overflow:hidden;box-shadow:inset 0 0 6px #000}
+#fame .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3a0610,#8b1a2b 60%,#e0304a);box-shadow:0 0 10px rgba(224,48,74,.7);transition:width .3s}
+#fame.hi svg{animation:beat .6s infinite}
+#fame.hi .bar{border-color:rgba(224,48,74,.8)}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.15)}}
+#bMirror{display:none}
+#bMirror.on{display:grid}
+#bMirror.act{box-shadow:0 0 16px rgba(120,190,210,.7),inset 0 0 10px rgba(80,160,190,.5);border-color:rgba(150,210,230,.7)}
+#resist{position:absolute;inset:0;z-index:32;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(80,0,10,.15),rgba(60,0,8,.6));touch-action:none}
+#resist.on{display:flex}
+#resist h2{font-family:'UnifrakturMaguntia',serif;font-weight:400;font-size:clamp(46px,9vw,88px);color:#f0d6c0;text-shadow:0 0 24px #c0283f,0 0 4px #000;animation:shudder .12s infinite}
+#resist .rb{width:min(420px,70vw);height:14px;border-radius:7px;border:1px solid rgba(232,201,138,.6);background:rgba(0,0,0,.7);overflow:hidden}
+#resist .rb i{display:block;height:100%;width:0;background:linear-gradient(90deg,#a8843f,#f0e0b0)}
+#resist p{font-family:'IM Fell English SC',serif;letter-spacing:.2em;color:#d8c8b0;font-size:14px}
+@keyframes shudder{0%{transform:translate(0,0)}25%{transform:translate(-2px,1px)}50%{transform:translate(2px,-1px)}75%{transform:translate(-1px,-2px)}}
+#choice{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(118px + var(--sab));display:none;flex-direction:column;gap:6px;align-items:center;z-index:2}
+#choice.on{display:flex}
+#choice .mbtn{background:linear-gradient(180deg,rgba(30,6,14,.95),rgba(8,2,5,.95));border:1px solid rgba(168,132,63,.5);border-radius:4px;min-width:min(320px,80vw)}
+#dText.mute{color:#8d8474;font-style:italic}
 /* ---------- tutorial ---------- */
 #tut{position:absolute;inset:0;z-index:34;display:none}
 #tut.on{display:block}
@@ -204,7 +228,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
 
   <div id="hud">
     <div class="tl fell" id="chapLabel">Capitolo I · Lo Specchio</div>
+    <div id="fame"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.8-8 11-8 11z" fill="#8b1a2b" stroke="#e0304a" stroke-width="1.2"/></svg><div class="bar"><i id="fameBar"></i></div></div>
     <div class="tr">
+      <button class="hb" id="bMirror" aria-label="Guarda nell'acqua" title="Guarda nell'acqua (M)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9c3-3 6 3 9 0s6 3 9 0M3 15c3-3 6 3 9 0s6 3 9 0" /><path d="M12 3v3M12 18v3" stroke="#8fc6d6"/></svg></button>
       <button class="hb" id="bReveal" aria-label="Rivela" title="Rivela gli oggetti (Spazio)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3" fill="#c0283f" stroke="none"/></svg></button>
       <button class="hb fell" id="bHint" aria-label="Suggerimento" title="Suggerimento (H)">?</button>
       <button class="hb" id="bMenu" aria-label="Menu" title="Menu (Esc)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
@@ -216,7 +242,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
   <div id="tip" class="fell"></div>
   <div id="toast"></div>
 
-  <div id="dlgLayer"><div id="dlg"><div id="dName" class="fell"></div><div id="dText"></div><div id="dMore">▼</div></div></div>
+  <div id="dlgLayer"><div id="dlg"><div id="dName" class="fell"></div><div id="dText"></div><div id="dMore">▼</div></div><div id="choice"></div></div>
+  <div id="resist"><h2>Resisti</h2><div class="rb"><i id="resBar"></i></div><p>tocca ripetutamente</p></div>
 
   <div id="title" class="layer">
     <svg class="corner c1" viewBox="0 0 100 100" fill="none" stroke="#a8843f" stroke-width="1.2"><path d="M4 96V30Q4 4 30 4h66"/><path d="M12 96V36Q12 12 36 12h60" opacity=".5"/><path d="M4 30q18 2 22 22-20-4-22-22zM30 4q2 18 22 22-4-20-22-22z" fill="#5a0f1f" stroke="none"/><circle cx="20" cy="20" r="4" fill="#8b1a2b" stroke="none"/><path d="M20 20l14 14M24 30l-4 6M30 24l6-4"/></svg>
@@ -259,7 +286,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
       </div>
     </div>
     <div id="netStat"><i></i><span>Connessione alla villa…</span></div>
-    <div class="tVer fell">Cap. I · II</div>
+    <div class="tVer fell">Cap. I · II · III</div>
   </div>
 
   <div id="chapters" class="layer panel">
@@ -318,11 +345,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
      ====================================================================== -->
 <script id="content-json" type="application/json">
 {
-  "version": 3,
+  "version": 4,
   "game": {
     "title": "Lucrezia Malaspina",
     "tagline": "Una fiaba gotica in cinque capitoli",
-    "motd": "Capitolo II · Stanotte la luna è rossa."
+    "motd": "Capitolo III · Il lago non riflette la luna."
   },
   "tuning": {
     "walkSpeed": 290,
@@ -334,7 +361,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
     "C": "Il Corvo",
     "V": "Una voce",
     "A": "Agnese",
-    "I": "Isabella"
+    "I": "Isabella",
+    "S": "La Strega"
   },
   "chapters": {
     "c1": {
@@ -350,7 +378,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
     "c3": {
       "num": "III",
       "title": "La Strega del Lago",
-      "available": false
+      "available": true
     },
     "c4": {
       "num": "IV",
@@ -383,6 +411,22 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
     "crypt": {
       "name": "La Cripta delle Vergini",
       "dark": 0.9
+    },
+    "woods": {
+      "name": "Il Bosco dei Cipressi",
+      "dark": 0.82
+    },
+    "shore": {
+      "name": "La Riva del Lago",
+      "dark": 0.6
+    },
+    "lake": {
+      "name": "Il Lago Nero",
+      "dark": 0.72
+    },
+    "hut": {
+      "name": "La Capanna della Strega",
+      "dark": 0.66
     }
   },
   "labels": {
@@ -421,7 +465,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
       "well": "Pozzo",
       "rose": "Roseto",
       "moon": "Luna",
-      "crows": "Corvi"
+      "crows": "Corvi",
+      "gate": "Cancello"
     },
     "crypt": {
       "stairs": "Giardino",
@@ -431,6 +476,38 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
       "calice": "Calice",
       "statue": "Statua",
       "agnese": "Agnese"
+    },
+    "woods": {
+      "back": "Giardino",
+      "p0": "Sentiero",
+      "p1": "Sentiero",
+      "p2": "Sentiero",
+      "doll": "Bambola",
+      "fawn": "Cerbiatto"
+    },
+    "shore": {
+      "woods": "Bosco",
+      "water": "Lago",
+      "boat": "Barca",
+      "heron": "Airone",
+      "hut": "Capanna",
+      "drowned": "Annegate",
+      "otherluc": "Lucrezia?",
+      "oar": "Remo",
+      "agnese": "Agnese"
+    },
+    "lake": {
+      "lamp": "Fanale"
+    },
+    "hut": {
+      "witch": "La Strega",
+      "cauldron": "Calderone",
+      "basin": "Bacile",
+      "jars": "Barattoli",
+      "goat": "Capra",
+      "window": "Finestra",
+      "herbs": "Erbe",
+      "door": "Porta"
     }
   },
   "items": {
@@ -481,6 +558,26 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
     "calice": {
       "name": "Calice d'argento",
       "desc": "Annerito dal tempo. L'orlo è consumato da troppe labbra."
+    },
+    "diario": {
+      "name": "Pagina del diario",
+      "desc": "La calligrafia di mia madre.|«Fu la Strega del Lago a darmi la ricetta. Oltre il bosco dei cipressi, dove l'acqua non riflette la luna.»"
+    },
+    "bocciolo": {
+      "name": "Bocciolo di sangue",
+      "desc": "Pulsa piano tra le dita. Profuma di ferro e di miele.|Forse calmerebbe la fame, se lo mangiassi."
+    },
+    "remo": {
+      "name": "Remo",
+      "desc": "Legno nero, gonfio d'acqua. Sull'impugnatura, segni di unghie piccole."
+    },
+    "perla": {
+      "name": "Lacrima d'annegata",
+      "desc": "Una perla grigia, fredda. Se la guardo controluce, dentro c'è una ragazza che dorme."
+    },
+    "filtro": {
+      "name": "Filtro della Luna Nera",
+      "desc": "Denso, scuro. Quando lo agito, qualcosa dentro sbadiglia."
     }
   },
   "texts": {
@@ -618,7 +715,98 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
     "c2_hint_crypt": "L:Sull'altare della cripta c'è qualcosa scritto da lei. Devo leggerlo.",
     "c2_hint_calice": "L:Il calice, sull'altare della cripta.",
     "c2_hint_dagger": "L:Mi serve una lama. Mia madre nascondeva i suoi segreti tra i libri della biblioteca.",
-    "c2_hint_vasca": "L:Il calice, la lama, la vasca. Forse il mio sangue basterà."
+    "c2_hint_vasca": "L:Il calice, la lama, la vasca. Forse il mio sangue basterà.",
+    "tut_fame_h": "La Fame",
+    "tut_fame": "La fame cresce col passare del tempo. Più è alta, più i sensi di Lucrezia si affinano: sente i battiti, fiuta il sangue. Ma se la vena si riempie del tutto, la bestia prende il comando.",
+    "tut_self_h": "Su di sé",
+    "tut_self": "Per usare un oggetto su Lucrezia, sceglilo nell'inventario e poi tocca lei.",
+    "tut_mirror_h": "Lo Specchio d'Acqua",
+    "tut_mirror": "Tocca qui per guardare nel lago: il mondo si capovolge. Ciò che esiste di là, puoi portarlo di qua. Tocca di nuovo per tornare.",
+    "c3_intro": "La seconda notte.|Agnese non è tornata. Nessuno, in paese, è venuto a cercarla. Nessuno ha bussato.|Nel diario di mia madre, tra le ultime pagine, c'è un nome che non conoscevo: la Strega del Lago.|«Fu lei a darmi la ricetta. Fu lei a dirmi il prezzo.»|Se qualcuno sa come fermare la bestia, è lei.|Edoardo arriva tra due notti.",
+    "c3_start": "L:Il cancello del giardino. Oltre, il bosco dei cipressi. E oltre il bosco... il lago.|{heartbeat}L:La fame è tornata prima del buio. Ogni notte, un po' prima.",
+    "c3_garden_door": "L:Non torno nella villa. Non finché non avrò una risposta.",
+    "c3_tomb": "La lastra della cripta è di nuovo al suo posto.|Sigillata. Dall'interno.",
+    "c3_rose": "Il bocciolo rosso è sbocciato. Pulsa, lento, come un cuore addormentato.|Lo colgo. Non mi punge: le spine si ritraggono davanti a me.",
+    "c3_rose2": "Sullo stelo restano solo spine. Rivolte verso di me.",
+    "c3_well": "Il pozzo è asciutto. Stanotte l'acqua se n'è andata.~Dal fondo del pozzo sale odore di lago.",
+    "c3_moon": "La luna cala. Tra due notti sarà nera.~La luna ha un morso, stanotte. Come una mela.",
+    "c3_crows": "{caw}I corvi si alzano tutti insieme e volano oltre il cancello, verso il bosco.|Come per indicarmi la strada.",
+    "c3_woods_enter": "Il bosco dei cipressi. Gli alberi sono così fitti che la luna passa a stento.|Tre sentieri. Tutti uguali. Tutti bui.|{whisper}Qualcuno ha appeso bambole di paglia ai rami. Hanno capelli veri.",
+    "c3_doll": "Una bambola di paglia, appesa per il collo.|I capelli sono veri. Biondi. Legati con un nastro da serva.~La bambola gira lentamente su sé stessa, anche senza vento.",
+    "c3_woods_deeper": "Il bosco si fa più fitto. L'odore di sangue è più forte, qui.~Più avanti. Adesso sento l'acqua.",
+    "c3_woods_loop": "Sono di nuovo all'inizio. La stessa bambola. Lo stesso albero spezzato.|L:Il bosco gira in tondo. O sono io?~Di nuovo qui. La bambola mi guarda con occhi di bottone.",
+    "c3_woods_loop3": "{stinger}Di nuovo qui.|Tra i tronchi, per un istante, una donna con un abito nero come il mio. Ferma. Il viso coperto dai capelli.|L:A stomaco pieno non troverò mai la strada. Il bosco la nasconde a chi non ha fame.",
+    "c3_fawn1": "Un cerbiatto. Ha la zampa stretta in una tagliola arrugginita.|{heartbeat}Trema. Sento il suo cuore da qui: veloce, caldo, pieno.|L:Povera creatura. Potrei liberarti... o potrei...",
+    "c3_fawn_free": "Apro le ganasce della tagliola. Il ferro mi taglia le dita, ma non sento dolore.|Il cerbiatto fugge nel buio senza voltarsi.|{hunger}L:Va'. Prima che cambi idea.",
+    "c3_fawn_dead": "Ciò che resta del cerbiatto. Non voglio guardare.~La tagliola è ancora chiusa su una zampa. Solo una zampa.",
+    "c3_feed_fawn": "{red}{shake}...|Quando torno in me, ho la bocca piena di caldo.|Il cerbiatto non trema più.|L:Non io. Non sono stata io.",
+    "c3_frenzy": "{hunger}La fame. Tutta insieme, come un'onda.|Le gambe si muovono da sole.",
+    "c3_frenzy_win": "{heartbeat}Respiro. Respiro. Le unghie piantate nei palmi.|L:Non stanotte. Non mi avrai stanotte.",
+    "c3_frenzy_self": "{red}{shake}Mi mordo il polso, forte, finché sento il sangue.|Il mio sangue non mi sazia. Ma il dolore mi riporta indietro.|L:La bestia non mangia sé stessa. Lo so, madre. Lo so.",
+    "c3_shore_enter": "Il lago.|L'acqua è nera e immobile, liscia come vetro. La luna non vi si riflette.|In fondo, oltre la nebbia, una luce. Una capanna su palafitte, sospesa sull'acqua.|{whisper}Il diario lo diceva: «dove l'acqua non riflette la luna».",
+    "c3_water": "L'acqua non riflette la luna. Ma se mi chino... riflette qualcos'altro.|Forse dovrei guardarci dentro davvero.",
+    "c3_water2": "Acqua nera. Sotto la superficie, qualcosa mi guarda.~L'acqua è così ferma che sembra pietra.",
+    "c3_boat": "Una barca legata al pontile. Un fanale spento sulla prua.|Manca il remo.",
+    "c3_boat_nooar": "La barca dondola, impaziente. Ma senza remo non va da nessuna parte.",
+    "c3_boat_lamp": "Accendo il fanale con la mia candela. La fiamma diventa verde, per un istante. Poi torna gialla.",
+    "c3_boat_dark": "L:Non attraverso quell'acqua al buio. Prima il fanale.",
+    "c3_boat_go": "Salgo sulla barca. Il legno geme sotto il mio peso.|L:Mia madre ha fatto questo viaggio. Quarant'anni fa.",
+    "c3_heron": "Un airone grigio, immobile tra le canne.|{heartbeat}Il suo cuore batte lento. Così lento. Così facile da fermare.~L'airone mi guarda con un occhio solo. Non scappa. Gli animali sanno cosa sono.",
+    "c3_feed_heron": "{red}{shake}...|Piume grigie sull'acqua nera. Galleggiano lente, come neve sporca.|L:Ancora. È successo ancora.",
+    "c3_heron_dead": "Piume grigie sull'acqua. Nient'altro.",
+    "c3_hut_far": "La capanna della Strega. Una finestra accesa, come un occhio socchiuso.~La luce non tremola. Non è fuoco.",
+    "c3_mirror_on": "{whisper}Mi chino sull'acqua... e il mondo si capovolge.|Di qua il lago è pieno di gente.|Ragazze. In camicia da notte bianca, i capelli bagnati sul viso. In piedi sull'acqua. Mi guardano.",
+    "c3_drowned": "Le annegate non si muovono. L'acqua gocciola dai loro capelli verso l'alto.~V:...ci ha mandate la signora...~V:...il lago prende ciò che il sangue lascia...",
+    "c3_otherluc": "In fondo al pontile ci sono io.|La stessa veste. Lo stesso viso. Ma lei non si muove quando mi muovo.|{whisper}Le sue labbra formano due parole: «non andare».~L'altra me non distoglie lo sguardo. Sorride. Io non sto sorridendo.",
+    "c3_oar": "Sul pontile riflesso c'è un remo. Di là esiste.|Allungo la mano nell'acqua e lo afferro. È gelido, e pesa come un braccio.|{stinger}Quando lo tiro a me, qualcuno dall'altra parte lo sta ancora tenendo.|A:...signora...|È lei. La cuffietta bianca, la treccia bionda, la lucerna spenta tra le dita.|A:Signora... qui sotto è freddo. Perché non mi avete aspettata?|L:Agnese... sei... sei morta?|A:Non lo so, signora. Il lago non me lo vuole dire.|A:La Strega vi chiederà una lacrima. Prendete la mia. Io non piango più.|Dalla sua guancia si stacca una goccia, e cade verso l'alto. Diventa una perla.",
+    "c3_agnese_r": "A:Fa freddo... fa tanto freddo...~A:Quando la luna sarà nera, signora, io vi aspetterò.~A:Avete ancora le mani fredde come il marmo?",
+    "c3_lake_enter": "Spingo la barca lontano dal pontile. La nebbia si chiude alle mie spalle.|Non devo smettere di remare. E non devo lasciare che il fanale si spenga.",
+    "c3_lake_mid": "{choir}Intorno alla barca, teste bianche affiorano dall'acqua. Una, dieci, quaranta.|Non mi toccano. Mi accompagnano.|{whisper}V:...brava... brava bambina...",
+    "c3_hut_enter": "La capanna della Strega.|Odore di alghe, di cera, di carne lasciata al sole. Barattoli ovunque. Occhi, nei barattoli.|S:Isabella. Sei tornata. E sei più giovane dell'ultima volta.|L:Io non sono Isabella.|S:No. Ma hai la sua fame. La sento da qui.",
+    "c3_witch1": "S:Siediti, figlia della lupa. No? Resta in piedi, allora. Come tua madre.|S:So cosa vuoi. Vuoi che la bestia dorma. Vuoi che il tuo uomo ti trovi bella.|S:Ma io non regalo niente. Mostrami che sei davvero sua figlia. E portami una lacrima di chi è annegato per te.",
+    "c3_witch_wait": "S:La prova del tuo sangue, e una lacrima d'annegata. Poi parleremo di prezzo.~S:Hai le mani vuote, figlia della lupa.~S:Il calderone non aspetta. E nemmeno la luna.",
+    "c3_witch_page": "Le porgo la pagina del diario.|La Strega la annusa invece di leggerla.|S:Inchiostro e bugie. È la sua mano, sì. Isabella scriveva come mordeva.",
+    "c3_witch_pearl": "Le porgo la perla.|S:Ah. La piccola serva. Il lago se l'è tenuta... per ora.|S:Per ora, ho detto. Le cose che il lago tiene, a volte le restituisce.",
+    "c3_witch_letter": "S:Lettere d'amore. Le mangio, sai? Sanno di sale.|S:Tienila. Ti servirà più di quanto credi.",
+    "c3_witch_pay": "S:Ora il prezzo. Il filtro che chiedi non si paga con l'oro, né col sangue: quello lo hai già sprecato.|S:Si paga con un pezzo di te. Scegli tu quale.",
+    "c3_pay_q": "Cosa darai alla Strega?",
+    "c3_pay_a": "Il mio riflesso",
+    "c3_pay_b": "Il ricordo di Edoardo",
+    "c3_pay_c": "La mia voce",
+    "c3_paid_reflect": "S:Il riflesso. Scelta da vanitosa. Ti piaceva tanto guardarti, vero?|Si china sul bacile d'acqua. Ci immerge le dita.|{noreflect}{whisper}Quando le ritira, tra le unghie stringe qualcosa di sottile e lucente, che si dibatte come un pesce.|Mi chino sul bacile. L'acqua è limpida. Non c'è nessuno.|L:...Non mi vedo. Non mi vedo più.",
+    "c3_paid_memory": "S:Il ricordo. Il più dolce, dunque. Il più pesante.|Mi posa due dita sulla fronte. Sono fredde come pesci.|{musicbox}Un ballo. Una terrazza sul mare. Un ragazzo con gli occhi grigi che ride... che ride...|{forget}...|L:Chi... chi era? Avevo un nome sulle labbra. Un nome importante.|L:Edoardo...? Chi è Edoardo?|S:Ora nessuno.",
+    "c3_paid_voice": "S:La voce. Saggia. Alla bestia le parole non servono.|Mi apre la bocca con un dito uncinato. E tira.|{stinger}Un filo d'argento mi esce dalla gola, lungo, lunghissimo. Lei lo avvolge attorno a un rocchetto.|{mute}Provo a gridare. Non esce nulla.|L:Non ho più voce. Posso solo pensare. Pensare... e avere fame.",
+    "c3_truth": "S:Ecco il tuo filtro. Il Filtro della Luna Nera.|S:Bevilo, e la bestia dormirà. Due notti, forse tre.|L:E poi? Esiste una cura?|{caw}La Strega ride. Una risata d'acqua nei polmoni.|S:Cura? Non c'è cura, figlia della lupa. Tua madre me lo chiese quarantasette volte.|S:Ogni filtro rimanda. E ogni rinvio rende la bestia più grande, più affamata.|S:Quando la luna sarà nera, la pelle non basterà più a contenerla.|S:E proprio quella notte arriverà il tuo uomo, vero? Che tempismo. Che fortuna... per la bestia.|L:No...|S:Va', ora. Il lago ti riporterà a casa. Il lago restituisce sempre ciò che non vuole tenere.",
+    "c3_drink": "Bevo il filtro. Sa di fango e di latte.|{heartbeat}Dentro di me, qualcosa si gira su un fianco. Sbadiglia. E si addormenta.|Per ora.",
+    "c3_card_reflect": "La bestia dorme. Ma da stanotte nessuno specchio ti restituirà il tuo volto. Nemmeno gli occhi di lui.",
+    "c3_card_memory": "La bestia dorme. Tra due notti un uomo varcherà il cancello. E tu non ricorderai il suo nome.",
+    "c3_card_voice": "La bestia dorme. Tra due notti lui ti chiamerà per nome. E tu non potrai rispondergli.",
+    "c3_cauldron": "Nel calderone ribolle qualcosa di verde. Quando le bolle scoppiano, sussurrano.|{whisper}Per un istante, nel vapore, vedo un piroscafo nella tempesta. Un uomo al parapetto stringe un ritratto. Il mio.~Il vapore sa di menta e di cadavere.",
+    "c3_basin": "Un bacile d'acqua, su un treppiede d'osso.|Nel riflesso ho vent'anni. Dietro di me, nell'acqua, una bestia mi tiene le zampe sulle spalle.|Mi volto. Non c'è niente.",
+    "c3_basin2": "Il bacile è vuoto. O sono io a essere vuota.",
+    "c3_jars": "Barattoli. Occhi, lingue, dita. Un cuoricino ancora rosso.|Su un'etichetta, una calligrafia che conosco: «Isabella, 1831».~In un barattolo, un occhio si gira a guardarmi.",
+    "c3_goat": "Una capra nera, sdraiata accanto al fuoco. Pupille orizzontali, gialle come la cera.|{heartbeat}Il suo cuore batte lento e forte.~La capra mastica qualcosa. Spero sia erba.",
+    "c3_feed_goat": "{red}{shake}...|La Strega non si è mossa dalla sedia.|S:Era vecchia, quella capra. Ne prenderò un'altra. Ma la prossima volta, figlia della lupa, chiedi.|Mi pulisco la bocca col dorso della mano. Non basta.",
+    "c3_goat_dead": "Della capra resta il campanaccio. E le corna.",
+    "c3_window": "Dalla finestra rotonda si vede il lago. In mezzo all'acqua, una barca vuota gira su sé stessa.",
+    "c3_herbs": "Mazzi di erbe appesi a seccare. Belladonna, giusquiamo, mandragola. E capelli, legati a ciocche.~Una lisca di pesce lunga quanto un braccio dondola sopra la mia testa.",
+    "c3_hut_door": "La porta dà sull'acqua. Non torno indietro senza una risposta.",
+    "c3_bud_eat": "Mastico i petali del bocciolo. Sanno di ferro e di miele.|{heartbeat}La fame si ritira, brontolando, come un cane che torna nella cuccia.|Per poco.",
+    "c3_letter_self": "Stringo la lettera al petto. Rileggo quella calligrafia che conosco a memoria.|L:Tra due notti, Edoardo. Resisterò. Per te.",
+    "c3_letter_self2": "Stringo la lettera. Ma la fame non ascolta più le parole d'amore.",
+    "c3_self_no": "L:Non ha senso.~L:No. Non così.",
+    "c3_hint_gate": "L:Il cancello, in fondo al giardino. Il bosco è oltre.",
+    "c3_hint_hunger": "L:Il bosco nasconde la strada. Ma quando ho fame sento l'odore del sangue... Devo lasciare che la fame cresca.",
+    "c3_hint_trail": "L:Lo sento: un odore di sangue, sul terreno. Devo seguirlo, sentiero dopo sentiero.",
+    "c3_hint_water": "L:L'acqua del lago non riflette la luna. Ma forse riflette altro. Devo guardarci dentro.",
+    "c3_hint_oar": "L:Nel lago capovolto, sul pontile, c'era un remo.",
+    "c3_hint_lamp": "L:Il fanale della barca è spento. La mia candela.",
+    "c3_hint_boat": "L:Ho il remo e la luce. La barca mi aspetta.",
+    "c3_hint_row": "L:Remare. Senza fermarmi. E se il fanale si spegne, riaccenderlo subito.",
+    "c3_hint_witch": "L:La Strega. Devo parlarle.",
+    "c3_hint_page": "L:Vuole una prova che sono figlia di Isabella. La pagina del diario.",
+    "c3_hint_pearl": "L:Una lacrima d'annegata... la perla di Agnese.",
+    "c3_hint_full": "L:La fame è troppo forte. Il bocciolo del roseto potrebbe calmarla. O la lettera di lui."
   }
 }
 </script>
@@ -665,11 +853,13 @@ function rng(seed){ return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let 
 const vibrate = p => { try { navigator.vibrate && navigator.vibrate(p); } catch(e){} };
 
 // ---------------- content (live from Firebase) ----------------
+const S = { scene: 'garden', inv: [], flags: {}, chapter: 1 };
 const DEF = JSON.parse($('content-json').textContent);
 let CONTENT = clone(DEF);
-const TX = k => (CONTENT.texts && CONTENT.texts[k]) || DEF.texts[k] || '';
-const itemName = id => (CONTENT.items?.[id]?.name) || DEF.items[id]?.name || id;
-const itemDesc = id => (CONTENT.items?.[id]?.desc) || DEF.items[id]?.desc || '';
+const forgot = t => (S && S.flags && S.flags.noMemory) ? String(t).replace(/Edoardo/g, '█████') : t;
+const TX = k => forgot((CONTENT.texts && CONTENT.texts[k]) || DEF.texts[k] || '');
+const itemName = id => (id === 'lettera' && S?.flags?.noMemory) ? 'Lettera sbiadita' : forgot((CONTENT.items?.[id]?.name) || DEF.items[id]?.name || id);
+const itemDesc = id => (id === 'lettera' && S?.flags?.noMemory) ? 'La carta è bianca. Qualcuno mi scriveva... ma chi?' : forgot((CONTENT.items?.[id]?.desc) || DEF.items[id]?.desc || '');
 const sceneCfg = id => merge(DEF.scenes[id] || {}, CONTENT.scenes?.[id] || {});
 const label = (sc,id) => CONTENT.labels?.[sc]?.[id] || DEF.labels?.[sc]?.[id] || '';
 
@@ -679,7 +869,7 @@ if (!PID) { PID = 'p_' + Math.random().toString(36).slice(2, 10) + Date.now().to
 const LS_SAVE = 'lucrezia_save_v1';
 
 // ---------------- game state ----------------
-const S = { scene: 'garden', inv: [], flags: {}, chapter: 1 };
+
 let F = S.flags;
 const luc = { x: 300, tx: null, face: 1, ph: 0, moving: false };
 let mode = 'title';           // title | play | ending
@@ -817,7 +1007,7 @@ function loopNoise(buf, type, freq, Q, gain){
 function setAmb(scene){
   if (!A.ctx) return;
   const t = A.ctx.currentTime;
-  const c = { bedroom: { rain: .055, wind: .035 }, corridor: { rain: .01, wind: .02 }, library: { rain: 0, wind: .012 }, garden: { rain: 0, wind: .1 }, crypt: { rain: 0, wind: .028 } }[scene] || { rain: 0, wind: .06 };
+  const c = { bedroom: { rain: .055, wind: .035 }, corridor: { rain: .01, wind: .02 }, library: { rain: 0, wind: .012 }, garden: { rain: 0, wind: .1 }, crypt: { rain: 0, wind: .028 }, woods: { rain: 0, wind: .08 }, shore: { rain: .018, wind: .05 }, lake: { rain: .03, wind: .045 }, hut: { rain: 0, wind: .02 } }[scene] || { rain: 0, wind: .06 };
   A.rain.g.gain.setTargetAtTime(c.rain, t, .8); A.wind.g.gain.setTargetAtTime(c.wind, t, .8);
 }
 let lastTick = 0;
@@ -830,6 +1020,9 @@ function ambTick(){
   if (sc === 'bedroom' && Math.random() < .002) sfx.creak(.5);
   if (sc === 'crypt' && mode === 'play') { if (Math.random() < .025) sfx.drip(); if (Math.random() < .0025) sfx.choir(); }
   if (sc === 'garden' && S.chapter === 2 && mode === 'play' && Math.random() < .002) sfx.choir();
+  if (sc === 'woods' && mode === 'play') { if (Math.random() < .006) sfx.snap(); if (Math.random() < .003) sfx.owl(); }
+  if (sc === 'hut' && mode === 'play' && Math.random() < .15) sfx.bubble();
+  if ((sc === 'shore' || sc === 'lake') && mode === 'play' && Math.random() < .004) sfx.drip();
 }
 function tone(type, f0, f1, dur, vol, delay = 0, filt){
   if (!A.ctx) return;
@@ -861,6 +1054,9 @@ const sfx = {
   drink(){ for (let i = 0; i < 4; i++) noise(A.brown, .2, .35, 'lowpass', 260 + i * 70, 5, i * .24, .02); },
   owl(){ tone('sine', 410, 370, .35, .035); tone('sine', 420, 350, .55, .035, .5); },
   drip(){ tone('sine', 1500 + Math.random() * 500, 500, .16, .05); },
+  splash(){ noise(A.brown, .5, .5, 'lowpass', 500, 1, 0, .03); noise(A.white, .3, .05, 'bandpass', 1800, 2, .05, .02); },
+  bubble(){ tone('sine', 120 + Math.random() * 80, 260, .12, .05); },
+  snap(){ noise(A.white, .06, .2, 'bandpass', 1500, 3); },
   choir(){
     if (!A.ctx) return; const a = A.ctx, t0 = a.currentTime;
     [[392, 0], [466.2, .4], [587.3, .8], [523.3, 2.6], [440, 3]].forEach(([f, d]) => {
@@ -1164,7 +1360,7 @@ const SCENES = {
       else { c.strokeStyle = 'rgba(168,132,63,.35)'; c.lineWidth = 1.5; c.strokeRect(890, 496, 120, 34); c.fillStyle = '#8a6d3b'; c.beginPath(); c.arc(950, 513, 4, 0, 7); c.fill(); c.fillStyle = '#000'; c.fillRect(949, 512, 2, 5); }
       // riflesso
       const d = Math.abs(luc.x - 950), al = clamp(1 - d / 300, 0, 1) * .55;
-      if (al > .01 && mode !== 'title') {
+      if (al > .01 && mode !== 'title' && !F.noReflect) {
         c.save(); ell(c, 950, 318, 80, 120); c.clip(); c.globalAlpha = al;
         c.translate(950 + (luc.x - 950) * .25, 318 + 330); c.scale(-luc.face * 1.45, 1.45);
         c.fillStyle = '#1d0f18'; c.fillRect(-18, -232, 38, 80);
@@ -1409,6 +1605,13 @@ const SCENES = {
         c.fillStyle = '#050003'; for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2 + t * .1; ell(c, 905 + Math.cos(a) * 6, 492 + Math.sin(a) * 5, 7, 4.5, a); c.fill(); }
         c.fillStyle = '#2a0008'; c.beginPath(); c.arc(905, 492, 4, 0, 7); c.fill();
       }
+      if (S.chapter === 3) {
+        c.fillStyle = '#16161a'; c.fillRect(1166, 360, 16, 240); c.fillRect(1262, 360, 16, 240);
+        c.fillStyle = '#2a2a30'; c.fillRect(1160, 350, 28, 12); c.fillRect(1256, 350, 28, 12);
+        c.fillStyle = '#000'; c.fillRect(1182, 400, 80, 200);
+        c.strokeStyle = '#0b0b0e'; c.lineWidth = 4; for (let i = 0; i < 5; i++) line(c, 1186 + i * 7, 410 + i * 3, 1186 + i * 7, 600 - i * 3);
+        c.lineWidth = 3; line(c, 1184, 430, 1216, 438); line(c, 1184, 560, 1216, 552);
+      }
       if (F.cryptOpen) {
         c.fillStyle = '#000'; c.beginPath(); c.moveTo(262, 600); c.lineTo(378, 600); c.lineTo(392, 626); c.lineTo(248, 626); c.closePath(); c.fill();
         c.strokeStyle = 'rgba(160,30,40,.35)'; c.lineWidth = 2; for (let i = 0; i < 3; i++) line(c, 256 + i * 4, 606 + i * 7, 384 - i * 4, 606 + i * 7);
@@ -1541,6 +1744,291 @@ SCENES.crypt = {
     return L;
   }
 };
+// ------------------------------------------------ CAPITOLO III: scene
+function cypress(c, x, base, w, h){
+  c.beginPath(); c.moveTo(x, base - h);
+  c.bezierCurveTo(x + w * .7, base - h * .7, x + w, base - h * .3, x + w * .45, base);
+  c.lineTo(x - w * .45, base);
+  c.bezierCurveTo(x - w, base - h * .3, x - w * .7, base - h * .7, x, base - h); c.fill();
+}
+const GAPS = [330, 640, 950];
+SCENES.woods = {
+  floorY: 648, minX: 90, maxX: 1200,
+  stat(c){
+    const R = rng(91);
+    c.fillStyle = LG(c, 0, -200, 0, 580, [[0, '#010103'], [1, '#0b1012']]); c.fillRect(X0, Y0, X1 - X0, 600 - Y0);
+    c.fillStyle = RG(c, 640, 70, 4, 260, [[0, 'rgba(200,210,230,.25)'], [1, 'rgba(200,210,230,0)']]); c.fillRect(300, -200, 700, 520);
+    c.fillStyle = '#d9dbe0'; c.beginPath(); c.arc(640, 70, 24, 0, 7); c.fill(); c.fillStyle = '#0b1012'; c.beginPath(); c.arc(652, 64, 22, 0, 7); c.fill();
+    c.fillStyle = '#070b0c'; for (let i = 0; i < 34; i++) cypress(c, X0 + R() * (X1 - X0), 590, 26 + R() * 24, 250 + R() * 260);
+    c.fillStyle = RG(c, 640, 520, 20, 700, [[0, 'rgba(110,125,130,.16)'], [1, 'rgba(110,125,130,0)']]); c.fillRect(X0, 300, X1 - X0, 300);
+    // tre varchi
+    for (const gx of GAPS) { c.fillStyle = LG(c, gx - 70, 0, gx + 70, 0, [[0, 'rgba(0,0,0,0)'], [.5, 'rgba(0,0,0,.92)'], [1, 'rgba(0,0,0,0)']]); c.fillRect(gx - 70, 260, 140, 340); }
+    c.fillStyle = '#020303';
+    for (const [x, w] of [[90, 90], [200, 60], [470, 80], [520, 50], [790, 70], [850, 60], [1100, 90], [1200, 80]]) {
+      c.fillRect(x - w * .18, 120, w * .36, 520); cypress(c, x, 470, w, 560);
+    }
+    c.fillStyle = LG(c, 0, 580, 0, 760, [[0, '#0b0f0c'], [1, '#010201']]); c.fillRect(X0, 585, X1 - X0, Y1 - 585);
+    c.strokeStyle = 'rgba(40,30,20,.5)'; c.lineWidth = 1.5; for (let i = 0; i < 200; i++) { const x = X0 + R() * (X1 - X0), y = 590 + R() * 90; line(c, x, y, x + (R() - .5) * 10, y - 2 - R() * 4); }
+    c.strokeStyle = '#030303'; c.lineWidth = 9; for (const x of [140, 480, 820, 1150]) { c.beginPath(); c.moveTo(x, 600); c.quadraticCurveTo(x + 50, 615, x + 110, 640); c.stroke(); }
+    // albero spezzato
+    c.save(); c.translate(700, 600); c.rotate(-.5); c.fillStyle = '#0c0a08'; c.fillRect(-10, -150, 20, 150); c.restore();
+    // corde delle bambole
+    c.strokeStyle = 'rgba(150,130,90,.5)'; c.lineWidth = 1.5; line(c, 470, 0, 470, 300); line(c, 820, 0, 820, 250);
+  },
+  dyn(c, t){
+    // bambole di paglia
+    for (const [x, y, k] of [[470, 300, 0], [820, 250, 1]]) {
+      c.save(); c.translate(x, y); c.rotate(Math.sin(t * .7 + k * 2) * .12); c.scale(Math.cos(t * .4 + k), 1);
+      c.fillStyle = '#7a6a44'; ell(c, 0, 18, 13, 15); c.fill(); c.fillRect(-4, 30, 8, 46); c.fillRect(-22, 40, 44, 7);
+      c.fillStyle = '#c7a868'; c.beginPath(); c.moveTo(-10, 8); c.quadraticCurveTo(-18, 40, -12, 60); c.lineTo(-6, 20); c.fill(); c.beginPath(); c.moveTo(10, 8); c.quadraticCurveTo(18, 40, 12, 60); c.lineTo(6, 20); c.fill();
+      c.fillStyle = '#000'; c.beginPath(); c.arc(-4, 17, 2.4, 0, 7); c.arc(5, 17, 2.4, 0, 7); c.fill();
+      c.fillStyle = '#5a0f1f'; c.fillRect(-12, 5, 24, 3);
+      c.restore();
+    }
+    // cerbiatto
+    if (!F.fawnFree) {
+      const dead = F.fawnDead;
+      c.save(); c.translate(1060, 628);
+      if (dead) { c.fillStyle = 'rgba(90,0,12,.75)'; ell(c, 0, 12, 70, 12); c.fill(); }
+      c.fillStyle = dead ? '#2a1a12' : '#5a3a24'; ell(c, 0, 0, 44, 18); c.fill();
+      if (!dead) {
+        c.fillStyle = 'rgba(235,225,200,.55)'; for (const [dx, dy] of [[-14, -6], [0, -9], [14, -5], [-4, 2], [22, 2]]) { c.beginPath(); c.arc(dx, dy, 2.2, 0, 7); c.fill(); }
+        const hb = Math.sin(t * 7) * 2;
+        c.fillStyle = '#5a3a24'; c.save(); c.translate(-38, -12 + hb); ell(c, 0, -10, 10, 13, -.4); c.fill(); ell(c, -8, -2, 9, 6); c.fill();
+        ell(c, 6, -22, 4, 9, .5); c.fill(); c.fillStyle = '#050303'; c.beginPath(); c.arc(-4, -10, 2.2, 0, 7); c.fill(); c.restore();
+      }
+      c.strokeStyle = '#3a3026'; c.lineWidth = 4; line(c, 30, 8, 52, 18); line(c, -26, 10, -30, 22);
+      c.strokeStyle = '#4a4440'; c.lineWidth = 2.5; c.beginPath(); c.arc(56, 18, 10, Math.PI, 0); c.stroke(); for (let i = 0; i < 5; i++) line(c, 48 + i * 4, 18, 48 + i * 4, 12);
+      c.restore();
+    }
+    // la traccia di sangue: visibile solo con la fame
+    if (!F.woodsDone) {
+      const vis = clamp(((F.hunger || 0) - 48) / 14, 0, 1);
+      if (vis > 0) {
+        const gx = GAPS[F.woodsSeq[F.woodsStep | 0]], x0 = luc.x;
+        c.fillStyle = `rgba(150,8,22,${.75 * vis})`;
+        const n = 14; for (let i = 1; i <= n; i++) { const k = i / n, x = x0 + (gx - x0) * k, y = 640 - k * 50 + Math.sin(i * 2.3) * 5; ell(c, x + Math.sin(i * 7) * 6, y, 4 - k * 1.5, 2); c.fill(); }
+        c.fillStyle = RG(c, gx, 470, 0, 120, [[0, `rgba(170,10,30,${.25 * vis * (.7 + .3 * Math.sin(t * 3))})`], [1, 'rgba(170,10,30,0)']]); c.fillRect(gx - 120, 350, 240, 240);
+      }
+    }
+    if ((F.loops | 0) >= 2 && (t % 9) < .5) { c.fillStyle = 'rgba(0,0,0,.95)'; const gx = GAPS[(Math.floor(t / 9)) % 3]; ell(c, gx, 400, 10, 14); c.fill(); c.beginPath(); c.moveTo(gx - 16, 415); c.lineTo(gx + 16, 415); c.lineTo(gx + 26, 600); c.lineTo(gx - 26, 600); c.fill(); }
+    // nebbia
+    for (let i = 0; i < 4; i++) { const x = ((t * (8 + i * 4) + i * 500) % 1900) - 300; c.save(); c.translate(x, 600 + i * 15); c.scale(1, .2); c.fillStyle = RG(c, 0, 0, 10, 340, [[0, 'rgba(150,160,170,.10)'], [1, 'rgba(150,160,170,0)']]); c.beginPath(); c.arc(0, 0, 340, 0, 7); c.fill(); c.restore(); }
+  },
+  lights(t){ return [{ x: 640, y: 120, r: 520, a: .35 }]; }
+};
+
+SCENES.shore = {
+  floorY: 640, minX: 110, maxX: 1150,
+  stat(c){
+    const R = rng(123);
+    c.fillStyle = LG(c, 0, -200, 0, 470, [[0, '#010207'], [1, '#121c26']]); c.fillRect(X0, Y0, X1 - X0, 480 - Y0);
+    for (let i = 0; i < 120; i++) { c.fillStyle = `rgba(220,225,255,${R() * .5})`; c.fillRect(X0 + R() * (X1 - X0), -250 + R() * 600, 1, 1); }
+    c.fillStyle = RG(c, 1010, 100, 6, 200, [[0, 'rgba(190,200,230,.25)'], [1, 'rgba(190,200,230,0)']]); c.fillRect(700, -150, 600, 500);
+    c.fillStyle = '#e4e6ea'; c.beginPath(); c.arc(1010, 100, 36, 0, 7); c.fill(); c.fillStyle = '#121c26'; c.beginPath(); c.arc(1026, 92, 33, 0, 7); c.fill();
+    c.fillStyle = '#05080c'; c.beginPath(); c.moveTo(X0, 470); c.quadraticCurveTo(400, 420, 760, 455); c.quadraticCurveTo(1000, 470, X1, 440); c.lineTo(X1, 480); c.lineTo(X0, 480); c.fill();
+    // capanna lontana
+    c.fillStyle = '#030406'; c.fillRect(860, 400, 60, 36); c.beginPath(); c.moveTo(852, 402); c.lineTo(890, 376); c.lineTo(928, 402); c.fill();
+    c.strokeStyle = '#030406'; c.lineWidth = 2; for (const x of [866, 880, 900, 914]) line(c, x, 436, x, 470);
+    // acqua
+    c.fillStyle = LG(c, 0, 470, 0, 760, [[0, '#06090d'], [1, '#010203']]); c.fillRect(X0, 470, X1 - X0, Y1 - 470);
+    // riva
+    c.fillStyle = LG(c, 0, 520, 0, 760, [[0, '#121510'], [1, '#030403']]);
+    c.beginPath(); c.moveTo(X0, 520); c.quadraticCurveTo(300, 540, 520, 600); c.quadraticCurveTo(600, 640, 560, 760); c.lineTo(X0, Y1); c.fill();
+    c.fillStyle = '#05070a'; for (let i = 0; i < 10; i++) cypress(c, X0 + 40 + i * 70 + R() * 30, 560, 24 + R() * 20, 300 + R() * 200);
+    // canne
+    c.strokeStyle = '#141a12'; c.lineWidth = 2; for (let i = 0; i < 60; i++) { const x = 300 + R() * 300, y = 600 + R() * 50; c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(x + 4, y - 40, x + (R() - .5) * 20, y - 60 - R() * 40); c.stroke(); }
+    // pontile
+    c.fillStyle = '#0d0907'; for (let x = 520; x < 1180; x += 80) { c.fillRect(x, 640, 9, 120); }
+    c.fillStyle = LG(c, 0, 628, 0, 648, [[0, '#2a1f16'], [1, '#120c08']]); c.fillRect(500, 630, 680, 16);
+    c.strokeStyle = 'rgba(0,0,0,.6)'; c.lineWidth = 1.5; for (let x = 500; x < 1180; x += 26) line(c, x, 630, x, 646);
+    c.fillStyle = '#1a120c'; c.fillRect(1166, 590, 10, 60); c.fillRect(500, 600, 10, 46);
+    // albero morto
+    c.strokeStyle = '#030405'; tree(c, 220, 560, 110, -1.7, 14, 5, R);
+  },
+  dyn(c, t){
+    // increspature e riflesso negato
+    c.strokeStyle = 'rgba(120,140,160,.12)'; c.lineWidth = 1;
+    for (let i = 0; i < 14; i++) { const y = 490 + i * 16 + Math.sin(t + i) * 2, x = ((i * 173 + t * 12) % 1500) - 100; line(c, x, y, x + 60 + i * 4, y); }
+    // barca
+    const bob = Math.sin(t * 1.3) * 3;
+    c.save(); c.translate(1100, 672 + bob); c.rotate(Math.sin(t * .9) * .02);
+    c.fillStyle = '#1a110b'; c.beginPath(); c.moveTo(-90, -16); c.lineTo(120, -16); c.quadraticCurveTo(110, 14, 70, 16); c.lineTo(-70, 16); c.quadraticCurveTo(-96, 10, -90, -16); c.fill();
+    c.fillStyle = '#2a1c12'; c.fillRect(-90, -18, 210, 5);
+    c.fillStyle = '#1a120c'; c.fillRect(104, -70, 4, 54);
+    c.fillStyle = '#2a2219'; c.fillRect(98, -82, 16, 4); c.fillRect(98, -60, 16, 4);
+    c.fillStyle = F.boatLamp ? 'rgba(255,190,110,.35)' : 'rgba(150,160,170,.12)'; c.fillRect(99, -78, 14, 18);
+    c.restore();
+    if (F.boatLamp) flame(c, 1206, 612 + bob, .55, t, 4);
+    c.strokeStyle = 'rgba(120,100,70,.6)'; c.lineWidth = 1.2; line(c, 1166, 610, 1180, 660 + bob);
+    // airone
+    if (!F.heronDead && !mirrorView) {
+      const hx = 430, hy = 612;
+      c.strokeStyle = '#5a5e64'; c.lineWidth = 2; line(c, hx - 4, hy, hx - 4, hy + 36); line(c, hx + 4, hy, hx + 6, hy + 36);
+      c.fillStyle = '#7a7e86'; ell(c, hx, hy - 10, 16, 12, -.3); c.fill();
+      c.strokeStyle = '#7a7e86'; c.lineWidth = 4; c.beginPath(); c.moveTo(hx - 8, hy - 18); c.quadraticCurveTo(hx - 20, hy - 40, hx - 10, hy - 56); c.stroke();
+      c.fillStyle = '#8a8e96'; ell(c, hx - 10, hy - 58, 6, 5); c.fill(); c.fillStyle = '#b8a040'; c.beginPath(); c.moveTo(hx - 15, hy - 58); c.lineTo(hx - 34, hy - 55); c.lineTo(hx - 15, hy - 56); c.fill();
+    }
+    if (F.heronDead && !mirrorView) { c.fillStyle = 'rgba(160,165,175,.5)'; for (let i = 0; i < 9; i++) { ell(c, 400 + i * 9 + Math.sin(t + i) * 3, 640 + (i % 3) * 5, 5, 1.6, i); c.fill(); } }
+    if (mirrorView) {
+      // il mondo riflesso: le annegate, il remo, l'altra me
+      for (const [x, k] of [[260, 0], [360, 1], [560, 2], [660, 3]]) drowned(c, x, 640, t, k);
+      if (!F.oar) { c.save(); c.translate(900, 626); c.rotate(-.05); c.fillStyle = '#3a2a1a'; c.fillRect(-90, -3, 160, 6); ell(c, 82, 0, 22, 8); c.fill(); c.restore(); }
+      drowned(c, 780, 640, t, 4, true);
+      drawLuc(c, 1060, 640, 1, -1, 0, false, t * .2, false, true);
+    }
+  },
+  lights(t){ const L = [{ x: 1010, y: 100, r: 600, a: .45 }, { x: 840, y: 640, r: 460, a: .5 }, { x: 300, y: 600, r: 300, a: .3 }]; if (F.boatLamp) L.push({ x: 1206, y: 600, r: 260, a: .9, warm: 1 }); if (mirrorView) L.push({ x: 500, y: 560, r: 420, a: .5 }); return L; }
+};
+function drowned(c, x, y, t, k, agnese){
+  c.save(); c.translate(x, y + Math.sin(t * .6 + k) * 2); c.globalAlpha = .82;
+  c.fillStyle = LG(c, 0, -230, 0, 0, [[0, '#c9ccd2'], [1, 'rgba(160,170,185,.15)']]);
+  c.beginPath(); c.moveTo(-14, -190); c.quadraticCurveTo(-34, -90, -40 + Math.sin(t + k) * 4, 0); c.lineTo(40 + Math.sin(t * 1.1 + k) * 4, 0); c.quadraticCurveTo(34, -90, 14, -190); c.closePath(); c.fill();
+  c.fillStyle = '#d6d3cc'; ell(c, 0, -212, 12, 15); c.fill();
+  if (agnese) { c.fillStyle = '#e6e0d2'; c.beginPath(); c.ellipse(-1, -224, 15, 8, 0, Math.PI, Math.PI * 2); c.fill(); c.strokeStyle = '#a0814a'; c.lineWidth = 5; c.beginPath(); c.moveTo(-8, -210); c.quadraticCurveTo(-14, -180, -10, -150); c.stroke(); c.fillStyle = '#100808'; ell(c, -4, -212, 1.8, 2.4); c.fill(); ell(c, 5, -212, 1.8, 2.4); c.fill(); }
+  else { c.fillStyle = '#0a0a0c'; c.beginPath(); c.moveTo(-15, -226); c.quadraticCurveTo(0, -236, 15, -226); c.lineTo(18, -140 - k * 6); c.lineTo(-18, -146); c.closePath(); c.fill(); }
+  c.restore();
+}
+
+// --- il lago: la traversata in barca
+const L3 = { p: 0, v: 0, idle: 0, out: false, outT: 0, pres: 0, oar: 0, mid: false, gusts: [30, 66], acc: 0, lx: null };
+function resetLake(){ Object.assign(L3, { p: 0, v: 0, idle: 0, out: false, outT: 0, pres: 0, oar: 0, mid: false, gusts: [30, 66], acc: 0, lx: null }); }
+SCENES.lake = {
+  floorY: 630, minX: 560, maxX: 560,
+  stat(c){
+    const R = rng(201);
+    c.fillStyle = LG(c, 0, -200, 0, 440, [[0, '#010104'], [1, '#0d151c']]); c.fillRect(X0, Y0, X1 - X0, 450 - Y0);
+    for (let i = 0; i < 90; i++) { c.fillStyle = `rgba(220,225,255,${R() * .45})`; c.fillRect(X0 + R() * (X1 - X0), -250 + R() * 560, 1, 1); }
+    c.fillStyle = LG(c, 0, 430, 0, 760, [[0, '#071017'], [.4, '#03070a'], [1, '#000']]); c.fillRect(X0, 430, X1 - X0, Y1 - 430);
+    c.fillStyle = 'rgba(140,155,170,.12)'; c.fillRect(X0, 425, X1 - X0, 10);
+  },
+  dyn(c, t){
+    const p = L3.p;
+    // riva della villa che si allontana, capanna che si avvicina
+    c.fillStyle = '#04060a'; const sx = 200 - p * 9; for (let i = 0; i < 8; i++) cypress(c, sx - 200 + i * 60, 440, 26, 160 + (i % 3) * 40);
+    const hk = clamp((p - 40) / 60, 0, 1), hx = 1500 - hk * 560, hs = .45 + hk * .9;
+    c.save(); c.translate(hx, 440); c.scale(hs, hs);
+    c.fillStyle = '#030406'; c.fillRect(-60, -90, 120, 70); c.beginPath(); c.moveTo(-74, -86); c.lineTo(0, -140); c.lineTo(74, -86); c.fill();
+    c.strokeStyle = '#030406'; c.lineWidth = 5; for (const x of [-50, -20, 20, 50]) line(c, x, -20, x, 30);
+    c.fillStyle = `rgba(230,180,90,${.7 + Math.sin(t * 2) * .1})`; c.beginPath(); c.arc(0, -56, 12, 0, 7); c.fill();
+    c.restore();
+    // scia e increspature
+    c.strokeStyle = 'rgba(140,160,180,.14)'; c.lineWidth = 1.2;
+    for (let i = 0; i < 18; i++) { const y = 450 + i * 15, x = ((i * 211 - t * (20 + L3.v * 60)) % 1600 + 1600) % 1600 - 160; line(c, x, y, x + 50 + i * 3, y); }
+    // teste che affiorano
+    if (L3.mid || (p > 44 && p < 62)) { for (let i = 0; i < 7; i++) { const x = 120 + i * 170 + Math.sin(i) * 40, rise = clamp((p - 44) / 5, 0, 1) * (1 - clamp((p - 58) / 4, 0, 1)); c.fillStyle = `rgba(200,205,215,${.55 * rise})`; ell(c, x, 560 + i % 2 * 30 - rise * 10, 11, 13); c.fill(); c.fillStyle = `rgba(5,5,8,${.8 * rise})`; c.fillRect(x - 12, 548 + i % 2 * 30 - rise * 10, 24, 6); } }
+    // la presenza alle spalle
+    if (L3.pres > .05) { const a = clamp(L3.pres, 0, 1); c.save(); c.globalAlpha = a * .9; c.fillStyle = '#000'; c.shadowColor = '#000'; c.shadowBlur = 30; ell(c, 230, 520 - a * 60, 30, 36); c.fill(); c.beginPath(); c.moveTo(180, 560 - a * 50); c.quadraticCurveTo(230, 530 - a * 60, 280, 560 - a * 50); c.lineTo(300, 700); c.lineTo(160, 700); c.fill(); c.fillStyle = '#c0283f'; c.beginPath(); c.arc(220, 516 - a * 60, 2.5, 0, 7); c.arc(240, 516 - a * 60, 2.5, 0, 7); c.fill(); c.restore(); }
+  },
+  front(c, t){
+    const p = L3.p, bob = Math.sin(t * 1.4) * 3, rock = Math.sin(t * .9) * .015;
+    // mani dall'acqua quando il fanale è spento
+    if (L3.out) { for (let i = 0; i < 6; i++) { const x = 420 + i * 70, r = clamp(L3.outT * 1.5 - i * .15, 0, 1); c.fillStyle = `rgba(200,200,205,${.8 * r})`; c.save(); c.translate(x, 650 - r * 30); c.rotate((i % 2 ? .3 : -.3)); c.fillRect(-5, 0, 10, 40); for (let f = 0; f < 4; f++) { c.fillRect(-6 + f * 4, -14 - (f % 2) * 4, 2.5, 16); } c.restore(); } }
+    c.save(); c.translate(600, 640 + bob); c.rotate(rock);
+    c.fillStyle = '#1a110b'; c.beginPath(); c.moveTo(-170, -24); c.lineTo(200, -24); c.quadraticCurveTo(190, 22, 120, 28); c.lineTo(-130, 28); c.quadraticCurveTo(-180, 20, -170, -24); c.fill();
+    c.fillStyle = '#2a1c12'; c.fillRect(-172, -27, 374, 6); c.strokeStyle = 'rgba(0,0,0,.5)'; c.lineWidth = 1.5; line(c, -150, 0, 180, 0);
+    c.fillStyle = '#1a120c'; c.fillRect(176, -110, 5, 86);
+    c.fillStyle = '#2a2219'; c.fillRect(169, -124, 19, 5); c.fillRect(169, -98, 19, 5);
+    c.fillStyle = L3.out ? 'rgba(150,160,170,.12)' : 'rgba(255,190,110,.35)'; c.fillRect(170, -119, 17, 21);
+    c.restore();
+    if (!L3.out) flame(c, 778, 520 + bob, .6, t, 4);
+    // remo
+    const a = Math.sin(L3.oar) * .5;
+    c.strokeStyle = '#3a2a1a'; c.lineWidth = 6; c.lineCap = 'round';
+    const hx = 600 + 18, hy = 640 - 170 + bob, ex = hx - 40 + Math.sin(a) * 160, ey = 700;
+    line(c, hx, hy, ex, ey); c.fillStyle = '#3a2a1a'; ell(c, ex, ey, 14, 30, Math.atan2(ey - hy, ex - hx) - Math.PI / 2); c.fill();
+    // interfaccia della traversata
+    c.strokeStyle = 'rgba(168,132,63,.5)'; c.lineWidth = 2; line(c, 390, 40, 890, 40);
+    c.fillStyle = '#c0283f'; c.beginPath(); c.arc(390 + 5 * p, 40, 6, 0, 7); c.fill();
+    c.fillStyle = 'rgba(220,205,180,.7)'; c.font = '16px "IM Fell English SC", serif'; c.textAlign = 'center';
+    if (L3.out) c.fillText('Il fanale si è spento — toccalo!', 640, 76);
+    else if (p < 8 || L3.idle > 3) c.fillText('Trascina avanti e indietro per remare', 640, 76);
+  },
+  lights(t){ const L = [{ x: 640, y: 120, r: 500, a: .2 }]; if (!L3.out) L.push({ x: 778, y: 505, r: 300 + Math.sin(t * 13) * 8, a: .95, warm: 1 }); if (L3.p > 60) L.push({ x: 1500 - clamp((L3.p - 40) / 60, 0, 1) * 560, y: 400, r: 160, a: .5, warm: 1 }); return L; }
+};
+
+SCENES.hut = {
+  floorY: 646, minX: 120, maxX: 860,
+  stat(c){
+    const R = rng(301);
+    c.fillStyle = LG(c, 0, -200, 0, 580, [[0, '#060403'], [1, '#1a120b']]); c.fillRect(X0, Y0, X1 - X0, 590 - Y0);
+    c.strokeStyle = 'rgba(0,0,0,.55)'; c.lineWidth = 2; for (let x = X0; x < X1; x += 34 + R() * 10) line(c, x, Y0, x, 590);
+    c.fillStyle = '#0c0805'; c.fillRect(X0, 30, X1 - X0, 22); c.fillRect(X0, 110, X1 - X0, 12);
+    // finestra rotonda
+    c.fillStyle = LG(c, 0, 130, 0, 270, [[0, '#0a1420'], [1, '#04080c']]); c.beginPath(); c.arc(640, 200, 66, 0, 7); c.fill();
+    c.fillStyle = '#dfe2e8'; c.beginPath(); c.arc(668, 172, 13, 0, 7); c.fill(); c.fillStyle = '#0a1420'; c.beginPath(); c.arc(674, 168, 12, 0, 7); c.fill();
+    c.fillStyle = '#050608'; c.fillRect(574, 236, 132, 30);
+    c.strokeStyle = '#1e140c'; c.lineWidth = 10; c.beginPath(); c.arc(640, 200, 70, 0, 7); c.stroke(); c.lineWidth = 4; line(c, 640, 132, 640, 268); line(c, 572, 200, 708, 200);
+    // scaffali con barattoli
+    for (const sy of [190, 290]) { c.fillStyle = '#1e140c'; c.fillRect(110, sy, 280, 9); }
+    for (let i = 0; i < 12; i++) {
+      const jx = 124 + (i % 6) * 44, jy = i < 6 ? 190 : 290, jh = 30 + R() * 22;
+      c.fillStyle = 'rgba(150,170,140,.16)'; c.fillRect(jx, jy - jh, 30, jh); c.strokeStyle = 'rgba(200,210,190,.35)'; c.lineWidth = 1.2; c.strokeRect(jx, jy - jh, 30, jh);
+      c.fillStyle = '#3a2a1a'; c.fillRect(jx - 2, jy - jh - 5, 34, 6);
+      const kind = Math.floor(R() * 4);
+      if (kind === 0) { c.fillStyle = '#e0dccf'; c.beginPath(); c.arc(jx + 15, jy - jh / 2, 7, 0, 7); c.fill(); c.fillStyle = '#2a4a3a'; c.beginPath(); c.arc(jx + 17, jy - jh / 2, 3, 0, 7); c.fill(); }
+      else if (kind === 1) { c.fillStyle = '#7a1424'; ell(c, jx + 15, jy - jh / 2, 8, 9); c.fill(); }
+      else if (kind === 2) { c.strokeStyle = '#d6c8b0'; c.lineWidth = 2.5; for (let f = 0; f < 3; f++) line(c, jx + 8 + f * 7, jy - 6, jx + 9 + f * 6, jy - jh + 10); }
+      else { c.fillStyle = 'rgba(120,140,90,.5)'; c.fillRect(jx + 2, jy - jh * .55, 26, jh * .55); }
+    }
+    // erbe e lische appese
+    for (let i = 0; i < 9; i++) { const x = 720 + i * 34; c.strokeStyle = 'rgba(140,120,80,.6)'; c.lineWidth = 1; line(c, x, 52, x, 90 + (i % 3) * 14); c.fillStyle = i % 2 ? '#2a3a20' : '#3a2a20'; c.beginPath(); c.moveTo(x - 9, 90 + (i % 3) * 14); c.lineTo(x, 150 + (i % 3) * 14); c.lineTo(x + 9, 90 + (i % 3) * 14); c.fill(); }
+    c.strokeStyle = '#cfc6b2'; c.lineWidth = 2; line(c, 760, 210, 880, 214); for (let i = 0; i < 12; i++) { line(c, 770 + i * 9, 211, 766 + i * 9, 198); line(c, 770 + i * 9, 213, 766 + i * 9, 226); }
+    // bacile
+    c.fillStyle = '#d0c6b2'; for (const dx of [-16, 0, 16]) { c.save(); c.translate(470 + dx, 560); c.rotate(dx * .02); c.fillRect(-2.5, -80, 5, 84); c.restore(); }
+    c.fillStyle = '#3a3630'; ell(c, 470, 480, 46, 12); c.fill(); c.fillStyle = '#0a1418'; ell(c, 470, 478, 38, 8); c.fill();
+    // calderone
+    c.fillStyle = '#050403'; ell(c, 640, 560, 86, 60); c.fill(); c.fillStyle = '#16120e'; ell(c, 640, 506, 80, 14); c.fill();
+    c.fillStyle = '#0c0a08'; c.fillRect(580, 600, 12, 26); c.fillRect(690, 600, 12, 26);
+    // pavimento
+    floorPlanks(c, 588, '#1a110a', '#030201', R);
+    // porta
+    door(c, 30, 245, 100, 340);
+    // sedia
+    c.fillStyle = '#0e0906'; c.fillRect(920, 360, 14, 286); c.fillRect(1080, 420, 12, 226); c.fillRect(920, 520, 172, 14);
+    cobweb(c, 1280, 52, 120, -1);
+  },
+  dyn(c, t){
+    // fuoco sotto il calderone e bolle verdi
+    for (let i = 0; i < 6; i++) { const fx = 600 + i * 16, h = 26 + Math.sin(t * 8 + i * 1.7) * 8; c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = LG(c, 0, 630, 0, 630 - h, [[0, 'rgba(255,170,80,.7)'], [1, 'rgba(160,30,10,0)']]); c.beginPath(); c.moveTo(fx - 7, 632); c.quadraticCurveTo(fx, 630 - h, fx + 7, 632); c.fill(); c.restore(); }
+    c.fillStyle = `rgba(90,200,110,${.35 + Math.sin(t * 3) * .1})`; ell(c, 640, 506, 72, 10); c.fill();
+    for (let i = 0; i < 5; i++) { const k = (t * .7 + i * .21) % 1; c.fillStyle = `rgba(150,240,160,${.5 * (1 - k)})`; c.beginPath(); c.arc(600 + i * 20, 500 - k * 60, 3 + k * 5, 0, 7); c.fill(); }
+    // capra
+    if (!F.goatDead) {
+      c.save(); c.translate(260, 610);
+      c.fillStyle = '#0a0808'; ell(c, 0, 0, 62, 24); c.fill(); ell(c, -60, -18, 20, 15, -.3); c.fill();
+      c.strokeStyle = '#2a2420'; c.lineWidth = 5; c.beginPath(); c.moveTo(-66, -30); c.quadraticCurveTo(-60, -60, -40, -56); c.stroke(); c.beginPath(); c.moveTo(-56, -32); c.quadraticCurveTo(-44, -58, -26, -50); c.stroke();
+      const blink = (t % 5.3) < .15; if (!blink) { c.fillStyle = '#d4b030'; ell(c, -70, -20, 4.5, 3); c.fill(); c.fillStyle = '#000'; c.fillRect(-73, -20.6, 6, 1.4); }
+      c.fillStyle = '#7a6a40'; c.beginPath(); c.arc(-56, 0, 4, 0, 7); c.fill();
+      c.restore();
+    } else { c.fillStyle = '#7a6a40'; c.beginPath(); c.arc(210, 628, 5, 0, 7); c.fill(); c.strokeStyle = '#2a2420'; c.lineWidth = 4; line(c, 230, 630, 252, 610); line(c, 240, 632, 262, 618); }
+    // la Strega
+    witch(c, 1000, 646, t);
+    // candele
+    flame(c, 160, 186, .7, t, 1); flame(c, 360, 286, .7, t, 2);
+    c.fillStyle = '#ddd2bd'; c.fillRect(156, 168, 8, 20); c.fillRect(356, 268, 8, 20);
+  },
+  lights(t){ return [{ x: 640, y: 540, r: 360 + Math.sin(t * 9) * 10, a: .95, warm: 1 }, { x: 260, y: 230, r: 220, a: .7, warm: 1 }, { x: 640, y: 200, r: 160, a: .4 }]; }
+};
+function witch(c, x, y, t){
+  const br = Math.sin(t * 1.1) * 2;
+  c.save(); c.translate(x, y);
+  c.fillStyle = '#0e120e'; c.beginPath(); c.moveTo(-70, 0); c.quadraticCurveTo(-80, -140, -30, -230 + br); c.quadraticCurveTo(10, -260 + br, 40, -220 + br); c.quadraticCurveTo(80, -140, 70, 0); c.fill();
+  c.fillStyle = '#1a1f18'; c.beginPath(); c.moveTo(-40, -200 + br); c.quadraticCurveTo(-60, -120, -50, -60); c.lineTo(40, -60); c.quadraticCurveTo(40, -150, 30, -200 + br); c.fill();
+  // capelli bianchi
+  c.fillStyle = '#b9b4a8'; c.beginPath(); c.moveTo(-36, -250 + br); c.quadraticCurveTo(0, -290 + br, 36, -250 + br); c.quadraticCurveTo(46, -200, 40, -150); c.lineTo(-44, -150); c.quadraticCurveTo(-48, -200, -36, -250 + br); c.fill();
+  c.strokeStyle = 'rgba(90,85,75,.6)'; c.lineWidth = 1; for (let i = 0; i < 10; i++) { c.beginPath(); c.moveTo(-30 + i * 7, -260 + br); c.quadraticCurveTo(-34 + i * 7.5, -200, -40 + i * 8.5, -152); c.stroke(); }
+  c.fillStyle = '#20261c'; c.beginPath(); c.moveTo(-62, -40); c.quadraticCurveTo(-70, -150, -42, -172 + br); c.quadraticCurveTo(0, -150 + br, 44, -172 + br); c.quadraticCurveTo(70, -150, 62, -40); c.quadraticCurveTo(0, -70, -62, -40); c.fill();
+  c.strokeStyle = 'rgba(0,0,0,.4)'; c.lineWidth = 2; for (let i = 0; i < 5; i++) { c.beginPath(); c.moveTo(-40 + i * 20, -160); c.quadraticCurveTo(-44 + i * 22, -110, -50 + i * 25, -50); c.stroke(); }
+  // un occhio tra i capelli
+  const blink = (t % 6.1) < .14;
+  c.fillStyle = '#0a0806'; c.fillRect(-14, -224 + br, 20, 10);
+  if (!blink) { c.fillStyle = '#d8d0b0'; ell(c, -4, -219 + br, 6, 3); c.fill(); c.fillStyle = '#6a8a50'; c.beginPath(); c.arc(-4 + clamp((luc.x - x) / 400, -1, 1) * 2.5, -219 + br, 2, 0, 7); c.fill(); }
+  // mani
+  c.fillStyle = '#b9b09a'; for (const dx of [-30, 18]) { ell(c, dx, -66, 12, 7); c.fill(); c.strokeStyle = '#2a2018'; c.lineWidth = 1.5; for (let f = 0; f < 4; f++) line(c, dx - 6 + f * 4, -62, dx - 8 + f * 4, -48); }
+  c.restore();
+}
+
 // ---------------- Agnese, la serva ----------------
 function drawAgnese(c, x, y, face, t, lit, scared){
   const k = .88;
@@ -1757,7 +2245,159 @@ const HS2 = {
   ]
 };
 const ENTER2 = { corridor: 'c2_corridor_enter', library: 'c2_library_enter', garden: 'c2_garden_enter', crypt: 'c2_crypt_enter' };
-const hsCur = () => (S.chapter === 2 ? HS2[S.scene] : HS[S.scene]) || [];
+
+// ---------------- CAPITOLO III ----------------
+let mirrorView = false, frenzy = null, beatT = 2;
+const C3_START = { ...C2_START, ch2done: 1, agneseGone: 1, hunger: 25 };
+async function woodsPath(i){
+  if (F.woodsDone) return goScene('shore', 130, 1);
+  if (i === F.woodsSeq[F.woodsStep | 0]) {
+    F.woodsStep = (F.woodsStep | 0) + 1;
+    if (F.woodsStep >= 2) { F.woodsDone = 1; return goScene('shore', 130, 1); }
+    await goScene('woods', 140, 1); await say('c3_woods_deeper');
+  } else {
+    F.woodsStep = 0; F.loops = (F.loops | 0) + 1;
+    await goScene('woods', 140, 1); await say(F.loops >= 3 ? 'c3_woods_loop3' : 'c3_woods_loop');
+  }
+}
+async function setMirror(on){
+  if (mirrorView === on) return;
+  $('fade').style.transition = 'opacity .25s'; $('fade').style.opacity = .85; sfx.whisper(); await sleep(260);
+  mirrorView = on; pending = null; luc.tx = null; $('bMirror').classList.toggle('act', on);
+  $('fade').style.opacity = 0; await sleep(260); $('fade').style.transition = '';
+  if (on && !F.mirrorSeen3) { F.mirrorSeen3 = 1; busy = true; await say('c3_mirror_on'); busy = false; save(); }
+}
+const HS3 = {
+  garden: [
+    { id: 'door', r: [12, 250, 125, 330], wx: 105, act: () => say('c3_garden_door') },
+    { id: 'gate', r: [1150, 330, 130, 280], wx: 1190, exit: { to: 'woods', x: 140, face: 1 } },
+    { id: 'tomb', r: [255, 455, 125, 140], wx: 320, act: () => say('c3_tomb') },
+    { id: 'well', r: [552, 340, 160, 248], wx: 630, act: () => say('c3_well') },
+    { id: 'rose', r: [825, 455, 165, 135], wx: 900, act: async () => { if (F.budTaken) return say('c3_rose2'); F.budTaken = 1; await say('c3_rose'); addItem('bocciolo'); } },
+    { id: 'moon', r: [920, 70, 130, 130], wx: 900, act: () => say('c3_moon') },
+    { id: 'crows', r: [1050, 120, 220, 260], wx: 1100, act: async () => { crowsT = 3.2; await say('c3_crows'); } }
+  ],
+  woods: [
+    { id: 'back', r: [0, 300, 70, 340], wx: 95, exit: { to: 'garden', x: 1150, face: -1 } },
+    { id: 'p0', r: [270, 270, 120, 330], wx: 330, act: () => woodsPath(0) },
+    { id: 'p1', r: [580, 270, 120, 330], wx: 640, act: () => woodsPath(1) },
+    { id: 'p2', r: [890, 270, 120, 330], wx: 950, act: () => woodsPath(2) },
+    { id: 'doll', r: [440, 280, 60, 110], wx: 470, act: () => say('c3_doll') },
+    { id: 'doll2', r: [790, 230, 60, 110], wx: 820, act: () => say('c3_doll'), nolabel: 1 },
+    { id: 'fawn', r: [1000, 570, 140, 80], wx: 990, vis: () => !F.fawnFree,
+      act: async () => {
+        if (F.fawnDead) return say('c3_fawn_dead');
+        if (!F.fawnSeen) { F.fawnSeen = 1; return say('c3_fawn1'); }
+        F.fawnFree = 1; await say('c3_fawn_free');
+      } }
+  ],
+  shore: [
+    { id: 'woods', r: [0, 300, 90, 340], wx: 120, exit: { to: 'woods', x: 1150, face: -1 } },
+    { id: 'water', r: [560, 470, 520, 150], wx: 700,
+      act: async () => { if (!F.waterSeen) { F.waterSeen = 1; await say('c3_water'); await runTut([{ t: 'bMirror', k: 'tut_mirror' }]); } else await say('c3_water2'); } },
+    { id: 'heron', r: [395, 540, 70, 110], wx: 470, vis: () => !F.heronDead, act: () => say('c3_heron') },
+    { id: 'hut', r: [840, 360, 100, 90], wx: 900, act: () => say('c3_hut_far') },
+    { id: 'boat', r: [1000, 590, 250, 110], wx: 1140,
+      act: async () => {
+        if (!F.oar) return say('c3_boat');
+        if (!F.boatLamp) return say('c3_boat_dark');
+        await say('c3_boat_go'); sfx.splash(); await goScene('lake', 560, 1);
+      },
+      use: async it => {
+        if (it === 'candela' && !F.boatLamp) { F.boatLamp = 1; await say('c3_boat_lamp'); return true; }
+        if (it === 'remo') { if (!F.boatLamp) { await say('c3_boat_dark'); return true; } removeItem('remo'); await say('c3_boat_go'); sfx.splash(); await goScene('lake', 560, 1); return true; }
+      } }
+  ],
+  shore_r: [
+    { id: 'drowned', r: [220, 420, 480, 230], wx: 460, act: () => say('c3_drowned') },
+    { id: 'agnese', r: [750, 410, 70, 230], wx: 740, vis: () => !!F.oar, act: () => say('c3_agnese_r') },
+    { id: 'oar', r: [800, 600, 200, 50], wx: 860, vis: () => !F.oar, act: async () => { F.oar = 1; await say('c3_oar'); addItem('remo'); addItem('perla'); } },
+    { id: 'otherluc', r: [1020, 360, 90, 290], wx: 990, act: () => say('c3_otherluc') }
+  ],
+  lake: [],
+  hut: [
+    { id: 'door', r: [22, 245, 110, 340], wx: 130, act: () => say('c3_hut_door') },
+    { id: 'jars', r: [110, 120, 290, 190], wx: 250, act: () => say('c3_jars') },
+    { id: 'goat', r: [180, 560, 150, 80], wx: 340, vis: () => true, act: () => say(F.goatDead ? 'c3_goat_dead' : 'c3_goat') },
+    { id: 'basin', r: [420, 455, 100, 120], wx: 470, act: () => say(F.noReflect ? 'c3_basin2' : 'c3_basin') },
+    { id: 'cauldron', r: [550, 470, 180, 150], wx: 640, act: () => say('c3_cauldron') },
+    { id: 'window', r: [570, 130, 140, 140], wx: 640, act: () => say('c3_window') },
+    { id: 'herbs', r: [700, 50, 320, 180], wx: 820, act: () => say('c3_herbs') },
+    { id: 'witch', r: [920, 360, 170, 290], wx: 850,
+      act: async () => { if (!F.witchMet) { F.witchMet = 1; return say('c3_witch1'); } await say('c3_witch_wait'); },
+      use: async it => {
+        if (it === 'diario') { removeItem('diario'); F.witchPage = 1; await say('c3_witch_page'); }
+        else if (it === 'perla') { removeItem('perla'); F.witchPearl = 1; await say('c3_witch_pearl'); }
+        else if (it === 'lettera') { await say('c3_witch_letter'); return true; }
+        else return false;
+        F.witchMet = 1;
+        if (F.witchPage && F.witchPearl) await ending3();
+        return true;
+      } }
+  ]
+};
+const ENTER3 = { woods: 'c3_woods_enter', shore: 'c3_shore_enter', lake: 'c3_lake_enter', hut: 'c3_hut_enter' };
+const hsCur = () => (S.chapter === 3 ? (mirrorView && S.scene === 'shore' ? HS3.shore_r : HS3[S.scene]) : S.chapter === 2 ? HS2[S.scene] : HS[S.scene]) || [];
+function hint3(){
+  if ((F.hunger || 0) > 85 && (has('bocciolo') || (has('lettera') && !F.letterCalm))) return 'c3_hint_full';
+  if (S.scene === 'garden') return 'c3_hint_gate';
+  if (!F.woodsDone) return (F.hunger || 0) < 55 ? 'c3_hint_hunger' : 'c3_hint_trail';
+  if (S.scene === 'hut') { if (!F.witchMet) return 'c3_hint_witch'; if (!F.witchPage) return 'c3_hint_page'; return 'c3_hint_pearl'; }
+  if (S.scene === 'lake') return 'c3_hint_row';
+  if (!F.oar) return F.waterSeen ? 'c3_hint_oar' : 'c3_hint_water';
+  if (!F.boatLamp) return 'c3_hint_lamp';
+  return 'c3_hint_boat';
+}
+// --- la fame: bersagli della bestia
+const PREY = {
+  woods: () => (!F.fawnFree && !F.fawnDead) ? { x: 1000, flag: 'fawnDead', text: 'c3_feed_fawn' } : null,
+  shore: () => (!F.heronDead && !mirrorView) ? { x: 470, flag: 'heronDead', text: 'c3_feed_heron' } : null,
+  hut: () => !F.goatDead ? { x: 330, flag: 'goatDead', text: 'c3_feed_goat' } : null
+};
+async function startFrenzy(){
+  busy = true; selected = null; renderInv(); actionBar(); pending = null; luc.tx = null;
+  await say('c3_frenzy');
+  const prey = (PREY[S.scene] || (() => null))();
+  const res = await new Promise(r => { frenzy = { prey, t: 0, res: 30, done: r }; $('resist').classList.add('on'); });
+  $('resist').classList.remove('on'); frenzy = null; luc.moving = false;
+  if (res === 'win') { F.hunger = 62; await say('c3_frenzy_win'); }
+  else if (prey) { F[prey.flag] = 1; F.fed = (F.fed | 0) + 1; F.hunger = 0; vibrate([80, 40, 200]); await say(prey.text); }
+  else { F.hunger = 38; await say('c3_frenzy_self'); }
+  busy = false; save();
+}
+$('resist').addEventListener('pointerdown', e => { e.stopPropagation(); if (frenzy) { frenzy.res = Math.min(100, frenzy.res + 8); vibrate(15); } });
+// --- usare oggetti su Lucrezia
+function onLuc(p){ const sc = SCENES[S.scene]; return Math.abs(p.x - luc.x) < 48 && p.y > sc.floorY - 290 && p.y < sc.floorY + 10; }
+async function useSelf(it){
+  busy = true; selected = null; renderInv(); actionBar();
+  try {
+    if (it === 'bocciolo' && S.chapter === 3) { removeItem('bocciolo'); F.hunger = Math.max(0, (F.hunger || 0) - 45); await say('c3_bud_eat'); }
+    else if (it === 'lettera' && S.chapter === 3 && !F.noMemory) { if (!F.letterCalm) { F.letterCalm = 1; F.hunger = Math.max(0, (F.hunger || 0) - 15); await say('c3_letter_self'); } else await say('c3_letter_self2'); }
+    else await say(S.chapter === 3 ? 'c3_self_no' : 'generic_no');
+  } finally { busy = false; save(); }
+}
+// --- scelta
+function choose(q, opts){
+  return new Promise(res => {
+    const layer = $('dlgLayer'), box = $('choice');
+    layer.classList.add('on'); layer.onpointerup = null;
+    $('dName').style.display = 'none'; $('dText').className = 'narr'; $('dText').textContent = q; $('dMore').style.opacity = 0;
+    box.innerHTML = '';
+    opts.forEach((o, i) => { const b = document.createElement('button'); b.className = 'mbtn'; b.textContent = o; b.onpointerup = e => e.stopPropagation(); b.onclick = e => { e.stopPropagation(); box.classList.remove('on'); layer.classList.remove('on'); res(i); }; box.appendChild(b); });
+    box.classList.add('on');
+  });
+}
+async function ending3(){
+  await say('c3_witch_pay');
+  const k = ['reflect', 'memory', 'voice'][await choose(TX('c3_pay_q'), [TX('c3_pay_a'), TX('c3_pay_b'), TX('c3_pay_c')])];
+  F.c3pay = k;
+  await say('c3_paid_' + k);
+  await say('c3_truth');
+  addItem('filtro'); await sleep(900); removeItem('filtro');
+  await say('c3_drink');
+  F.hunger = 0; F.ch3done = 1; save(); fbInc('completions3'); logEv('chapter_complete', { chapter: 3, pay: k });
+  showEnding(3, TX('c3_card_' + k));
+}
 function hint2(){
   if (!F.isaTalk) return 'c2_hint_mirror';
   if (!F.lampLit) return F.agneseMet ? 'c2_hint_lamp' : 'c2_hint_agnese';
@@ -1770,6 +2410,7 @@ function hint2(){
 }
 
 function hint(){
+  if (S.chapter === 3) return hint3();
   if (S.chapter === 2) return hint2();
   if (!has('candela') && !F.candleTaken) return 'hint_candle';
   if (has('elisir')) return 'hint_mirror';
@@ -1814,7 +2455,8 @@ function showLine(ln){
     layer.classList.add('on');
     $('dName').textContent = name; $('dName').style.display = name ? '' : 'none';
     const dt = $('dText'); dt.className = ln.sp ? '' : 'narr';
-    const full = ln.t; let i = 0, done = false; dt.textContent = ''; $('dMore').style.opacity = 0;
+    if (F.noVoice && ln.sp === 'L') { $('dName').style.display = 'none'; dt.className = 'mute'; }
+    const full = forgot(ln.t); let i = 0, done = false; dt.textContent = ''; $('dMore').style.opacity = 0;
     const iv = setInterval(() => { i += 2; dt.textContent = full.slice(0, i); if (i >= full.length) finish(); }, 24);
     function finish(){ clearInterval(iv); dt.textContent = full; done = true; $('dMore').style.opacity = 1; }
     const start = performance.now();
@@ -1843,6 +2485,9 @@ async function runFx(f){
     case 'young': F.young = 1; break;
     case 'hunger': redA = Math.max(redA, .75); sfx.heartbeat(2); break;
     case 'choir': sfx.choir(); break;
+    case 'forget': F.noMemory = 1; renderInv(); break;
+    case 'mute': F.noVoice = 1; break;
+    case 'noreflect': F.noReflect = 1; break;
     case 'drink': sfx.drink(); await sleep(800); break;
     case 'stinger': sfx.stinger(); shakeT = .35; break;
     default: if (sfx[f]) sfx[f]();
@@ -1867,6 +2512,11 @@ const ICONS = {
   anello: '<ellipse cx="24" cy="29" rx="12" ry="11" fill="none" stroke="#d4ac54" stroke-width="4"/><rect x="16" y="9" width="16" height="12" rx="3" fill="#b8902e"/><circle cx="24" cy="15" r="3.5" fill="#8b1a2b"/><path d="M24 12v6" stroke="#2a3a20" stroke-width="1.2"/>',
   pugnale: '<path d="M24 3l4 8v20h-8V11z" fill="#d8dce2"/><path d="M24 5v25" stroke="#8a9098" stroke-width="1"/><rect x="14" y="30" width="20" height="4" rx="2" fill="#a8843f"/><path d="M24 34c-3 3 3 5 0 8 3 1 0 4 0 4" stroke="#a8843f" stroke-width="3.5" fill="none"/>',
   calice: '<path d="M12 7h24c0 11-5 18-12 18S12 18 12 7z" fill="#a9a398" stroke="#e0dacb" stroke-width="1.5"/><ellipse cx="24" cy="8" rx="12" ry="2.5" fill="#5a0710"/><rect x="22" y="25" width="4" height="12" fill="#a9a398"/><ellipse cx="24" cy="40" rx="10" ry="3" fill="#a9a398"/>',
+  diario: '<path d="M9 6h26l3 3v33H9z" fill="#cbb994"/><path d="M13 13h20M13 18h22M13 23h18M13 28h21M13 33h14" stroke="#4a2a1e" stroke-width="1.2"/><circle cx="31" cy="36" r="3" fill="#8b1a2b"/>',
+  bocciolo: '<path d="M24 28l2 16" stroke="#2a3a20" stroke-width="2.5"/><path d="M24 30c-9-2-10-12-6-20 2 4 4 5 6 5s4-1 6-5c4 8 3 18-6 20z" fill="#8b1a2b"/><path d="M24 30c-3-4-3-10 0-15 3 5 3 11 0 15z" fill="#c0283f"/><path d="M21 38l-6-3M27 40l6-2" stroke="#2a3a20" stroke-width="2"/>',
+  remo: '<path d="M10 40L32 12" stroke="#5a3e24" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="35" cy="9" rx="5" ry="9" transform="rotate(40 35 9)" fill="#5a3e24"/><path d="M10 40l-3 3" stroke="#2a1c10" stroke-width="5" stroke-linecap="round"/>',
+  perla: '<circle cx="24" cy="26" r="11" fill="#9aa0a8"/><circle cx="20" cy="22" r="4" fill="#e8ecf0" opacity=".8"/><path d="M24 4c-2 4-2 6 0 8 2-2 2-4 0-8z" fill="#b8c8ee" opacity=".7"/>',
+  filtro: '<path d="M20 5h8v9c7 3 10 9 10 15a14 14 0 0 1-28 0c0-6 3-12 10-15z" fill="rgba(40,60,40,.5)" stroke="#9ab090" stroke-width="2"/><path d="M11 29a13 13 0 0 0 26 0z" fill="#1a2418"/><circle cx="24" cy="33" r="4" fill="#3a5a30"/><rect x="18" y="3" width="12" height="4" fill="#2a1c10"/>',
   elisir: '<path d="M20 5h8v11c7 3 10 8 10 14a14 14 0 0 1-28 0c0-6 3-11 10-14z" fill="rgba(255,90,110,.18)" stroke="#f0c8c8" stroke-width="2"/><path d="M11 27a13 13 0 0 0 26 0z" fill="#e8e4ff" opacity=".85"/><circle cx="24" cy="31" r="6" fill="#c0283f" opacity=".5"/><rect x="18" y="3" width="12" height="4" fill="#8a1424"/>'
 };
 function renderInv(newId){
@@ -1890,7 +2540,7 @@ function removeItem(id){ S.inv = S.inv.filter(x => x !== id); if (selected === i
 // =====================================================================
 //  INPUT & MOVEMENT
 // =====================================================================
-function toWorld(e){ const r = cv.getBoundingClientRect(); return { x: (e.clientX - r.left - ox) / s, y: (e.clientY - r.top - oy) / s }; }
+function toWorld(e){ const r = cv.getBoundingClientRect(); const y = (e.clientY - r.top - oy) / s; return { x: (e.clientX - r.left - ox) / s, y: mirrorView ? H - y : y }; }
 function hit(p){
   const list = hsCur().filter(h => (!h.vis || h.vis()) && p.x >= h.r[0] && p.x <= h.r[0] + h.r[2] && p.y >= h.r[1] && p.y <= h.r[1] + h.r[3]);
   list.sort((a, b) => a.r[2] * a.r[3] - b.r[2] * b.r[3]); return list[0] || null;
@@ -1899,11 +2549,22 @@ function walkTo(x){ const sc = SCENES[S.scene]; luc.tx = clamp(x, sc.minX, sc.ma
 cv.addEventListener('pointerdown', e => {
   auInit();
   if (mode !== 'play' || busy) return;
-  const p = toWorld(e), h = hit(p);
+  const p = toWorld(e);
+  if (S.scene === 'lake') {
+    if (L3.out && Math.abs(p.x - 778) < 90 && p.y > 420 && p.y < 640) { L3.out = false; L3.outT = 0; sfx.pickup(); return; }
+    L3.lx = p.x; L3.acc = 0; return;
+  }
+  if (selected && onLuc(p)) { useSelf(selected); return; }
+  const h = hit(p);
   if (h) { pending = h; walkTo(h.wx); }
   else { pending = null; if (selected) { selected = null; renderInv(); actionBar(); } walkTo(p.x); }
 });
 cv.addEventListener('pointermove', e => {
+  if (S.scene === 'lake' && L3.lx !== null && mode === 'play' && !busy) {
+    const x = toWorld(e).x; L3.acc += Math.abs(x - L3.lx); L3.lx = x;
+    if (L3.acc > 110) { L3.acc = 0; rowStroke(); }
+    return;
+  }
   if (e.pointerType !== 'mouse' || mode !== 'play') { $('tip').classList.remove('on'); return; }
   const p = toWorld(e), h = hit(p), tip = $('tip');
   cv.classList.toggle('pointer', !!h);
@@ -1930,20 +2591,26 @@ async function arrive(h){
 async function goScene(id, x, face){
   $('fade').style.opacity = 1; await sleep(650);
   S.scene = id; luc.x = x; luc.tx = null; luc.face = face || 1; pending = null;
+  mirrorView = false; $('bMirror').classList.remove('act'); if (id === 'lake') resetLake();
   setAmb(id); presence();
   for (const k in cache) if (k !== id) delete cache[k];
   getStatic(id);
   $('fade').style.opacity = 0; showSceneName(id);
   const fk = 'seen_' + id;
-  const EN = S.chapter === 2 ? ENTER2 : ENTER;
+  const EN = S.chapter === 3 ? ENTER3 : S.chapter === 2 ? ENTER2 : ENTER;
   if (!F[fk]) { F[fk] = 1; if (EN[id]) { await sleep(700); await say(EN[id]); } }
   save();
 }
+addEventListener('pointerup', () => { L3.lx = null; });
+function rowStroke(){ if (L3.out) return; L3.v = Math.min(4.2, L3.v + 1.05); L3.idle = 0; L3.pres = Math.max(0, L3.pres - .35); L3.oar += Math.PI; sfx.splash(); }
 addEventListener('keydown', e => {
   if (mode !== 'play') return;
   if (e.key === 'Escape') toggleMenu();
   if (e.key === ' ') { revealT = 2.5; e.preventDefault(); }
   if (e.key.toLowerCase() === 'h') doHint();
+  if (e.key.toLowerCase() === 'm' && S.chapter === 3 && S.scene === 'shore' && !busy) setMirror(!mirrorView);
+  if (S.scene === 'lake' && !busy && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) { if (e.key !== L3.lastKey) rowStroke(); L3.lastKey = e.key; }
+  if (S.scene === 'lake' && !busy && L3.out && (e.key === 'Enter' || e.key.toLowerCase() === 'f')) { L3.out = false; L3.outT = 0; }
 });
 async function doHint(){ if (busy) return; busy = true; await say(hint()); busy = false; }
 
@@ -1975,6 +2642,7 @@ function update(dt){
   }
   if (shadowT >= 0) { shadowT += dt; if (shadowT > 1.6) shadowT = -1; }
   isaA += ((isaOn ? .9 : 0) - isaA) * Math.min(1, dt * (isaOn ? 1.2 : 2.5));
+  if (S.chapter === 3 && mode === 'play') updateC3(dt);
   if (agneseHere() && mode === 'play') {
     hungerT -= dt;
     if (hungerT <= 0 && Math.abs(luc.x - AGX[S.scene]) < 280) { hungerT = rand(4, 7); sfx.heartbeat(1); redA = Math.max(redA, .3); }
@@ -1983,13 +2651,43 @@ function update(dt){
   revealT = Math.max(0, revealT - dt); crowsT = Math.max(0, crowsT - dt); brewT = Math.max(0, brewT - dt);
   for (const d of dust) { d.y -= d.v * dt * .3; d.x += Math.sin(T * .5 + d.p) * dt * 6; if (d.y < 0) { d.y = H; d.x = rand(0, W); } }
 }
+function updateC3(dt){
+  const paused = $('tut').classList.contains('on') || $('menu').classList.contains('on') || $('dlgLayer').classList.contains('on');
+  if (frenzy) {
+    frenzy.t += dt; frenzy.res = Math.max(0, frenzy.res - 13 * dt); $('resBar').style.width = frenzy.res + '%';
+    redA = Math.max(redA, .45); shakeT = Math.max(shakeT, .08);
+    const pr = frenzy.prey;
+    if (pr) { const d = pr.x - luc.x; if (Math.abs(d) > 4) { luc.face = Math.sign(d); luc.x += Math.sign(d) * 62 * dt; luc.moving = true; luc.ph += dt * 6; } }
+    if (frenzy.res >= 100) frenzy.done('win');
+    else if (pr ? Math.abs(pr.x - luc.x) < 30 : frenzy.t > 5.5) frenzy.done('lose');
+    return;
+  }
+  if (!busy && !paused) {
+    F.hunger = Math.min(100, (F.hunger || 0) + (S.scene === 'lake' ? .22 : .42) * dt);
+    if (F.hunger >= 100) { startFrenzy(); return; }
+  }
+  const h = F.hunger || 0;
+  if (h > 60) { beatT -= dt; if (beatT <= 0) { sfx.heartbeat(1); beatT = 3.4 - (h - 60) / 40 * 2.2; } }
+  if (S.scene === 'lake' && !busy && !paused) {
+    L3.idle += dt;
+    if (L3.out) { L3.outT += dt; L3.v *= Math.exp(-dt * 3); L3.p = Math.max(0, L3.p - dt * 1.6); if (L3.outT > .2 && Math.random() < dt * 2) sfx.drip(); }
+    else { L3.v *= Math.exp(-dt * .55); L3.p += L3.v * dt * 1.25; }
+    if (L3.gusts.length && L3.p >= L3.gusts[0]) { L3.gusts.shift(); L3.out = true; L3.outT = 0; sfx.whisper(); vibrate(120); }
+    if (L3.idle > 5) { L3.pres = Math.min(1.2, L3.pres + dt * .25); if (L3.pres >= 1.2) { L3.pres = 0; L3.idle = 0; L3.p = Math.max(0, L3.p - 15); sfx.stinger(); shakeT = .6; toast('Qualcosa ha spinto indietro la barca'); } }
+    else L3.pres = Math.max(0, L3.pres - dt * .3);
+    if (!L3.mid && L3.p >= 48) { L3.mid = true; busy = true; say('c3_lake_mid').then(() => { busy = false; }); }
+    if (L3.p >= 100) { busy = true; L3.p = 100; goScene('hut', 200, 1).then(() => { busy = false; save(); }); }
+  }
+}
 function render(){
   const c = ctx;
   c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = '#000'; c.fillRect(0, 0, cv.width, cv.height);
   const sc = SCENES[S.scene]; if (!sc) return;
   const shx = shakeT > 0 ? (Math.random() - .5) * 24 * shakeT : 0, shy = shakeT > 0 ? (Math.random() - .5) * 24 * shakeT : 0;
+  if (mirrorView) { c.setTransform(1, 0, 0, -1, 0, cv.height); }
   c.drawImage(getStatic(S.scene), shx * dpr, shy * dpr);
-  const wt = [dpr * s, 0, 0, dpr * s, dpr * (ox + shx), dpr * (oy + shy)];
+  const wtN = [dpr * s, 0, 0, dpr * s, dpr * (ox + shx), dpr * (oy + shy)];
+  const wt = mirrorView ? [dpr * s, 0, 0, -dpr * s, dpr * (ox + shx), dpr * (oy + shy + H * s)] : wtN;
   c.setTransform(...wt);
   sc.dyn(c, T);
   let cp = null;
@@ -2020,10 +2718,10 @@ function render(){
   // rivela
   if (revealT > 0 && mode === 'play') {
     const a = Math.min(1, revealT);
-    c.font = '20px "IM Fell English SC", serif'; c.textAlign = 'center';
+    c.setTransform(...wtN); c.font = '20px "IM Fell English SC", serif'; c.textAlign = 'center';
     for (const h of hsCur()) {
       if ((h.vis && !h.vis()) || h.nolabel) continue;
-      const x = h.r[0] + h.r[2] / 2, y = h.r[1] + h.r[3] / 2, pr = 14 + Math.sin(T * 6) * 4;
+      const x = h.r[0] + h.r[2] / 2, y = mirrorView ? H - (h.r[1] + h.r[3] / 2) : h.r[1] + h.r[3] / 2, pr = 14 + Math.sin(T * 6) * 4;
       c.fillStyle = `rgba(192,40,63,${.35 * a})`; c.beginPath(); c.arc(x, y, pr + 8, 0, 7); c.fill();
       c.strokeStyle = `rgba(230,200,140,${.9 * a})`; c.lineWidth = 2; c.beginPath(); c.arc(x, y, pr, 0, 7); c.stroke();
       c.fillStyle = `rgba(240,225,195,${a})`; c.shadowColor = '#000'; c.shadowBlur = 6; c.fillText(label(S.scene, h.id), x, y - pr - 12); c.shadowBlur = 0;
@@ -2033,12 +2731,25 @@ function render(){
   c.setTransform(1, 0, 0, 1, 0, 0);
   if (flashA > 0) { c.fillStyle = `rgba(${flashCol},${flashA * .45})`; c.fillRect(0, 0, cv.width, cv.height); }
   if (redA > 0) { c.fillStyle = `rgba(120,0,15,${redA * .55})`; c.fillRect(0, 0, cv.width, cv.height); }
+  if (mirrorView) {
+    c.fillStyle = 'rgba(20,70,85,.28)'; c.fillRect(0, 0, cv.width, cv.height);
+    c.strokeStyle = 'rgba(150,210,230,.07)'; c.lineWidth = 2 * dpr; for (let i = 0; i < 24; i++) { const y = (i / 24) * cv.height + Math.sin(T * 1.3 + i) * 6 * dpr; c.beginPath(); c.moveTo(0, y); for (let x = 0; x <= cv.width; x += 40 * dpr) c.lineTo(x, y + Math.sin(x / (60 * dpr) + T * 2 + i) * 3 * dpr); c.stroke(); }
+  }
+  const hg = S.chapter === 3 && mode === 'play' ? (F.hunger || 0) : 0;
+  if (hg > 55) { const k = (hg - 55) / 45, pulse = .75 + .25 * Math.sin(T * (3 + k * 5)); const g = c.createRadialGradient(cv.width / 2, cv.height / 2, Math.min(cv.width, cv.height) * (.45 - k * .15), cv.width / 2, cv.height / 2, Math.max(cv.width, cv.height) * .7); g.addColorStop(0, 'rgba(120,0,15,0)'); g.addColorStop(1, `rgba(140,0,20,${.55 * k * pulse})`); c.fillStyle = g; c.fillRect(0, 0, cv.width, cv.height); }
   const vg = c.createRadialGradient(cv.width / 2, cv.height / 2, Math.min(cv.width, cv.height) * .35, cv.width / 2, cv.height / 2, Math.max(cv.width, cv.height) * .75);
   vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.85)'); c.fillStyle = vg; c.fillRect(0, 0, cv.width, cv.height);
   if (grainPat) { c.save(); c.globalAlpha = .06; c.translate(Math.random() * 160, Math.random() * 160); c.fillStyle = grainPat; c.fillRect(-160, -160, cv.width + 160, cv.height + 160); c.restore(); }
 }
+let hudC3 = '';
+function syncHud3(){
+  const on = S.chapter === 3 && mode === 'play', st = on ? (S.scene === 'shore' ? 'm' : '') + Math.round((F.hunger || 0)) : '';
+  if (st === hudC3) return; hudC3 = st;
+  $('fame').classList.toggle('on', on); $('bMirror').classList.toggle('on', on && S.scene === 'shore');
+  if (on) { $('fameBar').style.width = (F.hunger || 0) + '%'; $('fame').classList.toggle('hi', (F.hunger || 0) > 60); }
+}
 function frame(now){
-  const dt = Math.min(.05, (now - last) / 1000); last = now;
+  const dt = Math.min(.05, (now - last) / 1000); last = now; syncHud3();
   update(dt); render(); requestAnimationFrame(frame);
 }
 
@@ -2132,10 +2843,11 @@ async function startPlay(fromSave){
   setChapLabel(); renderInv(); actionBar();
   getStatic(S.scene); setAmb(S.scene); presence();
   $('fade').style.opacity = 0; showSceneName(S.scene);
-  if (!fromSave && !F.seen_bedroom) {
-    F.seen_bedroom = 1; await sleep(900);
-    await say(S.chapter === 2 ? 'c2_bedroom_start' : 'bedroom_start');
+  if (!fromSave && !F['seen_' + S.scene]) {
+    F['seen_' + S.scene] = 1; await sleep(900);
+    await say({ 1: 'bedroom_start', 2: 'c2_bedroom_start', 3: 'c3_start' }[S.chapter]);
     if (S.chapter === 1 && !F.tutDone) { await sleep(300); await runTut(TUT_MAIN); F.tutDone = 1; }
+    if (S.chapter === 3 && !F.tut3) { await sleep(300); await runTut([{ t: 'fame', k: 'tut_fame' }, { t: 'luc', k: 'tut_self' }]); F.tut3 = 1; }
   }
   busy = false; save();
 }
@@ -2163,13 +2875,30 @@ async function newGame2(){
   for (const k in cache) delete cache[k];
   await startPlay(false);
 }
+async function newGame3(){
+  auInit(); enterFS();
+  S.chapter = 3; S.scene = 'garden'; S.inv = ['lettera', 'candela', 'diario'];
+  S.flags = { ...C3_START, woodsSeq: [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)], woodsStep: 0 }; F = S.flags;
+  luc.x = 180; luc.face = 1; luc.tx = null; selected = null; mirrorView = false;
+  fbInc('starts3'); logEv('chapter_start', { chapter: 3 });
+  $('fade').style.opacity = 1; await sleep(600);
+  $('title').classList.remove('on'); $('chapters').classList.remove('on');
+  const e = $('ending'); e.classList.remove('show', 'on');
+  $('card').classList.add('on'); $('fade').style.opacity = 0;
+  await showCard('c3_intro');
+  for (const k in cache) delete cache[k];
+  await startPlay(false);
+}
+const NEWGAME = n => (n === 3 ? newGame3 : n === 2 ? newGame2 : newGame)();
 async function continueGame(){
   auInit(); enterFS();
   const d = await loadSave(); if (!d || !d.scene) return newGame();
   if ((d.chapter || 1) === 1 && d.flags?.ch1done) return newGame2();
-  if (d.chapter === 2 && d.flags?.ch2done) return newGame2();
+  if (d.chapter === 2 && d.flags?.ch2done) return newGame3();
+  if (d.chapter === 3 && d.flags?.ch3done) return newGame3();
   S.chapter = d.chapter || 1; S.scene = SCENES[d.scene] ? d.scene : 'bedroom'; S.inv = Array.isArray(d.inv) ? d.inv : (d.inv ? Object.values(d.inv) : []);
-  S.flags = d.flags || {}; F = S.flags; luc.x = d.x || 300; luc.face = d.face || 1; luc.tx = null;
+  S.flags = d.flags || {}; F = S.flags; luc.x = d.x || 300; luc.face = d.face || 1; luc.tx = null; mirrorView = false;
+  if (S.scene === 'lake') { resetLake(); luc.x = 560; }
   $('fade').style.opacity = 1; await sleep(600);
   for (const k in cache) delete cache[k];
   await startPlay(true);
@@ -2187,7 +2916,7 @@ function showEnding(n, text){
   $('endChap').textContent = `FINE DEL CAPITOLO ${cur.num}`; $('endTitle').textContent = cur.title;
   $('endText').textContent = text;
   $('endNext').textContent = nx ? `Capitolo ${nx.num} — ${nx.title} · ${nx.available ? 'disponibile' : 'prossimamente'}` : '';
-  const nb = $('eNext'), playable = nx && nx.available && n + 1 === 2;
+  const nb = $('eNext'), playable = nx && nx.available && n + 1 <= 3; nb.dataset.n = n + 1;
   nb.style.display = playable ? '' : 'none'; if (playable) nb.textContent = `Capitolo ${nx.num} ❧`;
   updateInfo();
   const e = $('ending'); e.classList.add('on'); requestAnimationFrame(() => e.classList.add('show'));
@@ -2214,14 +2943,14 @@ function toTitle(){
 function renderChapters(){
   const box = $('chapList'); if (!box) return; box.innerHTML = '';
   const ch = CONTENT.chapters || DEF.chapters;
-  let done = false, done2 = false; try { const sv = JSON.parse(LS.get(LS_SAVE) || '{}'); done = !!sv.flags?.ch1done; done2 = !!sv.flags?.ch2done; } catch(e){}
+  let done = false, done2 = false, done3 = false; try { const sv = JSON.parse(LS.get(LS_SAVE) || '{}'); done = !!sv.flags?.ch1done; done2 = !!sv.flags?.ch2done; done3 = !!sv.flags?.ch3done; } catch(e){}
   Object.keys(ch).sort().forEach(k => {
     const c = ch[k], row = document.createElement('div');
-    const playable = c.available && (k === 'c1' || k === 'c2');
+    const playable = c.available && ['c1', 'c2', 'c3'].includes(k);
     row.className = 'chap ' + (playable ? 'play' : 'lock');
-    const isDone = (k === 'c1' && done) || (k === 'c2' && done2);
+    const isDone = (k === 'c1' && done) || (k === 'c2' && done2) || (k === 'c3' && done3);
     row.innerHTML = `<div class="n">${c.num}</div><div class="t">${c.title}</div><div class="s">${isDone ? 'Completato ✦' : playable ? 'Gioca' : k === 'c5' ? 'Il finale' : 'In arrivo'}</div>`;
-    if (playable) row.onclick = () => { $('chapters').classList.remove('on'); k === 'c2' ? newGame2() : newGame(); };
+    if (playable) row.onclick = () => { $('chapters').classList.remove('on'); NEWGAME(+k.slice(1)); };
     box.appendChild(row);
   });
 }
@@ -2243,7 +2972,8 @@ document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => b.close
 $('bMenu').onclick = e => { e.stopPropagation(); if (!busy) toggleMenu(true); };
 $('bHint').onclick = e => { e.stopPropagation(); doHint(); };
 $('bReveal').onclick = e => { e.stopPropagation(); revealT = 2.8; };
-['bMenu', 'bHint', 'bReveal'].forEach(id => $(id).addEventListener('pointerdown', e => e.stopPropagation()));
+$('bMirror').onclick = e => { e.stopPropagation(); if (!busy && mode === 'play') setMirror(!mirrorView); };
+['bMenu', 'bHint', 'bReveal', 'bMirror'].forEach(id => $(id).addEventListener('pointerdown', e => e.stopPropagation()));
 $('mResume').onclick = () => toggleMenu(false);
 $('mHint').onclick = () => { toggleMenu(false); doHint(); };
 $('mAudio').onclick = () => setMuted(!A.muted);
@@ -2254,7 +2984,7 @@ $('mFull').onclick = () => {
 };
 $('mTitle').onclick = toTitle;
 $('eTitle').onclick = toTitle;
-$('eNext').onclick = () => newGame2();
+$('eNext').onclick = () => NEWGAME(+$('eNext').dataset.n);
 
 // ---------------- boot ----------------
 resize(); makeGrain(); setMuted(A.muted);
@@ -2267,6 +2997,7 @@ $('title').classList.add('on');
 requestAnimationFrame(t => { last = t; requestAnimationFrame(frame); });
 setTimeout(() => { $('fade').style.opacity = 0; }, 150);
 initFirebase();
+if (/[?&]debug\b/.test(location.search)) window.__G = { S, L3, get F(){ return F; } };
 </script>
 </body>
 </html>
