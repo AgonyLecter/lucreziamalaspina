@@ -1549,6 +1549,7 @@ async function newGame(){
   fbInc('starts'); logEv('chapter_start', { chapter: 1 });
   $('fade').style.opacity = 1; await sleep(600);
   $('title').classList.remove('on');
+  $('card').classList.add('on'); $('fade').style.opacity = 0;
   await showCard('intro');
   for (const k in cache) delete cache[k];
   await startPlay(false);
