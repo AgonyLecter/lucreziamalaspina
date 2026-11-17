@@ -8,7 +8,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Lucrezia Malaspina">
-<title>Lucrezia Malaspina — Capitolo I: Lo Specchio</title>
+<title>Lucrezia Malaspina</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Lucrezia Malaspina — una fiaba gotica horror in cinque capitoli. Sviluppato da AgonyApp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
@@ -205,6 +210,20 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
 #choice .mbtn.beast{color:#ff5a6e;border-color:rgba(224,48,74,.8);text-shadow:0 0 10px #e0304a;font-family:'UnifrakturMaguntia',serif;transition:none}
 #choice .tbar{width:min(320px,80vw);height:6px;border:1px solid rgba(224,48,74,.6);border-radius:3px;overflow:hidden;background:rgba(0,0,0,.7)}
 #choice .tbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#5a0010,#e0304a)}
+/* ---------- titoli di coda ---------- */
+#credits{z-index:48;background:radial-gradient(ellipse at 50% 60%,#140306,#000 70%);overflow:hidden;padding:0}
+#credits .roll{position:absolute;left:0;right:0;top:100%;text-align:center;padding:0 20px;animation:roll 70s linear forwards}
+#credits.fast .roll{animation-duration:22s}
+@keyframes roll{to{transform:translateY(calc(-100% - 100vh))}}
+#credits .fine{font-family:'UnifrakturMaguntia',serif;font-size:clamp(60px,14vw,150px);color:#e6d8bd;text-shadow:0 0 40px #c0283f;margin:20vh 0 6vh}
+#credits h1{font-family:'UnifrakturMaguntia',serif;font-weight:400;font-size:clamp(40px,8vw,84px);color:#e6d8bd;text-shadow:0 0 24px rgba(192,40,63,.9)}
+#credits h3{font-family:'IM Fell English SC',serif;font-weight:400;letter-spacing:.3em;color:#8a7d68;font-size:14px;margin:7vh 0 10px;text-transform:uppercase}
+#credits p{font-size:clamp(18px,2.6vw,24px);color:#d8cab0;line-height:1.6}
+#credits .dev{font-family:'IM Fell English SC',serif;font-size:clamp(26px,5vw,46px);letter-spacing:.12em;color:#f0e0c0;text-shadow:0 0 18px rgba(192,40,63,.8);margin-top:8px}
+#credits .q{font-style:italic;color:#a3937a;max-width:640px;margin:0 auto}
+#crEnd{position:absolute;bottom:calc(14px + var(--sab));right:calc(16px + var(--sar));opacity:0;transition:opacity 1.5s;z-index:2}
+#crEnd.on{opacity:1}
+#crHint{position:absolute;bottom:calc(16px + var(--sab));left:calc(16px + var(--sal));font-family:'IM Fell English SC',serif;font-size:12px;letter-spacing:.2em;color:#5a5040}
 /* ---------- tutorial ---------- */
 #tut{position:absolute;inset:0;z-index:34;display:none}
 #tut.on{display:block}
@@ -285,13 +304,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
           <button class="mbtn" id="bNew">Nuova partita</button>
           <button class="mbtn" id="bCont" disabled>Continua</button>
           <button class="mbtn" id="bChaps">Capitoli</button>
+          <button class="mbtn" id="bInstall" style="display:none">Installa il gioco</button>
         </div>
         <div id="motd"></div>
         <div id="iosTip">Su iPhone: tocca <b>Condividi → Aggiungi a schermata Home</b> e apri il gioco dall'icona per giocare a tutto schermo.</div>
       </div>
     </div>
     <div id="netStat"><i></i><span>Connessione alla villa…</span></div>
-    <div class="tVer fell">Cap. I · II · III · IV</div>
+    <div class="tVer fell">AgonyApp</div>
   </div>
 
   <div id="chapters" class="layer panel">
@@ -327,6 +347,33 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
 
   <div id="card" class="layer"><div id="cardText"></div><div id="cardHint" class="fell">tocca per continuare</div></div>
 
+  <div id="credits" class="layer">
+    <div class="roll" id="roll">
+      <div class="fine">Fine</div>
+      <h1>Lucrezia Malaspina</h1>
+      <p class="q">Una fiaba gotica in cinque capitoli</p>
+      <h3>Sviluppato da</h3>
+      <div class="dev">AgonyApp</div>
+      <h3>Capitoli</h3>
+      <p>I · Lo Specchio<br>II · Il Sangue delle Vergini<br>III · La Strega del Lago<br>IV · La Metamorfosi<br>V · Il Banchetto</p>
+      <h3>Ideazione, storia e direzione</h3>
+      <p>AgonyApp</p>
+      <h3>Interpreti</h3>
+      <p>Lucrezia Malaspina<br>Edoardo, lo sposo<br>Isabella Malaspina, nello specchio<br>Agnese, la serva<br>La Strega del Lago<br>Il Corvo<br>La Bestia</p>
+      <h3>Grafica, musica e suoni</h3>
+      <p>Disegnati e suonati dal codice, in tempo reale</p>
+      <h3>Il tuo cammino</h3>
+      <p id="crStats"></p>
+      <h3>&nbsp;</h3>
+      <p class="q">«Ti ricordo come ti lasciai: non cambiare mai.»</p>
+      <h3>Grazie per aver giocato</h3>
+      <div class="dev">AgonyApp</div>
+      <p class="q" style="margin:6vh auto 30vh">La villa è chiusa. Per ora.</p>
+    </div>
+    <div id="crHint">tocca per accelerare</div>
+    <button class="mbtn" id="crEnd">Torna al titolo</button>
+  </div>
+
   <div id="rotate" class="layer">
     <svg viewBox="0 0 64 64" fill="none" stroke="#dccfb6" stroke-width="2"><rect x="18" y="6" width="28" height="52" rx="5"/><circle cx="32" cy="51" r="2" fill="#c0283f" stroke="none"/></svg>
     <p>Ruota il dispositivo</p>
@@ -350,11 +397,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
      ====================================================================== -->
 <script id="content-json" type="application/json">
 {
-  "version": 5,
+  "version": 6,
   "game": {
     "title": "Lucrezia Malaspina",
     "tagline": "Una fiaba gotica in cinque capitoli",
-    "motd": "Capitolo IV · Stanotte la luna è quasi nera."
+    "motd": "La storia è completa. Cinque notti. Una sposa. Un banchetto."
   },
   "tuning": {
     "walkSpeed": 290,
@@ -368,7 +415,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
     "A": "Agnese",
     "I": "Isabella",
     "S": "La Strega",
-    "B": "La Bestia"
+    "B": "La Bestia",
+    "E": "Edoardo"
   },
   "chapters": {
     "c1": {
@@ -394,7 +442,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
     "c5": {
       "num": "V",
       "title": "Il Banchetto",
-      "available": false
+      "available": true
     }
   },
   "scenes": {
@@ -482,7 +530,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
       "rose": "Roseto",
       "moon": "Luna",
       "crows": "Corvi",
-      "gate": "Cancello"
+      "gate": "Cancello",
+      "agnese": "Agnese"
     },
     "crypt": {
       "stairs": "Giardino",
@@ -492,7 +541,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
       "calice": "Calice",
       "statue": "Statua",
       "agnese": "Agnese",
-      "chains": "Catene"
+      "chains": "Catene",
+      "lucrezia": "Lucrezia"
     },
     "woods": {
       "back": "Giardino",
@@ -630,6 +680,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
     "chiave4": {
       "name": "Chiave del lucchetto",
       "desc": "Ferro nero, bagnato. Odora di lago."
+    },
+    "lanterna": {
+      "name": "Lanterna da viaggio",
+      "desc": "Mi ha fatto luce da Genova fin qui. Ancora qualche ora d'olio."
+    },
+    "anellofid": {
+      "name": "Anello di fidanzamento",
+      "desc": "Oro e un granato rosso. L'ho portato al collo, appeso a una catenina, per trent'anni."
     }
   },
   "texts": {
@@ -965,7 +1023,85 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
     "c4_hint_door": "L:Qualcuno ha bussato al portone del salone.",
     "c4_hint_crypt": "L:La cripta. Le catene. Agnese dice che la lapide, in giardino, si apre per lei.",
     "c4_hint_key": "L:La chiave del lucchetto. Agnese non vuole che apra la sua nicchia. Ma devo.",
-    "c4_hint_chains": "L:La chiave. Le catene sopra la vasca."
+    "c4_hint_chains": "L:La chiave. Le catene sopra la vasca.",
+    "c5_intro": "La notte della luna nera.|Il cielo è un pozzo senza fondo. Nessuna stella osa guardare.|Nella cripta, il ferro geme.|Sulla strada per Villa Malaspina, una carrozza nera corre verso il cancello.|Trent'anni. Un oceano. Una promessa.|Stanotte, finalmente, gli sposi si ritrovano.",
+    "c5_start": "{heartbeat}Il buio della cripta. Il ferro attorno ai polsi, al collo, alla vita.|B:Lo senti? La carrozza. Le ruote sulla ghiaia, laggiù, oltre il bosco.|L:No. Non lo sento. Non voglio sentirlo.|B:Lui ha fame di te da trent'anni. Io ho fame di lui da tre notti. Siamo pari.|Agnese è seduta sui gradini. Mi guarda. Aspetta che io dica qualcosa.",
+    "c5_chains": "Tiro. Il ferro tiene. Per ora.~Gli anelli sono caldi. Li ho scaldati io, tirando tutta la notte.",
+    "c5_vasca": "La vasca di mia madre. Stanotte non la riempirà nessuna vergine.",
+    "c5_statue": "{whisper}I:Che sposa bellissima, figlia mia.~La statua sorride. Io no.",
+    "c5_niches": "Quarantotto nomi. Stanotte la cripta aspetta il quarantanovesimo.",
+    "c5_agnese_pre": "A:Signora. La carrozza è al cancello. La sento anche io: il lago mi dice tutto.|A:Ditemi cosa devo fare.",
+    "c5_q_agnese": "Agnese aspetta un ordine. Fuori, i cavalli nitriscono.",
+    "c5_h_agnese": "«Va' da lui. Digli di andarsene. Digli che sono morta.»",
+    "c5_b_agnese": "Portamelo.",
+    "c5_agnese_warn": "A:Sì, signora. Correrò.|Agnese sale i gradini. Non fa rumore. Non lascia impronte. Solo acqua.",
+    "c5_agnese_bring": "{red}A:...Sì, signora.|Agnese sale i gradini. Si volta una sola volta. Nei suoi occhi c'è l'acqua nera del lago.|L:No! Agnese, non era la mia voce! Agnese!",
+    "c5_garden_enter": "{caw}Villa Malaspina.|Trent'anni. Il cancello è lo stesso, solo più arrugginito. Il giardino è diventato un cimitero.|E:Lucrezia... sono a casa.|Il cocchiere non ha voluto varcare il cancello. Dice che i cavalli sentono qualcosa. È rimasto fuori, a pregare.",
+    "c5_ag_warn": "Una ragazza esce dal buio, fradicia, con una cuffietta bianca.|A:Andate via, signore. Vi prego. La signora non c'è più. È morta.|E:Morta? Ma il telegramma... chi mi ha risposto?|A:Andate via. Prima che sia tardi.|E:Ho attraversato un oceano per lei, ragazza. Se è morta voglio vedere la sua tomba. Se è viva voglio vedere i suoi occhi.|Agnese abbassa lo sguardo. Poi cammina verso il pozzo, e il buio se la riprende.",
+    "c5_ag_bring": "Una ragazza esce dal buio, fradicia, con una cuffietta bianca.|A:Benvenuto, signore. La signora vi aspetta.|E:Lucrezia? Dov'è?|A:Vi aspetta da trent'anni. Può aspettare ancora un poco. Prima guardate la casa: ha preparato tutto per voi.|Agnese sorride. Ha le labbra viola. Poi cammina verso il pozzo, e il buio se la riprende.",
+    "c5_e_gate": "E:Il cocchiere aspetta fuori. Non torno indietro. Non stanotte.",
+    "c5_e_tomb": "«Isabella Malaspina. Bella per sempre.» La lastra è spostata. Sotto, una scala nel buio.|E:La madre di Lucrezia. Non scenderò in una tomba prima di averla cercata in casa.",
+    "c5_e_well": "E:Il pozzo dove da ragazzi gettavamo le monete. Lucrezia desiderava sempre la stessa cosa. Non me l'ha mai detta.",
+    "c5_e_rose": "E:Il roseto di sua madre. Morto. Una volta Lucrezia colse per me una rosa nera. Si punse, e rise.",
+    "c5_e_moon": "E:Nessuna luna, stanotte. Non ho mai visto un cielo così vuoto.",
+    "c5_e_crows": "E:Neanche un uccello. Neanche un grillo. Tutto tace, come in chiesa.",
+    "c5_hall_enter": "E:Il salone delle feste. Qui ci fidanzammo.|Le candele sono accese. Rosse. La tavola è apparecchiata per due.|E:Mi aspettava. Mi aspettava davvero.",
+    "c5_e_table": "Due piatti. Due calici. Le posate d'argento dei Malaspina.|Sul tovagliolo c'è un'impronta. Di mano? No. Le dita sono troppo lunghe.|E:Lucrezia... chi c'è con te, in questa casa?",
+    "c5_e_candles": "E:Candele rosse. Non ne ho mai viste di così. Le fiamme non tremano nemmeno quando ci soffio sopra.",
+    "c5_e_letter": "Una lettera sul pavimento. La raccolgo.|E:È la mia. La lettera che le scrissi da Buenos Aires.|«Ti ricordo come ti lasciai: non cambiare mai.»|La carta è graffiata, strappata ai bordi. Come se qualcuno avesse provato a stringerla con mani che non erano più mani.",
+    "c5_e_letter_blank": "Una lettera sul pavimento. La raccolgo.|E:È la mia busta. Il mio sigillo. Ma la carta... la carta è bianca. L'inchiostro è sparito.|E:Come se qualcuno avesse dimenticato ogni parola che le ho scritto.",
+    "c5_e_portone": "E:Il portone da cui uscii trent'anni fa. Lei piangeva sui gradini.",
+    "c5_e_chandelier": "E:Il lampadario sotto cui ballammo. Adesso è pieno di polvere e di ragnatele.",
+    "c5_e_window": "E:Dalla finestra vedo le lanterne della carrozza. Il cocchiere ha già girato i cavalli.",
+    "c5_e_sideboard": "E:La credenza è stata forzata. Il legno è spaccato come da un coltello. O da un artiglio.",
+    "c5_corridor_enter": "E:Il corridoio dei ritratti. Il conte Ottavio, nonna Ginevra...|E:E Isabella. Mio Dio. Qualcuno l'ha squarciata.",
+    "c5_e_young": "Il ritratto di Lucrezia a vent'anni.|E:Eccoti. Esattamente come ti ricordo.|Le mani della ragazza nel dipinto sono nascoste dietro la schiena.",
+    "c5_e_anc": "E:Gli antenati di Lucrezia mi guardano come si guarda un estraneo. O un pasto.",
+    "c5_e_clock": "E:Ferma alle tre e trentatré. Lucrezia diceva che era l'ora in cui morì sua madre.",
+    "c5_bedroom_enter": "E:La sua camera. Il letto a baldacchino. L'odore di lavanda... e di qualcos'altro. Ferro.",
+    "c5_e_bed": "Le lenzuola sono strappate in lunghe strisce. Sul cuscino, ciocche di capelli neri. E peli grigi, ruvidi.|E:Un animale. Un animale è entrato qui.|E:Lucrezia, dove sei?",
+    "c5_e_mirror": "Lo specchio di Isabella. Ci vedo un uomo vecchio, stanco, coi capelli grigi.|E:Mi riconoscerà? Io sono cambiato. E lei mi aveva chiesto di non cambiare mai.|{whisper}Per un istante, nel vetro, dietro di me, c'è una sposa.",
+    "c5_e_bwindow": "E:Da questa finestra lei guardava il viale. Ogni sera, mi scrisse. Per trent'anni.",
+    "c5_e_drawer": "E:Un dente da latte. Un artiglio. Una ciocca bianca. Che razza di reliquiario è questo?",
+    "c5_dressing_enter": "E:Una stanza segreta. Gabbie. Uccelli morti. E un manichino, nudo.",
+    "c5_e_dress": "Sul pavimento, attorno al manichino, brandelli di pizzo bianco e perle di fiume.|E:Un abito da sposa. L'ha indossato. Per me.|E:...Ma perché il pizzo è strappato come da artigli?",
+    "c5_e_bride": "E:Isabella il giorno delle nozze. E suo marito... quella faccia. Lo stesso terrore che comincio a sentire io.",
+    "c5_e_cages": "E:Uccelli imbalsamati. Uno ha il becco sporco di rosso.",
+    "c5_e_vanity": "E:Un pettine pieno di peli grigi. Come quelli sul cuscino.",
+    "c5_library_enter": "E:La biblioteca di Isabella. Il fuoco arde, eppure fa freddo.",
+    "c5_e_shelves": "E:«De Lamiis». «De Sanguine Virginum». Libri da rogo, avrebbe detto mio padre.",
+    "c5_e_grimoire": "E:Un vecchio libro aperto. Una frase sottolineata, con le unghie: «Solo il ferro.»",
+    "c5_e_raven": "{caw}C:Mai più.|E:Mai più. Lo dicesti tu, una volta, Lucrezia. Quando partii.",
+    "c5_e_raven_dead": "E:Piume nere sul busto di Pallade. E sangue secco.",
+    "c5_e_fire": "E:Il fuoco sussurra un nome. Il suo.",
+    "c5_e_alembic": "E:Alambicchi, storte, ampolle. Isabella faceva la speziale? Non me l'hanno mai detto.",
+    "c5_cut1": "{heartbeat}Nella cripta.|L'ho sentito. Il suo passo sulla ghiaia. Il suo odore: tabacco, sale, sudore di viaggio.|B:È qui. È qui! Tira, Lucrezia. Tira!|Le catene si tendono. Devo resistere.",
+    "c5_hold1": "Il ferro tiene. Le braccia tremano, ma il ferro tiene.|B:Un anello è già incrinato. Lo sento cantare.",
+    "c5_snap1": "{stinger}Un anello cede con uno schiocco secco. Il polso destro è libero.|B:Uno.",
+    "c5_cut2": "{heartbeat}Nella cripta.|Sento la sua voce. Chiama il mio nome nei corridoi, sopra di me. È più bassa, più roca. È invecchiato.|L:Edoardo... vattene...|B:Ti ha sentita? No. Ti sente solo la fame.|Le catene si tendono di nuovo.",
+    "c5_hold2": "Stringo i denti fino a farli sanguinare. Il ferro tiene. Ancora.|B:Il collare. Il collare è vecchio come tua madre.",
+    "c5_snap2": "{stinger}Le catene della vita si aprono con un suono di campana rotta.|B:Due.",
+    "c5_cut3": "{heartbeat}{red}Nella cripta.|È in giardino. È davanti alla tomba di mia madre. Sento il suo cuore da qui: forte, caldo, pieno.|Trent'anni ho aspettato quel cuore.|B:Anche io.|Le catene si tendono per l'ultima volta.",
+    "c5_hold3": "Il ferro tiene.|Ma non ho più forza. Le braccia pendono come stracci. Il prossimo strattone non sarà mio.|B:Non ti serve la forza. Ti basta aprire la bocca.",
+    "c5_snap3": "{stinger}Le catene dei polsi cedono tutte insieme. Resto in piedi solo per il collare. O per abitudine.|B:Tre.",
+    "c5_after3": "{creak}...|Dalla tomba aperta di Isabella sale un suono. Catene. Catene che sbattono contro la pietra.|E con le catene, un respiro. Pesante, rauco, affamato.|E:Lucrezia...?",
+    "c5_crypt_enter": "{choir}La cripta. Nicchie piene d'ossa. Una vasca macchiata di nero.|E al centro, sotto la volta, incatenata... una sposa.|L'abito bianco è a brandelli. La schiena è curva. Sulle braccia, pelo grigio.|Ma il viso... il viso è il suo. A vent'anni.|E:Lucrezia.",
+    "c5_meet": "E:Lucrezia. Amore mio. Sei... sei esattamente come ti ho lasciata.|L:Non avvicinarti.|E:Trent'anni. Ti ho scritto ogni settimana. Ho attraversato un oceano. Non mi fermerò a tre passi da te.|L:Edoardo. Guardami. Guardami davvero.|E:Ti guardo. Sei bellissima.|{heartbeat}B:Lo è. Lo è davvero. Avvicinati, amore mio.|Lui tende le mani verso di me. Verso il collare. Verso la chiave.",
+    "c5_q_final": "Edoardo è a un passo. Il suo cuore batte così forte che lo sento nei denti.",
+    "c5_h_final": "«Scappa, amore mio!»",
+    "c5_b_final": "Mangia.",
+    "c5_break": "{stinger}{shake}L'ultimo anello cede.|...|Lui non scappa. Non ha mai saputo scappare da me.",
+    "c5_feast": "{heartbeat}Il banchetto.|Trent'anni di attesa. Tre notti di fame. Un solo abbraccio.|Lui non grida. Mi chiama per nome, una volta. Poi un'altra, più piano.|Poi non mi chiama più.",
+    "c5_dawn": "{musicbox}All'alba il salone è silenzioso.|Le candele rosse si sono consumate fino al piattino.|Sulla tavola, due piatti. Uno solo è stato usato.|Sono seduta a capotavola, nell'abito da sposa. Non è più bianco.|La pelle è liscia come a vent'anni. Non sono mai stata così bella.|Non sono mai stata così sazia.",
+    "c5_epi_reflect": "Nello specchio del salone la tavola è apparecchiata per uno solo. La sedia di fronte è vuota.|Anche la mia.",
+    "c5_epi_memory": "Sul pavimento c'è un anello d'oro con un granato. Una lettera bianca. Un cappello.|L:Avevamo un ospite, stanotte? Doveva essere qualcuno di gentile.|Non ricordo il suo nome. Ricordo solo il sapore.",
+    "c5_epi_voice": "Vorrei gridare il suo nome. Vorrei chiedere perdono.|Ma non ho più voce. Dalla mia gola esce soltanto un suono basso, sazio, che fa tremare i bicchieri.",
+    "c5_final": "{whisper}I:Brava, figlia mia. Ora sei una Malaspina.|Fuori, sulla ghiaia, la carrozza aspetta ancora. I cavalli non hanno più nessuno da riportare a casa.|Raccolgo l'anello e lo infilo all'unico dito che non è diventato un artiglio.|L:Ti ricordo come mi lasciasti, amore mio.|L:E io... io non sono cambiata mai.",
+    "c5_hint_l": "L:Agnese mi guarda. Aspetta un ordine.",
+    "c5_hint_agnese": "E:Quella ragazza, in giardino. Devo parlarle.",
+    "c5_hint_house": "E:Devo cercarla in casa. Il salone, la sua camera, ogni stanza. Qualcosa mi dirà dov'è.",
+    "c5_hint_tomb": "E:Quel suono di catene veniva dalla tomba di Isabella.",
+    "c5_hint_her": "E:È lei. Devo raggiungerla."
   }
 }
 </script>
@@ -1380,7 +1516,7 @@ function drawLuc(c, x, y, k, face, ph, moving, t, candle, young){
   const bob = moving ? -Math.abs(Math.sin(ph)) * 4 : Math.sin(t * 1.6) * .8;
   const sw = moving ? Math.sin(ph) * 5 : Math.sin(t * .8);
   c.translate(0, bob);
-  const bride = S.chapter === 4 && F.dress, stg = S.chapter === 4 ? (F.stage | 0) : 0;
+  const bride = S.chapter >= 4 && F.dress, stg = S.chapter >= 4 ? (F.stage | 0) : 0;
   c.strokeStyle = bride ? '#bdb7a9' : '#100810'; c.lineWidth = 8; c.lineCap = 'round';
   c.beginPath(); c.moveTo(-6, -206); c.quadraticCurveTo(-15 - sw * .6, -180, -10 - sw, -152); c.stroke();
   c.fillStyle = bride ? LG(c, -62, 0, 62, 0, [[0, '#5e5a52'], [.55, '#cfc9bb'], [.78, '#ebe5d7'], [1, '#7a756b']]) : LG(c, -62, 0, 62, 0, [[0, '#0a0509'], [.55, '#2a1424'], [.78, '#3e1f33'], [1, '#110810']]);
@@ -1388,6 +1524,7 @@ function drawLuc(c, x, y, k, face, ph, moving, t, candle, young){
   for (let i = 1; i <= 10; i++) c.lineTo(-62 + sw + i * 12.4, Math.sin(i * 1.7 + ph * 2) * (moving ? 3 : 1.2));
   c.bezierCurveTo(52 + sw * .4, -50, 32, -120, 15, -160); c.closePath(); c.fill();
   c.fillStyle = bride ? '#a39d90' : '#160b13'; ell(c, -30, -118, 17, 34, -.2); c.fill();
+  if (bride && S.chapter === 5 && F.edoDead) { c.fillStyle = 'rgba(110,0,14,.85)'; for (const [bx, by, br] of [[10, -120, 16], [-20, -60, 22], [24, -40, 12], [0, -150, 9], [-8, -20, 18], [30, -90, 10]]) { ell(c, bx, by, br, br * .7, bx * .03); c.fill(); } }
   c.strokeStyle = bride ? 'rgba(255,255,255,.25)' : 'rgba(140,80,115,.16)'; c.lineWidth = 1.5;
   for (let i = -2; i <= 2; i++) { c.beginPath(); c.moveTo(i * 5, -150); c.quadraticCurveTo(i * 14 + sw * .5, -70, i * 22 + sw, -4); c.stroke(); }
   c.fillStyle = bride ? '#d9d3c5' : '#1d0f18'; c.beginPath(); c.moveTo(-15, -160); c.lineTo(-17, -205); c.quadraticCurveTo(-10, -219, 0, -219); c.quadraticCurveTo(14, -219, 19, -206); c.quadraticCurveTo(22, -192, 15, -182); c.lineTo(15, -160); c.closePath(); c.fill();
@@ -1422,6 +1559,39 @@ function drawLuc(c, x, y, k, face, ph, moving, t, candle, young){
     if (stg >= 1) { c.strokeStyle = '#0a0606'; c.lineWidth = 1.6; for (let i = 0; i < 4; i++) { c.beginPath(); c.moveTo(7 + sw + i * 2.2, -148); c.quadraticCurveTo(8 + sw + i * 2.6, -138, 4 + sw + i * 2.8, -132); c.stroke(); } }
   }
   c.restore(); return cp;
+}
+function drawEdo(c, x, y, k, face, ph, moving, t){
+  c.save(); c.translate(x, y);
+  c.fillStyle = 'rgba(0,0,0,.55)'; ell(c, 0, 0, 44 * k, 8 * k); c.fill();
+  c.scale(face * k, k);
+  const bob = moving ? -Math.abs(Math.sin(ph)) * 4 : Math.sin(t * 1.5) * .8, sw = moving ? Math.sin(ph) * 9 : 0;
+  c.translate(0, bob);
+  c.strokeStyle = '#121216'; c.lineWidth = 11; c.lineCap = 'round';
+  line(c, -6, -120, -8 + sw, -6); line(c, 6, -120, 8 - sw, -6);
+  c.fillStyle = '#050506'; ell(c, -6 + sw, -3, 10, 4); c.fill(); ell(c, 10 - sw, -3, 10, 4); c.fill();
+  c.strokeStyle = '#191a20'; c.lineWidth = 9; c.beginPath(); c.moveTo(-10, -205); c.quadraticCurveTo(-18 - sw * .4, -170, -14 - sw * .8, -136); c.stroke();
+  c.fillStyle = LG(c, -34, 0, 34, 0, [[0, '#0b0c10'], [.55, '#23252e'], [1, '#0e0f13']]);
+  c.beginPath(); c.moveTo(-22, -218); c.lineTo(22, -218); c.lineTo(28, -150); c.lineTo(34 + sw * .2, -78); c.lineTo(-34 + sw * .2, -78); c.lineTo(-28, -150); c.closePath(); c.fill();
+  c.fillStyle = '#3a0e14'; c.beginPath(); c.moveTo(-6, -214); c.lineTo(8, -214); c.lineTo(6, -150); c.lineTo(-4, -150); c.fill();
+  c.strokeStyle = 'rgba(0,0,0,.5)'; c.lineWidth = 2; line(c, 0, -214, 4, -80); line(c, -10, -214, -2, -170); line(c, 14, -214, 6, -170);
+  c.fillStyle = '#d8d2c4'; c.fillRect(-6, -226, 13, 9); c.fillStyle = '#0a0a0c'; c.fillRect(-3, -222, 8, 5);
+  const sk = '#c9b29a';
+  c.fillStyle = sk; ell(c, 3, -242, 12, 15, .05); c.fill();
+  c.beginPath(); c.moveTo(13, -246); c.lineTo(18, -238); c.lineTo(13, -236); c.fill();
+  c.fillStyle = '#8a8680'; c.beginPath(); c.ellipse(-3, -246, 11, 13, 0, Math.PI * .5, Math.PI * 1.6); c.fill();
+  c.fillStyle = '#a19c92'; ell(c, 6, -231, 11, 8); c.fill(); c.fillRect(6, -238, 10, 3);
+  c.fillStyle = '#1a0e10'; ell(c, 9, -247, 1.8, 1.4); c.fill();
+  c.strokeStyle = 'rgba(70,50,40,.6)'; c.lineWidth = .8; line(c, 6, -253, 12, -253);
+  c.fillStyle = '#0b0b0e'; c.fillRect(-11, -284, 25, 28); ell(c, 1.5, -256, 21, 4); c.fill(); c.fillStyle = '#3a0e14'; c.fillRect(-11, -262, 25, 3);
+  c.strokeStyle = '#191a20'; c.lineWidth = 9; c.beginPath(); c.moveTo(10, -205); c.quadraticCurveTo(22, -180, 26, -158); c.stroke();
+  c.fillStyle = sk; c.beginPath(); c.arc(27, -155, 4, 0, 7); c.fill();
+  c.strokeStyle = '#3a3026'; c.lineWidth = 1.6; c.beginPath(); c.arc(28, -150, 6, Math.PI, 0); c.stroke();
+  c.fillStyle = '#2a2219'; c.fillRect(20, -146, 16, 4); c.fillRect(20, -120, 16, 5);
+  c.fillStyle = 'rgba(255,200,120,.45)'; c.fillRect(21, -142, 14, 22); c.strokeStyle = 'rgba(80,70,60,.8)'; c.lineWidth = 1; c.strokeRect(21, -142, 14, 22);
+  c.restore();
+  const lx2 = x + face * 28 * k, ly2 = y + (-134 + bob) * k;
+  flame(c, lx2, ly2, .5, t, 9);
+  return { x: lx2, y: ly2 };
 }
 function flame(c, x, y, sc, t, seed = 0){
   const fl = Math.sin(t * 21 + seed) * .7 + Math.sin(t * 33 + seed * 2) * .4;
@@ -1588,7 +1758,7 @@ const SCENES = {
       cobweb(c, 0, 42, 110, 1); cobweb(c, 1280, 42, 90, -1);
     },
     dyn(c, t){
-      if (S.chapter === 4 && F.portraitTorn) {
+      if (S.chapter >= 4 && F.portraitTorn) {
         c.fillStyle = '#000'; arch(c, 705, 200, 90, 190); c.fill();
         c.fillStyle = LG(c, 705, 0, 795, 0, [[0, '#0a0405'], [1, '#1a0a0c']]); arch(c, 712, 210, 76, 180); c.fill();
         c.fillStyle = '#5a3a30'; for (let i = 0; i < 4; i++) { c.save(); c.translate(690 + i * 38, 150); c.rotate(.15 - i * .1); c.fillRect(0, 0, 12, 140 + i * 25); c.restore(); }
@@ -1703,7 +1873,7 @@ const SCENES = {
       }
       if (S.chapter === 4 && !F.tongsTaken) { c.strokeStyle = '#2a2624'; c.lineWidth = 4; line(c, 512, 568, 520, 450); line(c, 522, 568, 524, 450); c.fillStyle = '#3a3634'; c.beginPath(); c.arc(522, 446, 6, 0, 7); c.fill(); }
       // corvo
-      if (!(S.chapter === 4 && F.ravenDead4)) {
+      if (!(S.chapter >= 4 && F.ravenDead4)) {
       const look = luc.x < 1150 ? -1 : 1, blink = (t % 4.3) < .12;
       c.save(); c.translate(1192, 318); c.scale(look, 1);
       c.fillStyle = '#050407'; ell(c, 0, 0, 20, 14, -.25); c.fill();
@@ -1735,6 +1905,7 @@ const SCENES = {
       c.fillStyle = RG(c, 985, 135, 30, 300, redMoon ? [[0, 'rgba(230,60,60,.32)'], [1, 'rgba(230,60,60,0)']] : [[0, 'rgba(170,190,240,.3)'], [1, 'rgba(170,190,240,0)']]); c.fillRect(600, -200, 800, 700);
       c.fillStyle = RG(c, 975, 125, 4, 52, redMoon ? [[0, '#f0b9a4'], [1, '#9a2a24']] : [[0, '#f4f2ea'], [1, '#c3c6cc']]); c.beginPath(); c.arc(985, 135, 50, 0, 7); c.fill();
       if (S.chapter === 4) { c.fillStyle = '#04060c'; c.beginPath(); c.arc(1000, 128, 50, 0, 7); c.fill(); }
+      if (S.chapter === 5) { c.fillStyle = '#020306'; c.beginPath(); c.arc(985, 135, 53, 0, 7); c.fill(); c.strokeStyle = 'rgba(160,30,40,.35)'; c.lineWidth = 1.5; c.stroke(); }
       c.fillStyle = 'rgba(90,95,110,.18)'; for (const [mx, my, mr] of [[970, 120, 12], [1000, 150, 9], [995, 112, 6], [968, 152, 7]]) { c.beginPath(); c.arc(mx, my, mr, 0, 7); c.fill(); }
       c.fillStyle = '#080b14'; c.beginPath(); c.moveTo(X0, 470); c.quadraticCurveTo(300, 400, 640, 440); c.quadraticCurveTo(950, 470, 1300, 420); c.lineTo(X1, 430); c.lineTo(X1, 560); c.lineTo(X0, 560); c.fill();
       c.fillStyle = '#05070c'; for (const [x, y, sc] of [[470, 448, .5], [800, 455, .45], [860, 452, .35], [380, 452, .4]]) { c.fillRect(x - 2 * sc * 4, y - 40 * sc, 4 * sc * 4, 40 * sc); c.fillRect(x - 10 * sc * 2, y - 30 * sc, 20 * sc * 2, 4 * sc * 2); }
@@ -1785,7 +1956,7 @@ const SCENES = {
         c.fillStyle = '#050003'; for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2 + t * .1; ell(c, 905 + Math.cos(a) * 6, 492 + Math.sin(a) * 5, 7, 4.5, a); c.fill(); }
         c.fillStyle = '#2a0008'; c.beginPath(); c.arc(905, 492, 4, 0, 7); c.fill();
       }
-      if (S.chapter === 3) {
+      if (S.chapter === 3 || S.chapter === 5) {
         c.fillStyle = '#16161a'; c.fillRect(1166, 360, 16, 240); c.fillRect(1262, 360, 16, 240);
         c.fillStyle = '#2a2a30'; c.fillRect(1160, 350, 28, 12); c.fillRect(1256, 350, 28, 12);
         c.fillStyle = '#000'; c.fillRect(1182, 400, 80, 200);
@@ -1797,6 +1968,10 @@ const SCENES = {
         c.strokeStyle = 'rgba(160,30,40,.35)'; c.lineWidth = 2; for (let i = 0; i < 3; i++) line(c, 256 + i * 4, 606 + i * 7, 384 - i * 4, 606 + i * 7);
         c.fillStyle = RG(c, 320, 612, 0, 70, [[0, `rgba(170,20,35,${.25 + Math.sin(t * 2) * .08})`], [1, 'rgba(170,20,35,0)']]); c.fillRect(250, 560, 140, 100);
         c.fillStyle = '#26272b'; c.save(); c.translate(430, 612); c.rotate(.12); c.fillRect(-64, -8, 128, 14); c.restore();
+      }
+      if (S.chapter === 5) {
+        for (const lx2 of [1236, 1262]) { c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = RG(c, lx2, 470, 0, 30, [[0, 'rgba(255,190,110,.6)'], [1, 'rgba(255,190,110,0)']]); c.fillRect(lx2 - 30, 440, 60, 60); c.restore(); c.fillStyle = '#ffd890'; c.beginPath(); c.arc(lx2, 470, 3, 0, 7); c.fill(); }
+        if (ag5Here()) drawAgnese(c, AG5.garden, 652, luc.x < AG5.garden ? -1 : 1, t, false, true, true);
       }
       if (ag4Here()) drawAgnese(c, AG4.garden, 652, luc.x < AG4.garden ? -1 : 1, t, false, true, true);
       // fuoco fatuo vicino alla lapide
@@ -1918,6 +2093,14 @@ SCENES.crypt = {
     const dy = (t * 260) % 640; c.fillStyle = 'rgba(120,10,20,.7)'; c.fillRect(682, 40 + dy * .75, 2, 6);
     c.fillStyle = `rgba(200,40,60,${.06 + Math.sin(t * 1.4) * .04})`; ell(c, 680, 521, 100, 7); c.fill();
     if (agneseHere()) agLamp = drawAgnese(c, AGX.crypt, 646, luc.x < AGX.crypt ? -1 : 1, t, true, true);
+    if (S.chapter === 5) {
+      if (!F.free) {
+        c.strokeStyle = '#2a2622'; c.lineWidth = 3; for (let y = 30; y < 400; y += 14) { ell(c, 690 + Math.sin(t * 2 + y * .02) * (F.links | 0), y, 4, 7, (y / 14) % 2 ? 1.57 : 0); c.stroke(); }
+        if ((F.links | 0) < 2) { c.lineWidth = 3; c.strokeStyle = '#3a3430'; c.beginPath(); c.moveTo(560, 640); c.quadraticCurveTo(620, 600, 676, 498); c.stroke(); c.beginPath(); c.moveTo(820, 640); c.quadraticCurveTo(760, 600, 702, 498); c.stroke(); }
+      }
+      if (F.pov === 'E' && !F.free) drawLuc(c, 690, 646, 1, -1, 0, false, t, false, true);
+      if (ag5Here()) drawAgnese(c, AG5.crypt, 646, luc.x < AG5.crypt ? -1 : 1, t, false, true, true);
+    }
     if (S.chapter === 4) {
       c.strokeStyle = '#2a2622'; c.lineWidth = 3; for (let y = 30; y < 420; y += 14) { ell(c, 680 + Math.sin(t * .6 + y * .02) * 2, y, 4, 7, (y / 14) % 2 ? 1.57 : 0); c.stroke(); }
       c.lineWidth = 6; c.strokeStyle = '#3a3430'; c.beginPath(); c.arc(680, 440, 20, 0, 7); c.stroke();
@@ -2283,12 +2466,18 @@ SCENES.hall = {
       for (const cx of [470, 640, 810]) for (const dx of [-14, 0, 14]) redFlame(c, cx + dx, 408 + (dx ? 4 : -4), .7, t, cx + dx);
       for (const cx of [360, 920]) for (const dx of [-26, 0, 26]) redFlame(c, cx + dx, 300 + (dx ? 4 : -6), .9, t, cx + dx);
     }
+    if (S.chapter === 5 && F.edoDead) {
+      c.fillStyle = 'rgba(110,0,14,.85)'; ell(c, 520, 472, 22, 4); c.fill(); for (let i = 0; i < 5; i++) { ell(c, 470 + i * 26, 478 + (i % 2) * 6, 6, 2); c.fill(); }
+      c.save(); c.translate(760, 632); c.rotate(-.5); c.fillStyle = '#0b0b0e'; c.fillRect(-12, -24, 24, 24); ell(c, 0, 0, 20, 4); c.fill(); c.restore();
+      c.fillStyle = '#d4ac54'; c.beginPath(); c.arc(700, 640, 3.5, 0, 7); c.fill(); c.fillStyle = '#a0101e'; c.beginPath(); c.arc(700, 637, 2, 0, 7); c.fill();
+    }
     if (F.letterDropped) { c.save(); c.translate(640, 636); c.rotate(.2); c.fillStyle = F.noMemory ? '#e8e4dc' : '#d9cbb0'; c.fillRect(-18, -8, 36, 16); if (!F.noMemory) { c.fillStyle = '#8b1a2b'; c.beginPath(); c.arc(0, 1, 3.5, 0, 7); c.fill(); } c.restore(); }
     if (F.knock && !F.agneseIn) { c.fillStyle = `rgba(80,110,130,${.25 + Math.sin(t * 2) * .1})`; ell(c, 1195, 590, 70, 6); c.fill(); }
     if (ag4Here()) drawAgnese(c, AG4.hall, 646, luc.x < AG4.hall ? -1 : 1, t, false, true, true);
   },
   lights(t){
     const L = [{ x: 640, y: 200, r: 320, a: .25 }];
+    if (S.chapter === 5 && F.edoDead) L.push({ x: 470, y: 250, r: 520, a: .55 }, { x: 810, y: 250, r: 520, a: .55 });
     if (F.candlesLit) L.push({ x: 360, y: 320, r: 300, a: .85, warm: 1 }, { x: 920, y: 320, r: 300, a: .85, warm: 1 }, { x: 640, y: 430, r: 360, a: .9, warm: 1 });
     return L;
   }
@@ -2770,6 +2959,188 @@ const HS4 = {
     { id: 'agnese', r: [210, 400, 80, 250], wx: 330, vis: () => ag4Here(), act: () => agTalk() }
   ]
 };
+// ---------------- CAPITOLO V ----------------
+const AG5 = { crypt: 250, garden: 470 };
+const ag5Here = () => S.chapter === 5 && ((S.scene === 'crypt' && !F.agneseSent) || (S.scene === 'garden' && F.agneseSent && !F.agneseGone5));
+async function clue(id, key){
+  await say(key);
+  if (F['clue_' + id]) return;
+  F['clue_' + id] = 1; F.clues = (F.clues | 0) + 1;
+  if (F.clues <= 3) await cutToLucrezia(F.clues);
+}
+function struggle(){
+  return new Promise(r => { frenzy = { prey: null, t: 0, res: 35, done: r }; $('resist').classList.add('on'); }).then(v => { $('resist').classList.remove('on'); frenzy = null; return v; });
+}
+async function cutToLucrezia(n){
+  const back = { scene: S.scene, x: luc.x, face: luc.face, inv: S.inv };
+  $('fade').style.opacity = 1; await sleep(650);
+  F.pov = 'L'; S.scene = 'crypt'; luc.x = 690; luc.face = -1; luc.tx = null; pending = null; S.inv = []; renderInv(); setAmb('crypt'); F.hunger = 64 + n * 11;
+  $('fade').style.opacity = 0; await sleep(500);
+  await say('c5_cut' + n);
+  const r = await struggle();
+  F.links = (F.links | 0) + 1;
+  await say((r === 'win' ? 'c5_hold' : 'c5_snap') + n);
+  $('fade').style.opacity = 1; await sleep(650);
+  F.pov = 'E'; S.scene = back.scene; luc.x = back.x; luc.face = back.face; S.inv = back.inv; renderInv(); setAmb(S.scene);
+  $('fade').style.opacity = 0; await sleep(400);
+  if (n === 3) { F.chainsHeard = 1; await say('c5_after3'); }
+  save();
+}
+async function toEdoardo(){
+  $('fade').style.opacity = 1; await sleep(900);
+  F.pov = 'E'; S.inv = ['lanterna', 'anellofid']; renderInv();
+  await goScene('garden', 1150, -1);
+}
+const HS5L = {
+  crypt: [
+    { id: 'chains', r: [630, 30, 120, 420], wx: 690, act: () => say('c5_chains') },
+    { id: 'vasca', r: [550, 495, 262, 115], wx: 690, act: () => say('c5_vasca') },
+    { id: 'statue', r: [895, 145, 110, 290], wx: 690, act: () => say('c5_statue') },
+    { id: 'niches', r: [196, 130, 330, 380], wx: 690, act: () => say('c5_niches') },
+    { id: 'agnese', r: [210, 400, 80, 250], wx: 690, vis: () => ag5Here(),
+      act: async () => {
+        await say('c5_agnese_pre');
+        const r = await choose2(TX('c5_q_agnese'), TX('c5_h_agnese'), TX('c5_b_agnese'));
+        F.agneseSent = r === 'beast' ? 'bring' : 'warn';
+        await say(F.agneseSent === 'bring' ? 'c5_agnese_bring' : 'c5_agnese_warn');
+        await toEdoardo();
+      } }
+  ]
+};
+const HS5 = {
+  garden: [
+    { id: 'gate', r: [1150, 330, 130, 280], wx: 1150, act: () => say('c5_e_gate') },
+    { id: 'door', r: [12, 250, 125, 330], wx: 105, exit: { to: 'hall', x: 300, face: 1 } },
+    { id: 'tomb', r: [245, 455, 150, 175], wx: 320, exit: { to: 'crypt', x: 160, face: 1 },
+      guard: async () => { if (F.chainsHeard) return true; await say('c5_e_tomb'); return false; } },
+    { id: 'well', r: [552, 340, 160, 248], wx: 630, act: () => say('c5_e_well') },
+    { id: 'rose', r: [825, 455, 165, 135], wx: 900, act: () => say('c5_e_rose') },
+    { id: 'moon', r: [920, 70, 130, 130], wx: 900, act: () => say('c5_e_moon') },
+    { id: 'crows', r: [1050, 120, 220, 220], wx: 1100, act: () => say('c5_e_crows') },
+    { id: 'agnese', r: [435, 400, 75, 250], wx: 560, vis: () => ag5Here(),
+      act: async () => { await say(F.agneseSent === 'bring' ? 'c5_ag_bring' : 'c5_ag_warn'); F.agneseGone5 = 1; } }
+  ],
+  hall: [
+    { id: 'stairs', r: [20, 220, 190, 365], wx: 150, exit: { to: 'corridor', x: 1150, face: -1 } },
+    { id: 'gardendoor', r: [226, 258, 94, 322], wx: 270, exit: { to: 'garden', x: 130, face: 1 } },
+    { id: 'candelabra', r: [320, 280, 80, 360], wx: 380, act: () => clue('candles', 'c5_e_candles') },
+    { id: 'table', r: [400, 400, 480, 170], wx: 640, act: () => clue('table', 'c5_e_table') },
+    { id: 'sideboard', r: [970, 415, 130, 155], wx: 1000, act: () => say('c5_e_sideboard') },
+    { id: 'portone', r: [1112, 200, 165, 385], wx: 1110, act: () => say('c5_e_portone') },
+    { id: 'chandelier', r: [545, 60, 190, 120], wx: 640, act: () => say('c5_e_chandelier') },
+    { id: 'window', r: [425, 110, 90, 270], wx: 470, act: () => say('c5_e_window') },
+    { id: 'letter4', r: [610, 618, 60, 32], wx: 600, vis: () => !!F.letterDropped,
+      act: async () => { F.letterDropped = 0; addItem('lettera'); await clue('letter', F.noMemory ? 'c5_e_letter_blank' : 'c5_e_letter'); } }
+  ],
+  corridor: [
+    { id: 'door', r: [22, 240, 110, 340], wx: 85, exit: { to: 'bedroom', x: 1150, face: -1 } },
+    { id: 'anc1', r: [160, 185, 140, 185], wx: 230, act: () => say('c5_e_anc') },
+    { id: 'anc2', r: [320, 185, 140, 185], wx: 390, act: () => say('c5_e_anc') },
+    { id: 'lib', r: [492, 230, 125, 340], wx: 555, exit: { to: 'library', x: 105, face: 1 } },
+    { id: 'mother', r: [650, 135, 200, 290], wx: 750, exit: { to: 'dressing', x: 160, face: 1 } },
+    { id: 'clock', r: [893, 185, 94, 392], wx: 940, act: () => say('c5_e_clock') },
+    { id: 'young', r: [1010, 185, 130, 185], wx: 1075, act: () => say('c5_e_young') },
+    { id: 'stairs', r: [1140, 215, 130, 360], wx: 1200, exit: { to: 'hall', x: 230, face: 1 } }
+  ],
+  bedroom: [
+    { id: 'bed', r: [60, 300, 365, 270], wx: 330, act: () => clue('bed', 'c5_e_bed') },
+    { id: 'window', r: [555, 105, 170, 310], wx: 640, act: () => say('c5_e_bwindow') },
+    { id: 'mirror', r: [855, 175, 190, 285], wx: 950, act: () => say('c5_e_mirror') },
+    { id: 'drawer', r: [880, 488, 140, 52], wx: 950, act: () => say('c5_e_drawer') },
+    { id: 'door', r: [1140, 220, 130, 345], wx: 1185, exit: { to: 'corridor', x: 90, face: 1 } }
+  ],
+  dressing: [
+    { id: 'exit', r: [22, 235, 135, 350], wx: 150, exit: { to: 'corridor', x: 750, face: 1 } },
+    { id: 'dress', r: [535, 185, 210, 420], wx: 560, act: () => clue('dress', 'c5_e_dress') },
+    { id: 'cages', r: [255, 40, 220, 260], wx: 360, act: () => say('c5_e_cages') },
+    { id: 'vanity', r: [890, 310, 165, 260], wx: 960, act: () => say('c5_e_vanity') },
+    { id: 'bride', r: [755, 105, 160, 210], wx: 830, act: () => say('c5_e_bride') }
+  ],
+  library: [
+    { id: 'door', r: [22, 235, 115, 340], wx: 95, exit: { to: 'corridor', x: 555, face: 1 } },
+    { id: 'shelves', r: [150, 50, 340, 300], wx: 320, act: () => say('c5_e_shelves') },
+    { id: 'grimoire', r: [196, 440, 180, 60], wx: 285, act: () => say('c5_e_grimoire') },
+    { id: 'fire', r: [505, 300, 270, 268], wx: 640, act: () => say('c5_e_fire') },
+    { id: 'alembic', r: [990, 355, 120, 130], wx: 1035, act: () => say('c5_e_alembic') },
+    { id: 'raven', r: [1150, 290, 90, 60], wx: 1150, act: () => say(F.ravenDead4 ? 'c5_e_raven_dead' : 'c5_e_raven') },
+    { id: 'raven2', r: [1150, 330, 80, 230], wx: 1150, act: () => say(F.ravenDead4 ? 'c5_e_raven_dead' : 'c5_e_raven'), nolabel: 1 }
+  ],
+  crypt: [
+    { id: 'stairs', r: [22, 228, 136, 346], wx: 120, act: () => say('c5_e_gate') },
+    { id: 'niches', r: [196, 130, 330, 380], wx: 360, act: () => say('c5_niches') },
+    { id: 'statue', r: [895, 145, 110, 290], wx: 950, act: () => say('c5_statue') },
+    { id: 'lucrezia', r: [630, 350, 120, 300], wx: 600, act: () => finale() }
+  ]
+};
+const ENTER5 = { garden: 'c5_garden_enter', hall: 'c5_hall_enter', corridor: 'c5_corridor_enter', bedroom: 'c5_bedroom_enter', dressing: 'c5_dressing_enter', library: 'c5_library_enter', crypt: 'c5_crypt_enter' };
+function hint5(){
+  if (F.pov === 'L') return 'c5_hint_l';
+  if (S.scene === 'crypt') return 'c5_hint_her';
+  if (ag5Here()) return 'c5_hint_agnese';
+  if (F.chainsHeard) return 'c5_hint_tomb';
+  return 'c5_hint_house';
+}
+// la scelta che non si può fare
+function chooseLast(q, human, beast){
+  return new Promise(res => {
+    const layer = $('dlgLayer'), box = $('choice');
+    layer.classList.add('on'); layer.onpointerup = null;
+    $('dName').style.display = 'none'; $('dText').className = 'narr'; $('dText').textContent = forgot(q); $('dMore').style.opacity = 0;
+    box.innerHTML = '';
+    const bh = document.createElement('button'); bh.className = 'mbtn'; bh.textContent = human;
+    const bb = document.createElement('button'); bb.className = 'mbtn beast'; bb.textContent = beast;
+    box.append(bh, bb);
+    const words = [human, human.replace(/amore mio!»$/, 'amo...»'), '«Sca...»', '«...»'];
+    let tries = 0, done = false, tm = null;
+    const fin = () => { if (done) return; done = true; clearTimeout(tm); box.classList.remove('on'); layer.classList.remove('on'); bh.style.cssText = ''; res('beast'); };
+    const flee = e => {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      tries++; sfx.heartbeat(1); redA = Math.min(1, redA + .3); vibrate(60);
+      if (tries >= 4) { bh.style.transition = 'opacity .6s'; bh.style.opacity = 0; bh.style.pointerEvents = 'none'; tm = setTimeout(() => { sfx.stinger(); fin(); }, 3500); }
+      else { bh.textContent = words[tries]; bh.style.transform = `translate(${(Math.random() - .5) * 260}px,${-30 - Math.random() * 90}px) scale(${1 - tries * .2})`; bh.style.opacity = 1 - tries * .2; }
+      bb.style.transform = `scale(${1 + tries * .25})`;
+    };
+    bh.addEventListener('pointerdown', flee); bh.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') flee(e); });
+    bh.onclick = e => e.stopPropagation(); bh.onpointerup = e => e.stopPropagation(); bb.onpointerup = e => e.stopPropagation();
+    bb.onclick = e => { e.stopPropagation(); sfx.stinger(); fin(); };
+    box.classList.add('on');
+  });
+}
+async function finale(){
+  await say('c5_meet');
+  await chooseLast(TX('c5_q_final'), TX('c5_h_final'), TX('c5_b_final'));
+  F.free = 1; shakeT = 1;
+  await say('c5_break');
+  $('fade').style.transition = 'opacity .2s'; $('fade').style.opacity = 1; await sleep(400);
+  sfx.stinger(); sfx.heartbeat(3);
+  $('card').classList.add('on'); await showCard('c5_feast');
+  F.edoDead = 1; F.pov = 'L'; F.stage = 0; F.candlesLit = 0; F.hunger = 0; S.inv = []; renderInv();
+  S.scene = 'hall'; luc.x = 600; luc.face = 1; luc.tx = null; setAmb('hall');
+  for (const k in cache) delete cache[k];
+  $('fade').style.transition = 'opacity 2.5s'; $('fade').style.opacity = 0; await sleep(2600); $('fade').style.transition = '';
+  await say('c5_dawn');
+  await say('c5_epi_' + (F.c3pay || 'memory'));
+  await say('c5_final');
+  F.ch5done = 1; save(); fbInc('completions5'); logEv('game_complete', { pay: F.c3pay, agnese: F.agneseSent });
+  await sleep(800);
+  rollCredits();
+}
+let crMusic = 0;
+function rollCredits(){
+  mode = 'credits'; $('hud').classList.remove('on'); $('dlgLayer').classList.remove('on');
+  const fed = F.fed | 0, st = [];
+  st.push(`Il prezzo pagato alla Strega: ${{ reflect: 'il riflesso', memory: 'il ricordo di Edoardo', voice: 'la voce' }[F.c3pay] || 'il ricordo di Edoardo'}`);
+  st.push(F.agneseSent === 'bring' ? 'Agnese ha portato lo sposo alla bestia' : 'Agnese ha provato ad avvertirlo');
+  st.push(fed ? `La bestia si è nutrita ${fed} ${fed === 1 ? 'volta' : 'volte'} prima del banchetto` : 'La bestia ha digiunato fino al banchetto');
+  $('crStats').innerHTML = st.join('<br>');
+  const cr = $('credits'), roll = $('roll'); cr.classList.remove('fast'); roll.style.animation = 'none'; void roll.offsetWidth; roll.style.animation = '';
+  cr.classList.add('on'); $('crEnd').classList.remove('on');
+  setTimeout(() => $('crEnd').classList.add('on'), 9000);
+  clearInterval(crMusic); sfx.musicbox(); crMusic = setInterval(() => { if (cr.classList.contains('on')) sfx.musicbox(); else clearInterval(crMusic); }, 3200);
+  roll.onanimationend = () => $('crEnd').classList.add('on');
+}
+$('credits').addEventListener('pointerdown', e => { if (e.target.id !== 'crEnd') $('credits').classList.add('fast'); });
+$('crEnd').onclick = e => { e.stopPropagation(); $('credits').classList.remove('on'); clearInterval(crMusic); toTitle(); };
 const ENTER4 = { corridor: 'c4_corridor_enter', library: 'c4_library_enter', hall: 'c4_hall_enter', dressing: 'c4_dressing_enter', garden: 'c4_garden_enter', crypt: 'c4_crypt_enter' };
 const PREY4 = {
   corridor: () => ((F.stage | 0) >= 2 && !F.ratsEaten) ? { x: 400, flag: 'ratsEaten', text: 'c4_feed_rats' } : null,
@@ -2840,7 +3211,7 @@ async function ending4(){
   F.hunger = 60; F.ch4done = 1; save(); fbInc('completions4'); logEv('chapter_complete', { chapter: 4, choice: r });
   showEnding(4, TX('c4_card'));
 }
-const hsCur = () => (S.chapter === 4 ? HS4[S.scene] : S.chapter === 3 ? (mirrorView && S.scene === 'shore' ? HS3.shore_r : HS3[S.scene]) : S.chapter === 2 ? HS2[S.scene] : HS[S.scene]) || [];
+const hsCur = () => (S.chapter === 5 ? (F.pov === 'L' ? HS5L[S.scene] : HS5[S.scene]) : S.chapter === 4 ? HS4[S.scene] : S.chapter === 3 ? (mirrorView && S.scene === 'shore' ? HS3.shore_r : HS3[S.scene]) : S.chapter === 2 ? HS2[S.scene] : HS[S.scene]) || [];
 function hint3(){
   if ((F.hunger || 0) > 85 && (has('bocciolo') || (has('lettera') && !F.letterCalm))) return 'c3_hint_full';
   if (S.scene === 'garden') return 'c3_hint_gate';
@@ -2913,6 +3284,7 @@ function hint2(){
 }
 
 function hint(){
+  if (S.chapter === 5) return hint5();
   if (S.chapter === 4) return hint4();
   if (S.chapter === 3) return hint3();
   if (S.chapter === 2) return hint2();
@@ -2955,7 +3327,7 @@ async function say(key){
 }
 function showLine(ln){
   return new Promise(res => {
-    const layer = $('dlgLayer'), name = ln.sp ? (CONTENT.speakers?.[ln.sp] || ln.sp) : '';
+    const layer = $('dlgLayer'), name = ln.sp ? forgot(CONTENT.speakers?.[ln.sp] || ln.sp) : '';
     layer.classList.add('on');
     $('dName').textContent = name; $('dName').style.display = name ? '' : 'none';
     const dt = $('dText'); dt.className = ln.sp ? '' : 'narr';
@@ -3027,6 +3399,8 @@ const ICONS = {
   tizzone: '<path d="M12 42L26 14M18 42L28 14" stroke="#6a6460" stroke-width="3" stroke-linecap="round" fill="none"/><ellipse cx="28" cy="12" rx="8" ry="6" fill="#ff7a2a"/><ellipse cx="28" cy="12" rx="4" ry="3" fill="#ffe0a0"/>',
   argenteria: '<path d="M10 40L22 10M14 10v10a4 4 0 0 0 8 0V10M18 10v10" stroke="#d8dce2" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M28 8h12c0 9-3 14-6 14s-6-5-6-14z" fill="#c8ccd2"/><path d="M34 22v14M28 38h12" stroke="#c8ccd2" stroke-width="2.4"/>',
   chiave4: '<circle cx="14" cy="16" r="7" fill="none" stroke="#3a3632" stroke-width="4"/><path d="M19 21l18 18M31 33l-4 4M36 38l-4 4" stroke="#3a3632" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="34" cy="12" r="2" fill="#7aa0c0"/>',
+  lanterna: '<path d="M18 8a6 6 0 0 1 12 0" fill="none" stroke="#6a5a40" stroke-width="2"/><rect x="14" y="10" width="20" height="5" fill="#3a3026"/><rect x="15" y="15" width="18" height="22" fill="rgba(255,200,120,.35)" stroke="#8a7a5a" stroke-width="1.5"/><path d="M24 33c-3-4-3-8 0-12 3 4 3 8 0 12z" fill="#ffae4a"/><rect x="13" y="37" width="22" height="5" fill="#3a3026"/>',
+  anellofid: '<circle cx="24" cy="28" r="12" fill="none" stroke="#d4ac54" stroke-width="4"/><path d="M24 8l6 6-6 6-6-6z" fill="#a0101e" stroke="#d4ac54" stroke-width="1.5"/>',
   elisir: '<path d="M20 5h8v11c7 3 10 8 10 14a14 14 0 0 1-28 0c0-6 3-11 10-14z" fill="rgba(255,90,110,.18)" stroke="#f0c8c8" stroke-width="2"/><path d="M11 27a13 13 0 0 0 26 0z" fill="#e8e4ff" opacity=".85"/><circle cx="24" cy="31" r="6" fill="#c0283f" opacity=".5"/><rect x="18" y="3" width="12" height="4" fill="#8a1424"/>'
 };
 function renderInv(newId){
@@ -3055,7 +3429,7 @@ function hit(p){
   const list = hsCur().filter(h => (!h.vis || h.vis()) && p.x >= h.r[0] && p.x <= h.r[0] + h.r[2] && p.y >= h.r[1] && p.y <= h.r[1] + h.r[3]);
   list.sort((a, b) => a.r[2] * a.r[3] - b.r[2] * b.r[3]); return list[0] || null;
 }
-function walkTo(x){ const sc = SCENES[S.scene]; luc.tx = clamp(x, sc.minX, sc.maxX); }
+function walkTo(x){ const sc = SCENES[S.scene]; if (S.chapter === 5 && F.pov === 'L' && !F.free) { luc.tx = luc.x + .001; return; } luc.tx = clamp(x, sc.minX, sc.maxX); }
 cv.addEventListener('pointerdown', e => {
   auInit();
   if (mode !== 'play' || busy) return;
@@ -3106,8 +3480,8 @@ async function goScene(id, x, face){
   for (const k in cache) if (k !== id) delete cache[k];
   getStatic(id);
   $('fade').style.opacity = 0; showSceneName(id);
-  const fk = 'seen_' + id;
-  const EN = S.chapter === 4 ? ENTER4 : S.chapter === 3 ? ENTER3 : S.chapter === 2 ? ENTER2 : ENTER;
+  const fk = 'seen_' + (S.chapter === 5 ? F.pov : '') + id;
+  const EN = S.chapter === 5 ? ENTER5 : S.chapter === 4 ? ENTER4 : S.chapter === 3 ? ENTER3 : S.chapter === 2 ? ENTER2 : ENTER;
   if (!F[fk]) { F[fk] = 1; if (EN[id]) { await sleep(700); await say(EN[id]); } }
   save();
 }
@@ -3172,7 +3546,7 @@ function updateC3(dt){
     else if (pr ? Math.abs(pr.x - luc.x) < 30 : frenzy.t > 5.5) frenzy.done('lose');
     return;
   }
-  if (!busy && !paused) {
+  if (!busy && !paused && S.chapter !== 5) {
     F.hunger = Math.min(100, (F.hunger || 0) + (S.scene === 'lake' ? .22 : .42) * dt);
     if (F.hunger >= 100) { startFrenzy(); return; }
   }
@@ -3201,7 +3575,7 @@ function render(){
   c.setTransform(...wt);
   sc.dyn(c, T);
   let cp = null;
-  if (mode !== 'title') cp = drawLuc(c, luc.x, sc.floorY, 1, luc.face, luc.ph, luc.moving, T, has('candela'), !!F.young);
+  if (mode !== 'title') cp = (S.chapter === 5 && F.pov === 'E') ? drawEdo(c, luc.x, sc.floorY, 1.03, luc.face, luc.ph, luc.moving, T) : drawLuc(c, luc.x, sc.floorY, 1, luc.face, luc.ph, luc.moving, T, has('candela'), !!F.young);
   if (sc.front) sc.front(c, T);
   if (S.chapter === 4 && (F.stage | 0) >= 2 && mode === 'play') {
     const H4 = { corridor: F.ratsEaten ? [] : [[380, 530], [400, 548], [418, 526], [394, 512]], library: F.ravenDead4 ? [] : [[1190, 322]] }[S.scene] || [];
@@ -3213,7 +3587,7 @@ function render(){
 
   // luci
   const lights = sc.lights(T).slice();
-  if (S.chapter === 4 && mode !== 'title') lights.push({ x: luc.x, y: sc.floorY - 150, r: 220 + (F.stage | 0) * 35, a: .6 });
+  if ((S.chapter === 4 || (S.chapter === 5 && F.pov === 'L')) && mode !== 'title') lights.push({ x: luc.x, y: sc.floorY - 150, r: 220 + (F.stage | 0) * 35, a: .6 });
   if (cp) lights.push({ x: cp.x, y: cp.y, r: 300 + Math.sin(T * 17) * 6 + Math.sin(T * 29) * 4, a: 1, warm: 1 });
   const dark = clamp((sceneCfg(S.scene).dark ?? .6) * (1 - flashA * .7) * (S.chapter === 4 ? ((F.stage | 0) >= 3 ? .55 : .8) : 1), 0, .98);
   const ls = .5;
@@ -3252,7 +3626,7 @@ function render(){
     c.fillStyle = 'rgba(20,70,85,.28)'; c.fillRect(0, 0, cv.width, cv.height);
     c.strokeStyle = 'rgba(150,210,230,.07)'; c.lineWidth = 2 * dpr; for (let i = 0; i < 24; i++) { const y = (i / 24) * cv.height + Math.sin(T * 1.3 + i) * 6 * dpr; c.beginPath(); c.moveTo(0, y); for (let x = 0; x <= cv.width; x += 40 * dpr) c.lineTo(x, y + Math.sin(x / (60 * dpr) + T * 2 + i) * 3 * dpr); c.stroke(); }
   }
-  const hg = S.chapter >= 3 && mode === 'play' ? (F.hunger || 0) : 0;
+  const hg = S.chapter >= 3 && mode === 'play' && !(S.chapter === 5 && F.pov === 'E') ? (F.hunger || 0) : 0;
   if (hg > 55) { const k = (hg - 55) / 45, pulse = .75 + .25 * Math.sin(T * (3 + k * 5)); const g = c.createRadialGradient(cv.width / 2, cv.height / 2, Math.min(cv.width, cv.height) * (.45 - k * .15), cv.width / 2, cv.height / 2, Math.max(cv.width, cv.height) * .7); g.addColorStop(0, 'rgba(120,0,15,0)'); g.addColorStop(1, `rgba(140,0,20,${.55 * k * pulse})`); c.fillStyle = g; c.fillRect(0, 0, cv.width, cv.height); }
   const vg = c.createRadialGradient(cv.width / 2, cv.height / 2, Math.min(cv.width, cv.height) * .35, cv.width / 2, cv.height / 2, Math.max(cv.width, cv.height) * .75);
   vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.85)'); c.fillStyle = vg; c.fillRect(0, 0, cv.width, cv.height);
@@ -3260,7 +3634,7 @@ function render(){
 }
 let hudC3 = '';
 function syncHud3(){
-  const on = S.chapter >= 3 && mode === 'play', st = on ? (S.chapter === 3 && S.scene === 'shore' ? 'm' : '') + Math.round((F.hunger || 0)) : '';
+  const on = S.chapter >= 3 && mode === 'play' && !(S.chapter === 5 && (F.pov === 'E' || F.edoDead)), st = on ? (S.chapter === 3 && S.scene === 'shore' ? 'm' : '') + Math.round((F.hunger || 0)) : '';
   if (st === hudC3) return; hudC3 = st;
   $('fame').classList.toggle('on', on); $('bMirror').classList.toggle('on', on && S.chapter === 3 && S.scene === 'shore');
   if (on) { $('fameBar').style.width = (F.hunger || 0) + '%'; $('fame').classList.toggle('hi', (F.hunger || 0) > 60); }
@@ -3362,7 +3736,7 @@ async function startPlay(fromSave){
   $('fade').style.opacity = 0; showSceneName(S.scene);
   if (!fromSave && !F['seen_' + S.scene]) {
     F['seen_' + S.scene] = 1; await sleep(900);
-    await say({ 1: 'bedroom_start', 2: 'c2_bedroom_start', 3: 'c3_start', 4: 'c4_start' }[S.chapter]);
+    await say({ 1: 'bedroom_start', 2: 'c2_bedroom_start', 3: 'c3_start', 4: 'c4_start', 5: 'c5_start' }[S.chapter]);
     if (S.chapter === 1 && !F.tutDone) { await sleep(300); await runTut(TUT_MAIN); F.tutDone = 1; }
     if (S.chapter === 4 && !F.tut4) { await sleep(300); await runTut([{ t: 'luc', k: 'tut_stage' }, { t: 'fame', k: 'tut_fame' }]); F.tut4 = 1; }
     if (S.chapter === 3 && !F.tut3) { await sleep(300); await runTut([{ t: 'fame', k: 'tut_fame' }, { t: 'luc', k: 'tut_self' }]); F.tut3 = 1; }
@@ -3422,14 +3796,32 @@ async function newGame4(){
   for (const k in cache) delete cache[k];
   await startPlay(false);
 }
-const NEWGAME = n => (n === 4 ? newGame4 : n === 3 ? newGame3 : n === 2 ? newGame2 : newGame)();
+async function newGame5(){
+  auInit(); enterFS();
+  let pay = 'memory', prev = {}; try { const sv = JSON.parse(LS.get(LS_SAVE) || '{}'); prev = sv.flags || {}; if (prev.c3pay) pay = prev.c3pay; } catch(e){}
+  S.chapter = 5; S.scene = 'crypt'; S.inv = [];
+  S.flags = { ...C3_START, ch3done: 1, ch4done: 1, hunger: 70, stage: 4, dress: 1, candlesLit: 1, tableSet: 1, silverTaken: 1, portraitTorn: 1, letterDropped: 1, tongsTaken: 1, cryptOpen: 1, cryptOpen4: 1, nicheOpen: 1, knock: 1, agneseIn: 1, tut3: 1, tut4: 1, pov: 'L',
+    fed: prev.fed | 0, agneseBitten: prev.agneseBitten | 0, ravenDead4: prev.ravenDead4 | 0, c3pay: pay, noReflect: pay === 'reflect' ? 1 : 0, noMemory: pay === 'memory' ? 1 : 0, noVoice: pay === 'voice' ? 1 : 0 }; F = S.flags;
+  luc.x = 690; luc.face = -1; luc.tx = null; selected = null; mirrorView = false;
+  fbInc('starts5'); logEv('chapter_start', { chapter: 5 });
+  $('fade').style.opacity = 1; await sleep(600);
+  $('title').classList.remove('on'); $('chapters').classList.remove('on');
+  const e = $('ending'); e.classList.remove('show', 'on');
+  $('card').classList.add('on'); $('fade').style.opacity = 0;
+  await showCard('c5_intro');
+  for (const k in cache) delete cache[k];
+  await startPlay(false);
+}
+const NEWGAME = n => (n === 5 ? newGame5 : n === 4 ? newGame4 : n === 3 ? newGame3 : n === 2 ? newGame2 : newGame)();
 async function continueGame(){
   auInit(); enterFS();
   const d = await loadSave(); if (!d || !d.scene) return newGame();
   if ((d.chapter || 1) === 1 && d.flags?.ch1done) return newGame2();
   if (d.chapter === 2 && d.flags?.ch2done) return newGame3();
   if (d.chapter === 3 && d.flags?.ch3done) return newGame4();
-  if (d.chapter === 4 && d.flags?.ch4done) return newGame4();
+  if (d.chapter === 4 && d.flags?.ch4done) return newGame5();
+  if (d.chapter === 5 && d.flags?.ch5done) return newGame5();
+  if (d.chapter === 5 && d.flags?.pov === 'L' && !d.flags?.agneseSent) return newGame5();
   S.chapter = d.chapter || 1; S.scene = SCENES[d.scene] ? d.scene : 'bedroom'; S.inv = Array.isArray(d.inv) ? d.inv : (d.inv ? Object.values(d.inv) : []);
   S.flags = d.flags || {}; F = S.flags; luc.x = d.x || 300; luc.face = d.face || 1; luc.tx = null; mirrorView = false;
   if (S.scene === 'lake') { resetLake(); luc.x = 560; }
@@ -3450,7 +3842,7 @@ function showEnding(n, text){
   $('endChap').textContent = `FINE DEL CAPITOLO ${cur.num}`; $('endTitle').textContent = cur.title;
   $('endText').textContent = text;
   $('endNext').textContent = nx ? `Capitolo ${nx.num} — ${nx.title} · ${nx.available ? 'disponibile' : 'prossimamente'}` : '';
-  const nb = $('eNext'), playable = nx && nx.available && n + 1 <= 4; nb.dataset.n = n + 1;
+  const nb = $('eNext'), playable = nx && nx.available && n + 1 <= 5; nb.dataset.n = n + 1;
   nb.style.display = playable ? '' : 'none'; if (playable) nb.textContent = `Capitolo ${nx.num} ❧`;
   updateInfo();
   const e = $('ending'); e.classList.add('on'); requestAnimationFrame(() => e.classList.add('show'));
@@ -3477,13 +3869,13 @@ function toTitle(){
 function renderChapters(){
   const box = $('chapList'); if (!box) return; box.innerHTML = '';
   const ch = CONTENT.chapters || DEF.chapters;
-  let done = false, done2 = false, done3 = false, done4 = false; try { const sv = JSON.parse(LS.get(LS_SAVE) || '{}'); done = !!sv.flags?.ch1done; done2 = !!sv.flags?.ch2done; done3 = !!sv.flags?.ch3done; done4 = !!sv.flags?.ch4done; } catch(e){}
+  let done = false, done2 = false, done3 = false, done4 = false, done5 = false; try { const sv = JSON.parse(LS.get(LS_SAVE) || '{}'); done = !!sv.flags?.ch1done; done2 = !!sv.flags?.ch2done; done3 = !!sv.flags?.ch3done; done4 = !!sv.flags?.ch4done; done5 = !!sv.flags?.ch5done; } catch(e){}
   Object.keys(ch).sort().forEach(k => {
     const c = ch[k], row = document.createElement('div');
-    const playable = c.available && ['c1', 'c2', 'c3', 'c4'].includes(k);
+    const playable = c.available && ['c1', 'c2', 'c3', 'c4', 'c5'].includes(k);
     row.className = 'chap ' + (playable ? 'play' : 'lock');
-    const isDone = (k === 'c1' && done) || (k === 'c2' && done2) || (k === 'c3' && done3) || (k === 'c4' && done4);
-    row.innerHTML = `<div class="n">${c.num}</div><div class="t">${c.title}</div><div class="s">${isDone ? 'Completato ✦' : playable ? 'Gioca' : k === 'c5' ? 'Il finale' : 'In arrivo'}</div>`;
+    const isDone = (k === 'c1' && done) || (k === 'c2' && done2) || (k === 'c3' && done3) || (k === 'c4' && done4) || (k === 'c5' && done5);
+    row.innerHTML = `<div class="n">${c.num}</div><div class="t">${c.title}</div><div class="s">${isDone ? 'Completato ✦' : playable ? 'Gioca' : 'In arrivo'}</div>`;
     if (playable) row.onclick = () => { $('chapters').classList.remove('on'); NEWGAME(+k.slice(1)); };
     box.appendChild(row);
   });
@@ -3531,6 +3923,11 @@ $('title').classList.add('on');
 requestAnimationFrame(t => { last = t; requestAnimationFrame(frame); });
 setTimeout(() => { $('fade').style.opacity = 0; }, 150);
 initFirebase();
+let installEvt = null;
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; $('bInstall').style.display = ''; });
+addEventListener('appinstalled', () => { $('bInstall').style.display = 'none'; installEvt = null; });
+$('bInstall').onclick = async () => { if (!installEvt) return; installEvt.prompt(); try { await installEvt.userChoice; } catch(e){} installEvt = null; $('bInstall').style.display = 'none'; };
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 if (/[?&]debug\b/.test(location.search)) window.__G = { S, L3, get F(){ return F; } };
 </script>
 </body>
