@@ -175,6 +175,27 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
 @keyframes rot{0%,20%{transform:rotate(0)}50%,70%{transform:rotate(-90deg)}100%{transform:rotate(0)}}
 #rotate p{font-family:'IM Fell English SC',serif;font-size:20px;letter-spacing:.08em}
 #rotate small{color:#7a6e5c;font-style:italic}
+
+/* ---------- tutorial ---------- */
+#tut{position:absolute;inset:0;z-index:34;display:none}
+#tut.on{display:block}
+#tutRing{position:absolute;border-radius:50%;border:1.5px solid rgba(232,201,138,.85);pointer-events:none;
+  box-shadow:0 0 0 200vmax rgba(0,0,0,.72),0 0 26px 4px rgba(192,40,63,.75),inset 0 0 16px rgba(192,40,63,.55);
+  transition:left .6s cubic-bezier(.6,0,.2,1),top .6s cubic-bezier(.6,0,.2,1),width .6s cubic-bezier(.6,0,.2,1),height .6s cubic-bezier(.6,0,.2,1),opacity .5s}
+#tutRing:after{content:'';position:absolute;inset:-9px;border-radius:50%;border:1px solid rgba(192,40,63,.7);animation:tutPulse 1.6s ease-out infinite}
+#tutRing.none{box-shadow:none;border-color:transparent}
+#tutRing.none:after{display:none}
+@keyframes tutPulse{from{transform:scale(.92);opacity:1}to{transform:scale(1.18);opacity:0}}
+#tutBox{position:absolute;width:min(380px,calc(100vw - 32px));padding:14px 20px 12px;border-radius:6px;text-align:left;
+  background:linear-gradient(180deg,rgba(20,6,12,.96),rgba(5,2,4,.97));border:1px solid rgba(168,132,63,.5);
+  box-shadow:0 0 0 3px rgba(0,0,0,.6),0 0 40px #000,inset 0 0 24px rgba(139,26,43,.2);opacity:0;transition:opacity .45s, transform .45s;transform:translateY(6px)}
+#tutBox.on{opacity:1;transform:none}
+#tutBox h3{font-family:'UnifrakturMaguntia',serif;font-weight:400;font-size:26px;color:#e8d6b4;text-shadow:0 0 12px rgba(192,40,63,.8);margin-bottom:4px}
+#tutBox p{font-size:clamp(16px,2.1vw,19px);line-height:1.35;color:var(--bone)}
+#tutBox .tn{margin-top:8px;font-size:12px;letter-spacing:.2em;color:#8a7d68;text-transform:uppercase;display:flex;justify-content:space-between}
+#tutBox .tn b{color:var(--blood2);font-weight:400;animation:pulse 1s infinite alternate}
+#tutSkip{position:absolute;bottom:calc(10px + var(--sab));right:calc(12px + var(--sar));font-family:'IM Fell English SC',serif;font-size:14px;letter-spacing:.12em;color:#8a7d68;padding:6px 10px}
+#tutSkip:hover{color:var(--bone)}
 </style>
 </head>
 <body>
@@ -238,7 +259,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
       </div>
     </div>
     <div id="netStat"><i></i><span>Connessione alla villa…</span></div>
-    <div class="tVer fell">Cap. I</div>
+    <div class="tVer fell">Cap. I · II</div>
   </div>
 
   <div id="chapters" class="layer panel">
@@ -264,12 +285,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
   </div>
 
   <div id="ending" class="layer">
-    <div class="e1">FINE DEL CAPITOLO I</div>
-    <h2>Lo Specchio</h2>
+    <div class="e1" id="endChap">FINE DEL CAPITOLO I</div>
+    <h2 id="endTitle">Lo Specchio</h2>
     <p id="endText"></p>
     <div class="next" id="endNext"></div>
     <div class="cnt" id="endCnt"></div>
-    <div class="menuBtns"><button class="mbtn" id="eTitle">Torna al titolo</button></div>
+    <div class="menuBtns"><button class="mbtn" id="eNext" style="display:none">Capitolo II</button><button class="mbtn" id="eTitle">Torna al titolo</button></div>
   </div>
 
   <div id="card" class="layer"><div id="cardText"></div><div id="cardHint" class="fell">tocca per continuare</div></div>
@@ -279,6 +300,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
     <p>Ruota il dispositivo</p>
     <small>La villa si visita in orizzontale.</small>
   </div>
+
+  <div id="tut"><div id="tutRing"></div><div id="tutBox"><h3 id="tutH"></h3><p id="tutP"></p><div class="tn"><span id="tutN"></span><b id="tutGo"></b></div></div><button id="tutSkip">Salta ✕</button></div>
 
   <div id="fade"></div>
 </div>
@@ -295,42 +318,174 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
      ====================================================================== -->
 <script id="content-json" type="application/json">
 {
-  "version": 2,
-  "game": { "title": "Lucrezia Malaspina", "tagline": "Una fiaba gotica in cinque capitoli", "motd": "Villa Malaspina, 1871. Le porte sono aperte." },
-  "tuning": { "walkSpeed": 290, "lightningMin": 7, "lightningMax": 17 },
-  "speakers": { "L": "Lucrezia", "C": "Il Corvo", "V": "Una voce" },
+  "version": 3,
+  "game": {
+    "title": "Lucrezia Malaspina",
+    "tagline": "Una fiaba gotica in cinque capitoli",
+    "motd": "Capitolo II · Stanotte la luna è rossa."
+  },
+  "tuning": {
+    "walkSpeed": 290,
+    "lightningMin": 7,
+    "lightningMax": 17
+  },
+  "speakers": {
+    "L": "Lucrezia",
+    "C": "Il Corvo",
+    "V": "Una voce",
+    "A": "Agnese",
+    "I": "Isabella"
+  },
   "chapters": {
-    "c1": { "num": "I",   "title": "Lo Specchio",             "available": true },
-    "c2": { "num": "II",  "title": "Il Sangue delle Vergini", "available": false },
-    "c3": { "num": "III", "title": "La Strega del Lago",      "available": false },
-    "c4": { "num": "IV",  "title": "La Metamorfosi",          "available": false },
-    "c5": { "num": "V",   "title": "Il Banchetto",            "available": false }
+    "c1": {
+      "num": "I",
+      "title": "Lo Specchio",
+      "available": true
+    },
+    "c2": {
+      "num": "II",
+      "title": "Il Sangue delle Vergini",
+      "available": true
+    },
+    "c3": {
+      "num": "III",
+      "title": "La Strega del Lago",
+      "available": false
+    },
+    "c4": {
+      "num": "IV",
+      "title": "La Metamorfosi",
+      "available": false
+    },
+    "c5": {
+      "num": "V",
+      "title": "Il Banchetto",
+      "available": false
+    }
   },
   "scenes": {
-    "bedroom":  { "name": "La Camera di Lucrezia",       "dark": 0.6 },
-    "corridor": { "name": "Il Corridoio degli Antenati", "dark": 0.93 },
-    "library":  { "name": "La Biblioteca di Isabella",   "dark": 0.64 },
-    "garden":   { "name": "Il Giardino dei Morti",       "dark": 0.36 }
+    "bedroom": {
+      "name": "La Camera di Lucrezia",
+      "dark": 0.6
+    },
+    "corridor": {
+      "name": "Il Corridoio degli Antenati",
+      "dark": 0.93
+    },
+    "library": {
+      "name": "La Biblioteca di Isabella",
+      "dark": 0.64
+    },
+    "garden": {
+      "name": "Il Giardino dei Morti",
+      "dark": 0.36
+    },
+    "crypt": {
+      "name": "La Cripta delle Vergini",
+      "dark": 0.9
+    }
   },
   "labels": {
-    "bedroom":  { "letter": "Lettera", "candle": "Candela", "bed": "Letto", "window": "Finestra", "mirror": "Specchio", "drawer": "Cassetto", "door": "Corridoio" },
-    "corridor": { "door": "Camera", "anc1": "Ritratto", "anc2": "Ritratto", "lib": "Biblioteca", "mother": "Isabella", "clock": "Pendola", "young": "Ritratto", "stairs": "Giardino" },
-    "library":  { "door": "Corridoio", "shelves": "Scaffali", "grimoire": "Grimorio", "fire": "Camino", "flask": "Ampolla", "alembic": "Alambicco", "raven": "Corvo" },
-    "garden":   { "door": "Villa", "tomb": "Lapide", "well": "Pozzo", "rose": "Roseto", "moon": "Luna", "crows": "Corvi" }
+    "bedroom": {
+      "letter": "Lettera",
+      "candle": "Candela",
+      "bed": "Letto",
+      "window": "Finestra",
+      "mirror": "Specchio",
+      "drawer": "Cassetto",
+      "door": "Corridoio"
+    },
+    "corridor": {
+      "door": "Camera",
+      "anc1": "Ritratto",
+      "anc2": "Ritratto",
+      "lib": "Biblioteca",
+      "mother": "Isabella",
+      "clock": "Pendola",
+      "young": "Ritratto",
+      "stairs": "Giardino",
+      "agnese": "Agnese"
+    },
+    "library": {
+      "door": "Corridoio",
+      "shelves": "Scaffali",
+      "grimoire": "Grimorio",
+      "fire": "Camino",
+      "flask": "Ampolla",
+      "alembic": "Alambicco",
+      "raven": "Corvo"
+    },
+    "garden": {
+      "door": "Villa",
+      "tomb": "Lapide",
+      "well": "Pozzo",
+      "rose": "Roseto",
+      "moon": "Luna",
+      "crows": "Corvi"
+    },
+    "crypt": {
+      "stairs": "Giardino",
+      "niches": "Loculi",
+      "vasca": "Vasca",
+      "altar": "Diario",
+      "calice": "Calice",
+      "statue": "Statua",
+      "agnese": "Agnese"
+    }
   },
   "items": {
-    "lettera": { "name": "Lettera di Edoardo", "desc": "«...Ti ricordo come ti lasciai: non cambiare mai.»|La carta profuma ancora di tabacco." },
-    "candela": { "name": "Candela accesa", "desc": "La fiamma trema, anche quando non c'è vento." },
-    "chiave":  { "name": "Chiave d'ottone", "desc": "Piccola, fredda. Un capello bianco è attorcigliato all'anello." },
-    "pagina":  { "name": "Pagina strappata", "desc": "«...e la carne tornerà tenera come quella di una sposa. Il resto è nel Libro.»|Il bordo è macchiato di qualcosa di scuro." },
-    "ampolla": { "name": "Ampolla vuota", "desc": "Vetro soffiato. Profuma di mirra." },
-    "rugiada": { "name": "Rugiada di luna", "desc": "Acqua del pozzo che brilla d'argento. Non si scalda nemmeno tra le mani." },
-    "rosa":    { "name": "Rosa insanguinata", "desc": "Il petalo nero ha bevuto il mio sangue. Sembra più viva di prima." },
-    "elisir":  { "name": "Elisir della Prima Notte", "desc": "Limpido come una lacrima. Quando lo agito, sento un battito." }
+    "lettera": {
+      "name": "Lettera di Edoardo",
+      "desc": "«...Ti ricordo come ti lasciai: non cambiare mai.»|La carta profuma ancora di tabacco."
+    },
+    "candela": {
+      "name": "Candela accesa",
+      "desc": "La fiamma trema, anche quando non c'è vento."
+    },
+    "chiave": {
+      "name": "Chiave d'ottone",
+      "desc": "Piccola, fredda. Un capello bianco è attorcigliato all'anello."
+    },
+    "pagina": {
+      "name": "Pagina strappata",
+      "desc": "«...e la carne tornerà tenera come quella di una sposa. Il resto è nel Libro.»|Il bordo è macchiato di qualcosa di scuro."
+    },
+    "ampolla": {
+      "name": "Ampolla vuota",
+      "desc": "Vetro soffiato. Profuma di mirra."
+    },
+    "rugiada": {
+      "name": "Rugiada di luna",
+      "desc": "Acqua del pozzo che brilla d'argento. Non si scalda nemmeno tra le mani."
+    },
+    "rosa": {
+      "name": "Rosa insanguinata",
+      "desc": "Il petalo nero ha bevuto il mio sangue. Sembra più viva di prima."
+    },
+    "elisir": {
+      "name": "Elisir della Prima Notte",
+      "desc": "Limpido come una lacrima. Quando lo agito, sento un battito."
+    },
+    "chiavetta": {
+      "name": "Chiavetta della pendola",
+      "desc": "Ottone consumato. Agnese la stringeva così forte da lasciarsi il segno sul palmo."
+    },
+    "anello": {
+      "name": "Sigillo di Isabella",
+      "desc": "Oro rosso. Lo stemma dei Malaspina: una rosa trafitta da una spina.|È tiepido, come se qualcuno l'avesse appena sfilato dal dito."
+    },
+    "pugnale": {
+      "name": "Pugnale d'argento",
+      "desc": "Lama sottile, elsa a forma di serpente.|Sul fazzoletto che lo avvolgeva, due iniziali ricamate in rosso: I. M."
+    },
+    "calice": {
+      "name": "Calice d'argento",
+      "desc": "Annerito dal tempo. L'orlo è consumato da troppe labbra."
+    }
   },
   "texts": {
     "intro": "{thunder}Villa Malaspina, autunno del 1871.|Edoardo partì per le Americhe quando avevo vent'anni. Giurò che sarebbe tornato a prendermi.|Sono passati trent'anni.|Domani notte, col plenilunio, la sua carrozza varcherà il cancello.|E lo specchio... lo specchio non mente mai.",
-    "bedroom_start": "L:Non riesco a dormire. Non stanotte.|L:Domani lui sarà qui. E troverà... questo.|Tocca l'ambiente per camminare ed esaminare. Tocca un oggetto dell'inventario, poi qualcosa nella stanza, per usarlo.",
+    "bedroom_start": "L:Non riesco a dormire. Non stanotte.|L:Domani lui sarà qui. E troverà... questo.",
     "bedroom_bed": "Il letto a baldacchino dove ho dormito sola per trent'anni.|Le lenzuola odorano di lavanda e di polvere.",
     "bedroom_letter": "Una lettera. La calligrafia di Edoardo.|«Mia Lucrezia, il piroscafo attracca a Genova per Ognissanti. Al plenilunio sarò da te. Ti ricordo come ti lasciai: non cambiare mai.»|L:Non cambiare mai... Che crudeltà, amore mio.",
     "bedroom_candle": "Una candela di sego, ancora accesa.|La prendo. In questa villa, il buio ha i denti.",
@@ -386,7 +541,84 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
     "hint_flask": "L:Mi serve un recipiente per la rugiada. In biblioteca c'era un'ampolla.",
     "hint_dew": "L:La rugiada di luna. Il pozzo in giardino.",
     "hint_alembic": "L:Ho tutto. L'alambicco in biblioteca.",
-    "hint_mirror": "L:«Bevi davanti allo specchio.» Lo specchio della mia camera."
+    "hint_mirror": "L:«Bevi davanti allo specchio.» Lo specchio della mia camera.",
+    "tut_luc_h": "Lucrezia",
+    "tut_luc": "Tocca il pavimento per guidare i suoi passi. Tocca un oggetto o una porta: lei vi si avvicinerà per esaminarlo.",
+    "tut_eye_h": "L'Occhio",
+    "tut_eye": "Quando il buio inganna lo sguardo, tocca l'Occhio: per un istante la villa ti mostrerà tutto ciò che si può toccare.",
+    "tut_eye2_h": "Ciò che la villa nasconde",
+    "tut_eye2": "Ogni cerchio rosso è un ricordo, un oggetto, una porta. Su tastiera: barra spaziatrice.",
+    "tut_hint_h": "Il Sussurro",
+    "tut_hint": "Quando ti perdi, tocca il punto di domanda: Lucrezia ti confiderà cosa le passa per la mente. Su tastiera: H.",
+    "tut_menu_h": "Il Menu",
+    "tut_menu": "Pausa, audio e schermo intero. La villa ricorda ogni tuo passo: la partita si salva da sola.",
+    "tut_end_h": "Ora va'.",
+    "tut_end": "Edoardo arriva domani notte. E lo specchio non mente mai.",
+    "tut_inv_h": "Ciò che porti con te",
+    "tut_inv": "Tocca un oggetto per sceglierlo, poi tocca qualcosa nella stanza per usarlo. Toccalo due volte per esaminarlo.",
+    "c2_intro": "{thunder}Il giorno dopo.|A mezzogiorno un messo ha portato una seconda lettera. Il mare ha trattenuto il piroscafo di Edoardo: tre notti ancora.|L'elisir mi ha restituito i miei vent'anni. Ma il libro lo diceva: una notte soltanto.|Al tramonto, sul cuscino, ho trovato il primo capello bianco.|E la fame... la fame non se n'è mai andata.",
+    "c2_bedroom_start": "L:Le mie mani. Le macchie tornano ad affiorare, come inchiostro sotto la carta.|L:Sta svanendo. Troppo presto. Lui non deve vedermi così.|{whisper}Dallo specchio, qualcuno pronuncia il mio nome.",
+    "c2_mirror1": "{musicbox}Nel vetro, al posto del mio riflesso, c'è lei.|I:Lucrezia. Figlia mia. Quanto sei bella stanotte.|L:Madre...? Voi siete morta. Vi ho vista nella bara.|I:I Malaspina non muoiono, bambina. Aspettano. Come hai aspettato tu.|I:Hai bevuto l'elisir. Ora dentro di te c'è qualcosa che ha fame. Ed è appena nato.|I:Il sangue di una vergine, ogni plenilunio. Solo così la bestia resta in catene.|L:La bestia...?|I:Credevi davvero che in paese mi sentissero ululare per una diceria?|I:Scendi nella mia cripta, sotto la lapide. Le mie ragazze ti diranno il resto.|I:Il mio sigillo apre la porta dei morti. L'ho affidato a chi custodisce il tempo.|{whisper}Il volto si scioglie nel vetro come cera calda.",
+    "c2_mirror2": "{whisper}I:Il tempo, Lucrezia. Chi custodisce il tempo?~Lo specchio è vuoto. Non mostra nemmeno me.~I:La luna sale, figlia mia. E con lei la fame.",
+    "c2_mirror_letter": "Mostro la lettera allo specchio.|I:«Non cambiare mai.» Ah, gli uomini. Amano ciò che il tempo ha già divorato.|I:Vuoi che ti ritrovi come ti lasciò? Allora impara a nutrirti.",
+    "c2_mirror_candle": "Nel riflesso, la fiamma è nera.",
+    "c2_bed": "Le lenzuola sono strappate. Lunghi solchi, come di unghie.|L:Non ricordo di averlo fatto. Non ricordo.",
+    "c2_window": "{thunder}La luna sorge dietro i cipressi. È rossa. Rossa come una ferita.|Il mio cuore accelera mentre la guardo, come se la riconoscesse.",
+    "c2_drawer": "Il cassetto di mia madre. Capelli bianchi, un dente da latte.|L:Adesso mi chiedo di chi fosse, quel dente.",
+    "c2_corridor_enter": "Nel corridoio, una ragazza stringe una lucerna spenta.|È Agnese, la serva arrivata dal paese a San Michele. Ha sedici anni.|{heartbeat}La sento prima di vederla. Il suo cuore. Il suo sangue che corre.",
+    "c2_agnese1": "A:Signora! Siete... siete voi? Sembrate un'altra.|L:Una buona notte di sonno, Agnese.|A:La lucerna mi si è spenta, e il vento ha cominciato a cantare. Con voci di ragazze.|A:In paese dicono che le serve della signora Isabella non tornavano mai a casa.|{hunger}L:...Il suo collo. Il battito sotto la pelle, come un uccellino in gabbia.|L:Cosa mi sta succedendo?",
+    "c2_agnese2": "A:Vi prego, signora, non lasciatemi al buio.~A:Avete una luce? La mia lucerna è morta.~A:Le voci... le sentite anche voi?",
+    "c2_agnese_lamp": "Accosto la candela alla sua lucerna. La fiamma passa dall'una all'altra come un segreto.|A:Grazie, signora. Che Dio vi benedica.|A:Prendete questa: è la chiavetta della pendola. Ogni sera la carico, ma stanotte ho paura di toccarla.|A:Si è fermata di nuovo alle tre e trentatré.|{hunger}Le sue dita sfiorano le mie. Calde. Così calde.",
+    "c2_agnese3": "A:La pendola si è fermata... come ogni notte.~A:Restate vicino a me, signora?~A:Avete le mani fredde come il marmo.~{hunger}A:Signora... perché mi guardate così?",
+    "c2_agnese_letter": "A:Non so leggere, signora. Ma è una bella calligrafia. Di un innamorato?|L:Di un uomo che arriverà tra tre notti. E che deve trovarmi bella.",
+    "c2_agnese_dagger": "{heartbeat}La lama trema nella mia mano.|L:No. Non così. Non lei.",
+    "c2_clock": "Ferma alle tre e trentatré. Lo sportello del pendolo è chiuso a chiave.",
+    "c2_clock_open": "{creak}La chiavetta gira. Lo sportello si apre.|Il pendolo non è di ottone: è un anello. Un sigillo d'oro appeso a un capello nero.|{chime}La pendola rintocca. Tre volte.|L:«Chi custodisce il tempo.» Madre, siete sempre stata crudele con gli enigmi.",
+    "c2_clock2": "Il pendolo è fermo. Eppure lo sento ticchettare.~Tic. Tac. Le lancette non si muovono.",
+    "c2_mother": "Mia madre sorride dal ritratto. Ha gli occhi rossi, adesso.~I:...brava bambina...",
+    "c2_young": "Il ritratto della ragazza che fui.|{whisper}Giurerei che il dipinto sia invecchiato al posto mio.",
+    "c2_anc": "Gli antenati mi fissano. Nessuno di loro sembra sorpreso.~Nonna Ginevra ha la bocca socchiusa. Prima era chiusa.",
+    "c2_library_enter": "Il fuoco brucia ancora. Nessuno lo alimenta, eppure non si spegne mai.",
+    "c2_shelves": "I libri di mia madre. Ora so cosa cercava, tra queste pagine.",
+    "c2_shelves_dagger": "«De Sanguine Virginum». Lo sfilo dallo scaffale.|Dietro, avvolto in un fazzoletto ricamato, c'è un pugnale d'argento.|Sul fazzoletto due lettere, cucite in filo rosso: I. M.|L:Isabella Malaspina.",
+    "c2_shelves2": "Anatomia. Alchimia. Sangue. La biblioteca di una santa, direbbe il parroco.",
+    "c2_grimoire": "Il «Liber Juventutis» si è aperto da solo su una pagina nuova.|«Ciò che il primo elisir concede, solo il sangue lo trattiene.»|«Nella vasca di marmo, sotto la luna piena. Una vergine, un calice, una lama.»",
+    "c2_fire": "Il fuoco sussurra il mio nome. Stanotte capisco la sua lingua.~Le fiamme si piegano verso di me, come cani verso il padrone.",
+    "c2_raven": "{caw}C:Il prezzo.~C:Vergine... vergine...~{caw}C:Bestia.",
+    "c2_alembic": "L'alambicco è vuoto. Non resta una sola goccia di elisir.",
+    "c2_garden_enter": "{caw}La luna è rossa sopra le tombe.|Dal fondo del giardino sale un canto. Voci di ragazze, sottili come vetro.",
+    "c2_tomb": "«Isabella Malaspina, 1802 – 1849. Bella per sempre.»|Sulla lastra c'è un incavo piccolo e rotondo. Come per un sigillo.",
+    "c2_tomb_open": "Premo il sigillo nell'incavo. Combacia.|{creak}{shake}La lastra scivola via con un gemito di pietra.|Sotto, una scala scende nel buio. Sale un odore di ruggine e di rose.|{choir}E il canto, adesso, è vicinissimo.",
+    "c2_well": "Nel pozzo, la luna rossa galleggia come un tuorlo di sangue.",
+    "c2_rose": "Sullo stelo dove colsi la rosa nera è spuntato un bocciolo nuovo.|Rosso. E pulsa.",
+    "c2_moon": "La luna di sangue. Mi chiama come una madre chiama la figlia.~L:Non guardarmi così. Non sono ancora tua.",
+    "c2_crows": "{caw}I corvi non volano via, stanotte. Mi guardano come si guarda una di famiglia.",
+    "c2_crypt_enter": "{choir}La cripta dei Malaspina.|Non ci sono bare, qui. Solo nicchie nel muro, decine di nicchie. E una vasca di marmo, al centro.|L:Le sue ragazze.",
+    "c2_niches1": "Nelle nicchie, ossa piccole, ancora avvolte in brandelli di grembiule.|Su ogni lastra, un nome e un'età. «Lucia, 16». «Teresa, 15». «Maddalena, 17»...|Quarantasette nomi.|{stinger}L'ultima lastra è nuova. Il nome è inciso di fresco, la polvere di marmo ancora bianca.|«Agnese, 16».|L:No. No, no, no.",
+    "c2_niches2": "Quarantasette nomi. Quarantotto lastre.~{choir}Le voci cantano una ninna nanna. Mia madre la cantava a me.~«Agnese, 16». La polvere di marmo è ancora fresca.",
+    "c2_vasca": "Una vasca di marmo bianco, con zampe di leone.|Il fondo è macchiato di un rosso che nessuna acqua ha mai lavato via.|L:Qui si bagnava. Ogni plenilunio.",
+    "c2_vasca2": "La vasca attende. Un calice, una lama, una vergine.",
+    "c2_vasca_nodiary": "L:Non so ancora cosa farne. Devo capire.",
+    "c2_vasca_noblade": "L:Un calice, una lama. Mi manca la lama.",
+    "c2_vasca_dagger": "L:Il calice, prima. Il sangue va raccolto.",
+    "c2_altar": "Sull'altare, il diario di mia madre. La sua calligrafia, minuta e feroce.|«3 novembre 1848. La quarantasettesima. Piangeva, all'inizio. Poi ha smesso.»|«Ogni plenilunio la bestia chiede. Se non le dai una vergine, se la prende da sola.»|«Il sangue di chi la porta in sé non vale nulla: la bestia non mangia sé stessa.»|«Lucrezia aspetta il suo Edoardo. Che dolce, stupida bambina. Un giorno avrà fame anche lei.»|L:Madre... cosa avete fatto di me?",
+    "c2_agnese_arrives": "{creak}Passi sulla scala. Una luce che trema.|A:Signora? Vi ho seguita... non volevo restare sola lassù.|{hunger}L:Agnese. Non dovevi venire qui.",
+    "c2_altar2": "«Il sangue di chi la porta in sé non vale nulla: la bestia non mangia sé stessa.»",
+    "c2_calice": "Un calice d'argento annerito. Lo prendo. È più pesante di quanto sembri.",
+    "c2_statue": "Una statua velata. Sotto il velo di marmo si indovina un sorriso.|{whisper}Ha la bocca di mia madre. E i denti... troppi denti.",
+    "c2_agnese_crypt": "A:Che posto è questo, signora? Perché ci sono tutti quei nomi?~A:Quella lastra nuova... cosa c'è scritto? Io non so leggere.~{hunger}A:Signora, i vostri occhi... sono rossi.~A:Andiamo via, vi prego. Qui sotto fa freddo.",
+    "c2_final": "L:No. Non lei. Il libro mente.|L:Prenderò il mio sangue. Sarà il mio, a placarla.|{prick}La lama apre il palmo. Il calice si riempie, goccia dopo goccia.|Verso il sangue nella vasca.|...|{stinger}{shake}Il marmo lo rifiuta. Il sangue ribolle, si fa nero, e mi sputa addosso il suo odore.|{whisper}I:La bestia non mangia sé stessa, figlia mia.|{hunger}{heartbeat}E la fame esplode. Come un pugno che si apre nel petto.|A:Signora...? Signora, che avete?|L:Agnese. Corri.|L:CORRI!|{red}{shake}La lucerna cade.",
+    "c2_dawn": "...|L'alba.|Mi sveglio nel mio letto. La pelle liscia, tesa, splendente. Mai stata così bella.|Le lenzuola sono rosse.|Sotto le unghie ho qualcosa di scuro. Sulla lingua, un sapore di ferro e di miele.|L:Agnese...?|Nessuno risponde. In tutta la villa, nessuno risponde.",
+    "c2_card": "Nessuno, in paese, rivedrà Agnese. E Lucrezia, stamattina, non è mai stata così bella.",
+    "c2_hint_mirror": "L:Lo specchio mi ha chiamata per nome. Devo tornare a guardarlo.",
+    "c2_hint_agnese": "L:«Chi custodisce il tempo»... la pendola nel corridoio. Agnese ne ha cura, ogni sera.",
+    "c2_hint_lamp": "L:Agnese ha paura del buio. La mia candela potrebbe ridarle la luce.",
+    "c2_hint_clock": "L:La chiavetta della pendola. Il pendolo nasconde qualcosa.",
+    "c2_hint_tomb": "L:Il sigillo di mia madre. La sua lapide, in giardino.",
+    "c2_hint_crypt": "L:Sull'altare della cripta c'è qualcosa scritto da lei. Devo leggerlo.",
+    "c2_hint_calice": "L:Il calice, sull'altare della cripta.",
+    "c2_hint_dagger": "L:Mi serve una lama. Mia madre nascondeva i suoi segreti tra i libri della biblioteca.",
+    "c2_hint_vasca": "L:Il calice, la lama, la vasca. Forse il mio sangue basterà."
   }
 }
 </script>
@@ -523,17 +755,20 @@ function applyContent(remote){
   const full = (CONTENT.game?.title || 'Lucrezia Malaspina').trim(), sp = full.indexOf(' ');
   const first = sp > 0 ? full.slice(0, sp) : full, rest = sp > 0 ? full.slice(sp + 1) : '';
   $('gTitle').textContent = first; $('gReflect').textContent = first; $('gSur').textContent = rest;
-  document.title = `${full} — Capitolo I`;
+  setChapLabel();
   $('gTag').textContent = CONTENT.game?.tagline || '';
   $('motd').textContent = CONTENT.game?.motd || '';
-  const c1 = CONTENT.chapters?.c1;
-  if (c1) $('chapLabel').textContent = `Capitolo ${c1.num} · ${c1.title}`;
   renderChapters(); renderInv();
 }
 
+function setChapLabel(){
+  const full = (CONTENT.game?.title || 'Lucrezia Malaspina').trim();
+  const c = CONTENT.chapters?.['c' + S.chapter] || DEF.chapters['c' + S.chapter];
+  if (c) { $('chapLabel').textContent = `Capitolo ${c.num} · ${c.title}`; document.title = `${full} — Capitolo ${c.num}: ${c.title}`; }
+}
 // ---------------- save / load ----------------
 let saveTimer = 0;
-function snapshot(){ return { scene: S.scene, x: Math.round(luc.x), face: luc.face, inv: S.inv.slice(), flags: { ...F }, chapter: 1, v: 1 }; }
+function snapshot(){ return { scene: S.scene, x: Math.round(luc.x), face: luc.face, inv: S.inv.slice(), flags: { ...F }, chapter: S.chapter, v: 1 }; }
 function save(){ clearTimeout(saveTimer); saveTimer = setTimeout(doSave, 350); }
 async function doSave(){
   if (mode === 'title') return;
@@ -582,7 +817,7 @@ function loopNoise(buf, type, freq, Q, gain){
 function setAmb(scene){
   if (!A.ctx) return;
   const t = A.ctx.currentTime;
-  const c = { bedroom: { rain: .055, wind: .035 }, corridor: { rain: .01, wind: .02 }, library: { rain: 0, wind: .012 }, garden: { rain: 0, wind: .1 } }[scene] || { rain: 0, wind: .06 };
+  const c = { bedroom: { rain: .055, wind: .035 }, corridor: { rain: .01, wind: .02 }, library: { rain: 0, wind: .012 }, garden: { rain: 0, wind: .1 }, crypt: { rain: 0, wind: .028 } }[scene] || { rain: 0, wind: .06 };
   A.rain.g.gain.setTargetAtTime(c.rain, t, .8); A.wind.g.gain.setTargetAtTime(c.wind, t, .8);
 }
 let lastTick = 0;
@@ -593,6 +828,8 @@ function ambTick(){
   if (sc === 'corridor' && mode === 'play' && performance.now() - lastTick > 1000) { lastTick = performance.now(); noise(A.white, .03, .05, 'bandpass', 3600, 9); }
   if (sc === 'garden' && Math.random() < .004) Math.random() < .5 ? sfx.owl() : sfx.caw(.4);
   if (sc === 'bedroom' && Math.random() < .002) sfx.creak(.5);
+  if (sc === 'crypt' && mode === 'play') { if (Math.random() < .025) sfx.drip(); if (Math.random() < .0025) sfx.choir(); }
+  if (sc === 'garden' && S.chapter === 2 && mode === 'play' && Math.random() < .002) sfx.choir();
 }
 function tone(type, f0, f1, dur, vol, delay = 0, filt){
   if (!A.ctx) return;
@@ -623,6 +860,18 @@ const sfx = {
   prick(){ tone('sine', 2600, 1700, .18, .06); noise(A.white, .12, .1, 'highpass', 3000); vibrate(80); },
   drink(){ for (let i = 0; i < 4; i++) noise(A.brown, .2, .35, 'lowpass', 260 + i * 70, 5, i * .24, .02); },
   owl(){ tone('sine', 410, 370, .35, .035); tone('sine', 420, 350, .55, .035, .5); },
+  drip(){ tone('sine', 1500 + Math.random() * 500, 500, .16, .05); },
+  choir(){
+    if (!A.ctx) return; const a = A.ctx, t0 = a.currentTime;
+    [[392, 0], [466.2, .4], [587.3, .8], [523.3, 2.6], [440, 3]].forEach(([f, d]) => {
+      const o = a.createOscillator(), v = a.createOscillator(), vg = a.createGain(), g = a.createGain(), lp = a.createBiquadFilter();
+      o.type = 'triangle'; o.frequency.value = f; v.frequency.value = 5 + Math.random(); vg.gain.value = f * .006; v.connect(vg); vg.connect(o.frequency);
+      lp.type = 'bandpass'; lp.frequency.value = 900; lp.Q.value = .8;
+      const t = t0 + d; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.03, t + 1.2); g.gain.exponentialRampToValueAtTime(.0001, t + 4.2);
+      o.connect(lp); lp.connect(g); g.connect(A.master); o.start(t); v.start(t); o.stop(t + 4.3); v.stop(t + 4.3);
+    });
+    noise(A.white, 3.5, .05, 'bandpass', 2600, 5, 0, 1.2);
+  },
   door(){ sfx.creak(1); noise(A.brown, .5, .4, 'lowpass', 200, 1, .9, .01); }
 };
 function setMuted(m){ A.muted = m; LS.set('lucrezia_mute', m ? '1' : '0'); if (A.master) A.master.gain.setTargetAtTime(m ? 0 : .9, A.ctx.currentTime, .1); $('mAudio').textContent = 'Audio: ' + (m ? 'no' : 'sì'); }
@@ -922,6 +1171,7 @@ const SCENES = {
         drawHead(c, !!F.young, !!F.young);
         c.restore();
       }
+      if (isaA > .01) { c.save(); ell(c, 950, 318, 80, 120); c.clip(); ghostFace(c, 950, 300, 1.7, isaA, t); c.restore(); }
     },
     lights(t){
       const L = [{ x: 640, y: 250, r: 300, a: .45 + flashA * .5 }];
@@ -987,8 +1237,9 @@ const SCENES = {
         ell(c, x, 330, 13, 17); c.fill(); c.beginPath(); c.moveTo(x - 20, 350); c.quadraticCurveTo(x, 340, x + 20, 350); c.lineTo(x + 26, 575); c.lineTo(x - 26, 575); c.fill();
         c.restore();
       }
+      if (agneseHere()) agLamp = drawAgnese(c, AGX.corridor, 646, luc.x < AGX.corridor ? -1 : 1, t, !!F.lampLit, true);
     },
-    lights(t){ return [{ x: 1205, y: 520, r: 170, a: .35 }]; }
+    lights(t){ const L = [{ x: 1205, y: 520, r: 170, a: .35 }]; if (agneseHere() && F.lampLit && agLamp) L.push({ x: agLamp.x, y: agLamp.y, r: 240 + Math.sin(t * 11) * 6, a: .9, warm: 1 }); return L; }
   },
 
   // ------------------------------------------------ BIBLIOTECA
@@ -1105,8 +1356,9 @@ const SCENES = {
       const R = rng(51);
       c.fillStyle = LG(c, 0, -300, 0, 540, [[0, '#010207'], [.6, '#0b1222'], [1, '#1d2537']]); c.fillRect(X0, Y0, X1 - X0, 560 - Y0);
       for (let i = 0; i < 180; i++) { c.fillStyle = `rgba(220,225,255,${R() * .6})`; c.fillRect(X0 + R() * (X1 - X0), -300 + R() * 650, R() < .1 ? 2 : 1, R() < .1 ? 2 : 1); }
-      c.fillStyle = RG(c, 985, 135, 30, 300, [[0, 'rgba(170,190,240,.3)'], [1, 'rgba(170,190,240,0)']]); c.fillRect(600, -200, 800, 700);
-      c.fillStyle = RG(c, 975, 125, 4, 52, [[0, '#f4f2ea'], [1, '#c3c6cc']]); c.beginPath(); c.arc(985, 135, 50, 0, 7); c.fill();
+      const redMoon = S.chapter === 2;
+      c.fillStyle = RG(c, 985, 135, 30, 300, redMoon ? [[0, 'rgba(230,60,60,.32)'], [1, 'rgba(230,60,60,0)']] : [[0, 'rgba(170,190,240,.3)'], [1, 'rgba(170,190,240,0)']]); c.fillRect(600, -200, 800, 700);
+      c.fillStyle = RG(c, 975, 125, 4, 52, redMoon ? [[0, '#f0b9a4'], [1, '#9a2a24']] : [[0, '#f4f2ea'], [1, '#c3c6cc']]); c.beginPath(); c.arc(985, 135, 50, 0, 7); c.fill();
       c.fillStyle = 'rgba(90,95,110,.18)'; for (const [mx, my, mr] of [[970, 120, 12], [1000, 150, 9], [995, 112, 6], [968, 152, 7]]) { c.beginPath(); c.arc(mx, my, mr, 0, 7); c.fill(); }
       c.fillStyle = '#080b14'; c.beginPath(); c.moveTo(X0, 470); c.quadraticCurveTo(300, 400, 640, 440); c.quadraticCurveTo(950, 470, 1300, 420); c.lineTo(X1, 430); c.lineTo(X1, 560); c.lineTo(X0, 560); c.fill();
       c.fillStyle = '#05070c'; for (const [x, y, sc] of [[470, 448, .5], [800, 455, .45], [860, 452, .35], [380, 452, .4]]) { c.fillRect(x - 2 * sc * 4, y - 40 * sc, 4 * sc * 4, 40 * sc); c.fillRect(x - 10 * sc * 2, y - 30 * sc, 20 * sc * 2, 4 * sc * 2); }
@@ -1157,6 +1409,12 @@ const SCENES = {
         c.fillStyle = '#050003'; for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2 + t * .1; ell(c, 905 + Math.cos(a) * 6, 492 + Math.sin(a) * 5, 7, 4.5, a); c.fill(); }
         c.fillStyle = '#2a0008'; c.beginPath(); c.arc(905, 492, 4, 0, 7); c.fill();
       }
+      if (F.cryptOpen) {
+        c.fillStyle = '#000'; c.beginPath(); c.moveTo(262, 600); c.lineTo(378, 600); c.lineTo(392, 626); c.lineTo(248, 626); c.closePath(); c.fill();
+        c.strokeStyle = 'rgba(160,30,40,.35)'; c.lineWidth = 2; for (let i = 0; i < 3; i++) line(c, 256 + i * 4, 606 + i * 7, 384 - i * 4, 606 + i * 7);
+        c.fillStyle = RG(c, 320, 612, 0, 70, [[0, `rgba(170,20,35,${.25 + Math.sin(t * 2) * .08})`], [1, 'rgba(170,20,35,0)']]); c.fillRect(250, 560, 140, 100);
+        c.fillStyle = '#26272b'; c.save(); c.translate(430, 612); c.rotate(.12); c.fillRect(-64, -8, 128, 14); c.restore();
+      }
       // fuoco fatuo vicino alla lapide
       const wx = 330 + Math.sin(t * .7) * 26, wy = 430 + Math.cos(t * 1.1) * 14;
       c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = RG(c, wx, wy, 0, 26, [[0, 'rgba(150,200,255,.75)'], [1, 'rgba(80,120,255,0)']]); c.fillRect(wx - 26, wy - 26, 52, 52); c.restore();
@@ -1178,6 +1436,161 @@ const SCENES = {
     lights(t){ return [{ x: 985, y: 135, r: 700, a: .5 }, { x: 330 + Math.sin(t * .7) * 26, y: 430 + Math.cos(t * 1.1) * 14, r: 150, a: .6 }]; }
   }
 };
+// ------------------------------------------------ CRIPTA (Capitolo II)
+SCENES.crypt = {
+  floorY: 646, minX: 110, maxX: 1210,
+  stat(c){
+    const R = rng(77);
+    c.fillStyle = LG(c, 0, -200, 0, 600, [[0, '#030203'], [1, '#18130f']]); c.fillRect(X0, Y0, X1 - X0, 600 - Y0);
+    c.strokeStyle = 'rgba(0,0,0,.5)'; c.lineWidth = 2;
+    for (let y = -284, r = 0; y < 590; y += 44, r++) { line(c, X0, y, X1, y); for (let x = X0 + (r % 2 ? 40 : 0); x < X1; x += 80) line(c, x, y, x, y + 44); }
+    for (let i = 0; i < 70; i++) { c.fillStyle = R() < .5 ? 'rgba(120,100,80,.05)' : 'rgba(40,60,40,.06)'; ell(c, X0 + R() * (X1 - X0), R() * 600, 10 + R() * 40, 6 + R() * 20); c.fill(); }
+    // volte
+    c.strokeStyle = '#1d1814'; c.lineWidth = 28;
+    for (const [a, b] of [[170, 540], [540, 800], [800, 1130]]) { c.beginPath(); c.moveTo(a, 60); c.quadraticCurveTo((a + b) / 2, -70, b, 60); c.stroke(); }
+    c.strokeStyle = 'rgba(168,132,63,.08)'; c.lineWidth = 2;
+    for (const [a, b] of [[170, 540], [540, 800], [800, 1130]]) { c.beginPath(); c.moveTo(a, 74); c.quadraticCurveTo((a + b) / 2, -50, b, 74); c.stroke(); }
+    for (const px of [170, 540, 800, 1130]) {
+      c.fillStyle = LG(c, px - 22, 0, px + 22, 0, [[0, '#15120f'], [.45, '#3a332b'], [1, '#110e0c']]); c.fillRect(px - 20, 50, 40, 540);
+      c.fillStyle = '#2a241e'; c.fillRect(px - 30, 42, 60, 14); c.fillRect(px - 30, 574, 60, 18);
+    }
+    // loculi
+    for (let row = 0; row < 3; row++) for (let col = 0; col < 4; col++) {
+      const nx = 206 + col * 80, ny = 140 + row * 118, last = row === 2 && col === 3;
+      arch(c, nx - 4, ny - 4, 66, 92); c.fillStyle = '#29231d'; c.fill();
+      arch(c, nx, ny, 58, 86); c.fillStyle = '#040203'; c.fill();
+      if (!last) {
+        if (R() < .7) { c.fillStyle = '#b9ad98'; ell(c, nx + 29, ny + 64, 11, 10); c.fill(); c.fillRect(nx + 23, ny + 70, 12, 7); c.fillStyle = '#050304'; ell(c, nx + 25, ny + 63, 3, 3.4); c.fill(); ell(c, nx + 33, ny + 63, 3, 3.4); c.fill(); }
+        c.fillStyle = 'rgba(200,190,170,.35)'; for (let k = 0; k < 3; k++) { c.save(); c.translate(nx + 12 + R() * 34, ny + 80); c.rotate(R() - .5); c.fillRect(-9, -1.5, 18, 3); c.restore(); }
+        c.fillStyle = 'rgba(190,180,160,.18)'; c.fillRect(nx + 6, ny + 74, 46, 8);
+      }
+      c.fillStyle = last ? '#d6cfc0' : '#4a443c'; c.fillRect(nx + 5, ny + 90, 48, 13);
+      c.fillStyle = last ? 'rgba(60,10,15,.9)' : 'rgba(10,8,6,.55)'; c.fillRect(nx + 12, ny + 95, 34, 2); c.fillRect(nx + 18, ny + 99, 22, 1.5);
+    }
+    // statua velata
+    c.fillStyle = '#25211d'; c.fillRect(905, 318, 90, 120); c.fillStyle = '#3a342d'; c.fillRect(897, 312, 106, 10); c.fillRect(897, 432, 106, 10);
+    c.fillStyle = LG(c, 900, 0, 1000, 0, [[0, '#4a4640'], [.45, '#8d877c'], [1, '#3a3631']]);
+    c.beginPath(); c.moveTo(950, 150); c.quadraticCurveTo(975, 150, 978, 182); c.quadraticCurveTo(1004, 200, 1000, 260); c.quadraticCurveTo(1004, 296, 996, 312); c.lineTo(904, 312); c.quadraticCurveTo(896, 296, 900, 260); c.quadraticCurveTo(896, 200, 922, 182); c.quadraticCurveTo(925, 150, 950, 150); c.fill();
+    c.strokeStyle = 'rgba(0,0,0,.3)'; c.lineWidth = 1.5; for (let i = 0; i < 6; i++) { c.beginPath(); c.moveTo(925 + i * 10, 190); c.quadraticCurveTo(920 + i * 12, 250, 912 + i * 16, 310); c.stroke(); }
+    c.fillStyle = 'rgba(0,0,0,.35)'; ell(c, 950, 176, 16, 18); c.fill();
+    c.fillStyle = 'rgba(90,10,18,.7)'; c.fillRect(942, 186, 16, 2.5);
+    // altare
+    c.fillStyle = '#2a2622'; c.fillRect(862, 480, 176, 96); c.fillStyle = '#4a443c'; c.fillRect(850, 468, 200, 14); c.fillStyle = 'rgba(255,255,255,.06)'; c.fillRect(850, 468, 200, 2);
+    c.fillStyle = '#3a0910'; c.beginPath(); c.moveTo(880, 482); c.lineTo(1020, 482); c.lineTo(1020, 528); for (let px = 1020; px > 880; px -= 14) c.quadraticCurveTo(px - 7, 540, px - 14, 528); c.closePath(); c.fill();
+    c.fillStyle = 'rgba(168,132,63,.4)'; c.fillRect(880, 482, 140, 2);
+    c.fillStyle = '#ddd2bd'; c.fillRect(868, 438, 12, 30); c.fillRect(1020, 444, 12, 24);
+    c.fillStyle = 'rgba(221,210,189,.8)'; c.fillRect(866, 466, 16, 3); c.fillRect(1018, 466, 16, 3);
+    // diario aperto
+    c.fillStyle = '#3a1a10'; c.fillRect(904, 462, 70, 7);
+    c.fillStyle = LG(c, 906, 0, 972, 0, [[0, '#b3a383'], [.48, '#d7c8a6'], [.5, '#76674e'], [.52, '#d7c8a6'], [1, '#b3a383']]);
+    c.beginPath(); c.moveTo(906, 463); c.quadraticCurveTo(922, 450, 939, 458); c.quadraticCurveTo(956, 450, 972, 463); c.closePath(); c.fill();
+    c.strokeStyle = 'rgba(90,10,20,.6)'; c.lineWidth = 1; for (let i = 0; i < 3; i++) { line(c, 912, 459 - i * 2.5, 934, 457 - i * 2.5); line(c, 944, 457 - i * 2.5, 966, 459 - i * 2.5); }
+    // scala verso il giardino
+    arch(c, 22, 228, 136, 346); c.fillStyle = '#26221f'; c.fill();
+    arch(c, 34, 240, 112, 334); c.fillStyle = LG(c, 0, 240, 0, 574, [[0, '#2a0c10'], [.35, '#070304'], [1, '#000']]); c.fill();
+    c.save(); arch(c, 34, 240, 112, 334); c.clip(); c.strokeStyle = 'rgba(160,60,60,.18)'; c.lineWidth = 2;
+    for (let i = 0; i < 10; i++) { const y = 574 - i * 22; line(c, 34 + i * 7, y, 146, y); } c.restore();
+    // vasca
+    c.fillStyle = 'rgba(0,0,0,.6)'; ell(c, 680, 612, 150, 14); c.fill();
+    c.fillStyle = '#9b958a'; for (const fx of [584, 628, 732, 776]) { ell(c, fx, 600, 10, 9); c.fill(); }
+    c.fillStyle = LG(c, 0, 520, 0, 600, [[0, '#d7d0c3'], [.6, '#8d877c'], [1, '#4f4a43']]);
+    c.beginPath(); c.moveTo(556, 520); c.lineTo(804, 520); c.quadraticCurveTo(800, 596, 760, 598); c.lineTo(600, 598); c.quadraticCurveTo(560, 596, 556, 520); c.fill();
+    c.strokeStyle = 'rgba(80,70,60,.35)'; c.lineWidth = 1; for (let i = 0; i < 5; i++) { c.beginPath(); c.moveTo(600 + i * 40, 528); c.quadraticCurveTo(610 + i * 40, 560, 598 + i * 42, 596); c.stroke(); }
+    c.fillStyle = '#e2dccf'; ell(c, 680, 520, 128, 15); c.fill();
+    c.fillStyle = '#2a0408'; ell(c, 680, 521, 114, 10); c.fill();
+    c.fillStyle = '#5a0710'; for (const [dx, h] of [[600, 26], [652, 14], [744, 34], [770, 12]]) { c.fillRect(dx, 528, 3.5, h); c.beginPath(); c.arc(dx + 1.75, 528 + h, 3, 0, 7); c.fill(); }
+    // catene
+    c.strokeStyle = '#1e1b19'; c.lineWidth = 2.5;
+    for (const [cx, len] of [[350, 120], [620, 70], [1080, 150]]) for (let y = 40; y < 40 + len; y += 12) { ell(c, cx, y, 3, 6, (y / 12) % 2 ? 0 : 0); c.stroke(); }
+    // pavimento
+    c.fillStyle = LG(c, 0, 590, 0, 760, [[0, '#1a1613'], [1, '#030202']]); c.fillRect(X0, 590, X1 - X0, Y1 - 590);
+    c.fillStyle = 'rgba(0,0,0,.6)'; c.fillRect(X0, 590, X1 - X0, 5);
+    c.strokeStyle = 'rgba(0,0,0,.5)'; c.lineWidth = 1.5; let yy = 590, gap = 12;
+    while (yy < Y1) { line(c, X0, yy, X1, yy); for (let x = X0 + R() * 120; x < X1; x += 110 + R() * 90) line(c, x, yy, x - 10, yy + gap); yy += gap; gap *= 1.3; }
+    c.fillStyle = 'rgba(70,8,16,.35)'; ell(c, 690, 660, 140, 18); c.fill();
+    c.fillStyle = '#b9ad98'; for (const [bx, by] of [[470, 640], [1150, 650], [300, 660]]) { c.save(); c.translate(bx, by); c.rotate(R()); c.fillRect(-12, -2, 24, 4); c.restore(); }
+    c.beginPath(); c.arc(1180, 628, 10, 0, 7); c.fill(); c.fillStyle = '#050304'; ell(c, 1176, 627, 2.6, 3); c.fill(); ell(c, 1184, 627, 2.6, 3); c.fill();
+    cobweb(c, 0, 0, 130, 1); cobweb(c, 1280, 0, 120, -1);
+  },
+  dyn(c, t){
+    // le vergini
+    c.save(); c.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < 4; i++) {
+      const dir = i % 2 ? 1 : -1, gx = ((t * 11 * dir + i * 410) % 1500 + 1500) % 1500 - 110, gy = 300 + Math.sin(t * .5 + i) * 22;
+      const a = .07 + .05 * Math.sin(t * .8 + i * 2);
+      c.globalAlpha = Math.max(0, a);
+      c.fillStyle = RG(c, gx, gy - 70, 0, 26, [[0, 'rgba(230,235,255,1)'], [1, 'rgba(230,235,255,0)']]); c.fillRect(gx - 26, gy - 96, 52, 52);
+      c.fillStyle = LG(c, 0, gy - 50, 0, gy + 160, [[0, 'rgba(210,220,250,.9)'], [1, 'rgba(210,220,250,0)']]);
+      c.beginPath(); c.moveTo(gx - 12, gy - 50); c.quadraticCurveTo(gx - 34, gy + 60, gx - 40 + Math.sin(t * 2 + i) * 8, gy + 160); c.lineTo(gx + 40 + Math.sin(t * 2.3 + i) * 8, gy + 160); c.quadraticCurveTo(gx + 34, gy + 60, gx + 12, gy - 50); c.fill();
+    }
+    c.restore();
+    flame(c, 874, 438, 1, t, 1); flame(c, 1026, 444, 1, t, 2);
+    if (!F.caliceTaken) {
+      c.fillStyle = LG(c, 984, 0, 1008, 0, [[0, '#5a5650'], [.5, '#c9c2b2'], [1, '#4a4640']]);
+      c.beginPath(); c.moveTo(982, 434); c.quadraticCurveTo(996, 458, 1010, 434); c.closePath(); c.fill(); c.fillRect(994, 448, 4, 14); ell(c, 996, 464, 10, 3); c.fill();
+      c.fillStyle = 'rgba(120,0,15,.8)'; ell(c, 996, 435, 13, 2.5); c.fill();
+    }
+    // goccia dal soffitto
+    const dy = (t * 260) % 640; c.fillStyle = 'rgba(120,10,20,.7)'; c.fillRect(682, 40 + dy * .75, 2, 6);
+    c.fillStyle = `rgba(200,40,60,${.06 + Math.sin(t * 1.4) * .04})`; ell(c, 680, 521, 100, 7); c.fill();
+    if (agneseHere()) agLamp = drawAgnese(c, AGX.crypt, 646, luc.x < AGX.crypt ? -1 : 1, t, true, true);
+  },
+  lights(t){
+    const L = [{ x: 950, y: 440, r: 380 + Math.sin(t * 13) * 8, a: .95, warm: 1 }, { x: 90, y: 300, r: 200, a: .35 }, { x: 680, y: 520, r: 200, a: .3 }];
+    if (agneseHere() && agLamp) L.push({ x: agLamp.x, y: agLamp.y, r: 230 + Math.sin(t * 11) * 6, a: .85, warm: 1 });
+    return L;
+  }
+};
+// ---------------- Agnese, la serva ----------------
+function drawAgnese(c, x, y, face, t, lit, scared){
+  const k = .88;
+  c.save(); c.translate(x, y);
+  c.fillStyle = 'rgba(0,0,0,.5)'; ell(c, 0, 0, 44, 7); c.fill();
+  c.scale(face * k, k);
+  const tr = scared ? Math.sin(t * 37) * .7 : 0; c.translate(tr, Math.sin(t * 1.5) * .8);
+  c.fillStyle = LG(c, -50, 0, 50, 0, [[0, '#07080c'], [.55, '#1e2029'], [1, '#0b0c11']]);
+  c.beginPath(); c.moveTo(-15, -150); c.bezierCurveTo(-30, -110, -46, -50, -50, 0); c.lineTo(50, 0); c.bezierCurveTo(46, -50, 30, -110, 15, -150); c.closePath(); c.fill();
+  c.fillStyle = LG(c, 0, -150, 0, -10, [[0, '#a59d8c'], [1, '#5f594e']]);
+  c.beginPath(); c.moveTo(-11, -150); c.lineTo(11, -150); c.quadraticCurveTo(26, -70, 30, -16); c.lineTo(-24, -16); c.quadraticCurveTo(-22, -70, -11, -150); c.fill();
+  c.fillStyle = '#181920'; c.beginPath(); c.moveTo(-15, -150); c.lineTo(-16, -200); c.quadraticCurveTo(-8, -214, 0, -214); c.quadraticCurveTo(12, -214, 16, -200); c.lineTo(15, -150); c.closePath(); c.fill();
+  c.fillStyle = '#4a1418'; c.beginPath(); c.moveTo(-18, -206); c.quadraticCurveTo(0, -196, 18, -206); c.lineTo(10, -176); c.lineTo(-12, -178); c.closePath(); c.fill();
+  c.fillStyle = '#ead9c7'; c.fillRect(-4, -226, 9, 14);
+  c.fillStyle = '#ead9c7'; ell(c, 3, -240, 11, 14, .1); c.fill();
+  c.beginPath(); c.moveTo(12, -244); c.lineTo(16, -237); c.lineTo(12, -235); c.fill();
+  c.fillStyle = 'rgba(200,90,90,.25)'; ell(c, 8, -235, 4, 2.5); c.fill();
+  c.fillStyle = '#1a0e10'; ell(c, 8, -243, 1.8, scared ? 1.8 : 1.3); c.fill();
+  c.fillStyle = '#9a4a4a'; c.fillRect(9, -232, 4, 1.4);
+  c.fillStyle = '#b8955a'; c.beginPath(); c.ellipse(-1, -246, 13, 11, 0, Math.PI * .8, Math.PI * 2.1); c.fill();
+  c.strokeStyle = '#a0814a'; c.lineWidth = 6; c.beginPath(); c.moveTo(-8, -240); c.quadraticCurveTo(-16, -210, -12, -180); c.stroke();
+  c.fillStyle = '#d9d2c2'; c.beginPath(); c.ellipse(-2, -253, 14, 8, -.1, Math.PI, Math.PI * 2); c.fill(); c.fillRect(-16, -254, 28, 3);
+  c.strokeStyle = '#181920'; c.lineWidth = 7; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(8, -204); c.quadraticCurveTo(22, -182, 28, -176); c.stroke();
+  c.fillStyle = '#ead9c7'; c.beginPath(); c.arc(29, -175, 3.6, 0, 7); c.fill();
+  // lucerna
+  c.strokeStyle = '#3a3026'; c.lineWidth = 1.6; c.beginPath(); c.arc(30, -170, 6, Math.PI, 0); c.stroke();
+  c.fillStyle = '#2a2219'; c.fillRect(22, -166, 16, 4); c.fillRect(22, -140, 16, 5);
+  c.fillStyle = lit ? 'rgba(255,190,110,.35)' : 'rgba(150,160,170,.12)'; c.fillRect(23, -162, 14, 22);
+  c.strokeStyle = 'rgba(80,70,60,.8)'; c.lineWidth = 1; c.strokeRect(23, -162, 14, 22);
+  c.restore();
+  const lx2 = x + face * 30 * k, ly2 = y - 152 * k;
+  if (lit) flame(c, lx2, ly2 + 4, .55, t, 7);
+  return { x: lx2, y: ly2 };
+}
+// ---------------- il volto di Isabella ----------------
+function ghostFace(c, x, y, k, a, t){
+  c.save(); c.globalAlpha = clamp(a, 0, 1); c.translate(x, y + Math.sin(t * 1.3) * 3); c.scale(k, k);
+  c.fillStyle = '#070308'; c.beginPath(); c.moveTo(-30, -20); c.quadraticCurveTo(-36, 50, -26, 80); c.lineTo(26, 80); c.quadraticCurveTo(36, 50, 30, -20); c.fill();
+  ell(c, 0, -14, 30, 30); c.fill();
+  c.fillStyle = RG(c, -4, -6, 2, 30, [[0, '#efe5d6'], [1, '#9c958a']]); ell(c, 0, 0, 20, 27); c.fill();
+  c.fillStyle = '#e6dccb'; c.fillRect(-7, 22, 14, 18);
+  c.fillStyle = '#3d0a14'; ell(c, 0, 60, 30, 22); c.fill();
+  c.fillStyle = '#100608'; ell(c, -8, -4, 5.5, 3.4); c.fill(); ell(c, 8, -4, 5.5, 3.4); c.fill();
+  c.fillStyle = '#d02a40'; c.beginPath(); c.arc(-8, -4, 1.5, 0, 7); c.arc(8, -4, 1.5, 0, 7); c.fill();
+  c.strokeStyle = '#8a1424'; c.lineWidth = 2; c.beginPath(); c.moveTo(-6, 13); c.quadraticCurveTo(0, 17, 6, 13); c.stroke();
+  c.fillStyle = '#d4ac54'; for (let i = -4; i <= 4; i++) { c.beginPath(); c.arc(i * 4.5, 41 + (16 - i * i) * .3, 1.4, 0, 7); c.fill(); }
+  c.fillStyle = '#070308'; c.beginPath(); c.ellipse(0, -16, 22, 15, 0, Math.PI, Math.PI * 2); c.fill();
+  c.restore();
+}
 function crow(c, x, y, t, flying, i){
   c.save(); c.translate(x, y); c.fillStyle = '#020203';
   ell(c, 0, 0, 10, 6, -.2); c.fill(); c.beginPath(); c.arc(-8, -5, 4.5, 0, 7); c.fill();
@@ -1259,7 +1672,105 @@ const HS = {
 };
 const ENTER = { bedroom: 'bedroom_start', library: 'library_enter', garden: 'garden_enter' };
 
+// ---------------- CAPITOLO II ----------------
+const AGX = { corridor: 830, crypt: 250 };
+let agLamp = null, isaA = 0, isaOn = false, hungerT = 2, invTutPending = false;
+const agneseHere = () => S.chapter === 2 && !F.agneseGone && ((S.scene === 'corridor' && !F.agneseCrypt) || (S.scene === 'crypt' && F.agneseCrypt));
+async function isaSay(key){ isaOn = true; try { await say(key); } finally { isaOn = false; } }
+const C2_START = { candleTaken: 1, letterTaken: 1, drawerOpen: 1, keyTaken: 1, motherLooked: 1, flaskTaken: 1, roseTaken: 1, recipeKnown: 1, elixirMade: 1, mirrorSeen: 1, clockChimed: 1, ravenSeen: 1, corridorScare: 1, young: 1, tutDone: 1, tutInv: 1, ch1done: 1 };
+const HS2 = {
+  bedroom: [
+    { id: 'bed', r: [60, 300, 365, 270], wx: 330, act: () => say('c2_bed') },
+    { id: 'window', r: [555, 105, 170, 310], wx: 640, act: () => say('c2_window') },
+    { id: 'mirror', r: [855, 175, 190, 285], wx: 950,
+      act: async () => { if (!F.isaTalk) { await isaSay('c2_mirror1'); F.isaTalk = 1; } else await isaSay('c2_mirror2'); },
+      use: async it => { if (it === 'lettera') { await isaSay('c2_mirror_letter'); return true; } if (it === 'candela') { await say('c2_mirror_candle'); return true; } } },
+    { id: 'drawer', r: [880, 488, 140, 52], wx: 950, act: () => say('c2_drawer') },
+    { id: 'door', r: [1140, 220, 130, 345], wx: 1185, exit: { to: 'corridor', x: 90, face: 1 } }
+  ],
+  corridor: [
+    { id: 'door', r: [22, 240, 110, 340], wx: 85, exit: { to: 'bedroom', x: 1150, face: -1 } },
+    { id: 'anc1', r: [160, 185, 140, 185], wx: 230, act: () => say('c2_anc') },
+    { id: 'anc2', r: [320, 185, 140, 185], wx: 390, act: () => say('c2_anc') },
+    { id: 'lib', r: [492, 230, 125, 340], wx: 555, exit: { to: 'library', x: 105, face: 1 } },
+    { id: 'mother', r: [650, 135, 200, 290], wx: 750, act: () => say('c2_mother') },
+    { id: 'agnese', r: [795, 400, 75, 250], wx: 760, vis: () => agneseHere(),
+      act: async () => { if (!F.agneseMet) { F.agneseMet = 1; await say('c2_agnese1'); } else await say(F.lampLit ? 'c2_agnese3' : 'c2_agnese2'); },
+      use: async it => {
+        if (it === 'candela' && !F.lampLit) { F.lampLit = 1; await say('c2_agnese_lamp'); addItem('chiavetta'); return true; }
+        if (it === 'lettera') { await say('c2_agnese_letter'); return true; }
+        if (it === 'pugnale') { await say('c2_agnese_dagger'); return true; }
+      } },
+    { id: 'clock', r: [893, 185, 94, 392], wx: 940,
+      act: () => say(F.ringTaken ? 'c2_clock2' : 'c2_clock'),
+      use: async it => { if (it === 'chiavetta' && !F.ringTaken) { F.ringTaken = 1; removeItem('chiavetta'); await say('c2_clock_open'); addItem('anello'); return true; } } },
+    { id: 'young', r: [1010, 185, 130, 185], wx: 1075, act: () => say('c2_young') },
+    { id: 'stairs', r: [1140, 215, 130, 360], wx: 1200, exit: { to: 'garden', x: 120, face: 1 } }
+  ],
+  library: [
+    { id: 'door', r: [22, 235, 115, 340], wx: 95, exit: { to: 'corridor', x: 555, face: 1 } },
+    { id: 'shelves', r: [150, 50, 340, 300], wx: 320,
+      act: async () => {
+        if (!F.isaTalk) return say('c2_shelves');
+        if (!F.daggerTaken) { F.daggerTaken = 1; await say('c2_shelves_dagger'); addItem('pugnale'); return; }
+        await say('c2_shelves2');
+      } },
+    { id: 'grimoire', r: [196, 440, 180, 60], wx: 285, act: () => say('c2_grimoire') },
+    { id: 'fire', r: [505, 300, 270, 268], wx: 640, act: () => say('c2_fire'), use: async it => { if (it === 'lettera') { await say('library_fire_letter'); return true; } } },
+    { id: 'alembic', r: [990, 355, 120, 130], wx: 1035, act: () => say('c2_alembic') },
+    { id: 'raven', r: [1150, 290, 90, 60], wx: 1150, act: () => say('c2_raven') },
+    { id: 'raven2', r: [1150, 330, 80, 230], wx: 1150, act: () => say('c2_raven'), nolabel: 1 }
+  ],
+  garden: [
+    { id: 'door', r: [12, 250, 125, 330], wx: 105, exit: { to: 'corridor', x: 1190, face: -1 } },
+    { id: 'tomb', r: [245, 455, 150, 175], wx: 320, exit: { to: 'crypt', x: 160, face: 1 },
+      guard: async () => { if (F.cryptOpen) return true; await say('c2_tomb'); return false; },
+      use: async it => { if (it === 'anello' && !F.cryptOpen) { F.cryptOpen = 1; removeItem('anello'); await say('c2_tomb_open'); return true; } } },
+    { id: 'well', r: [552, 340, 160, 248], wx: 630, act: () => say('c2_well') },
+    { id: 'rose', r: [825, 455, 165, 135], wx: 900, act: () => say('c2_rose') },
+    { id: 'moon', r: [920, 70, 130, 130], wx: 900, act: () => say('c2_moon') },
+    { id: 'crows', r: [1050, 120, 220, 260], wx: 1150, act: async () => { crowsT = 3.2; await say('c2_crows'); } }
+  ],
+  crypt: [
+    { id: 'stairs', r: [22, 228, 136, 346], wx: 120, exit: { to: 'garden', x: 330, face: 1 } },
+    { id: 'niches', r: [196, 130, 330, 380], wx: 360, act: async () => { if (!F.nichesSeen) { F.nichesSeen = 1; await say('c2_niches1'); } else await say('c2_niches2'); } },
+    { id: 'vasca', r: [550, 495, 262, 115], wx: 690,
+      act: () => say(F.diaryRead ? 'c2_vasca2' : 'c2_vasca'),
+      use: async it => {
+        if (it === 'pugnale') { await say('c2_vasca_dagger'); return true; }
+        if (it !== 'calice') return false;
+        if (!F.diaryRead) { await say('c2_vasca_nodiary'); return true; }
+        if (!has('pugnale')) { await say('c2_vasca_noblade'); return true; }
+        await ending2(); return true;
+      } },
+    { id: 'statue', r: [895, 145, 110, 290], wx: 950, act: () => say('c2_statue') },
+    { id: 'altar', r: [880, 440, 110, 50], wx: 940,
+      act: async () => {
+        if (F.diaryRead) return say('c2_altar2');
+        F.diaryRead = 1; await say('c2_altar');
+        await sleep(500); F.agneseCrypt = 1; await say('c2_agnese_arrives');
+      } },
+    { id: 'calice', r: [975, 420, 45, 50], wx: 990, vis: () => !F.caliceTaken, act: async () => { F.caliceTaken = 1; await say('c2_calice'); addItem('calice'); } },
+    { id: 'agnese', r: [205, 400, 90, 250], wx: 340, vis: () => agneseHere(),
+      act: () => say('c2_agnese_crypt'),
+      use: async it => { if (it === 'pugnale') { await say('c2_agnese_dagger'); return true; } if (it === 'lettera') { await say('c2_agnese_letter'); return true; } } }
+  ]
+};
+const ENTER2 = { corridor: 'c2_corridor_enter', library: 'c2_library_enter', garden: 'c2_garden_enter', crypt: 'c2_crypt_enter' };
+const hsCur = () => (S.chapter === 2 ? HS2[S.scene] : HS[S.scene]) || [];
+function hint2(){
+  if (!F.isaTalk) return 'c2_hint_mirror';
+  if (!F.lampLit) return F.agneseMet ? 'c2_hint_lamp' : 'c2_hint_agnese';
+  if (!F.ringTaken) return 'c2_hint_clock';
+  if (!F.cryptOpen) return 'c2_hint_tomb';
+  if (!F.diaryRead) return 'c2_hint_crypt';
+  if (!F.caliceTaken) return 'c2_hint_calice';
+  if (!has('pugnale')) return 'c2_hint_dagger';
+  return 'c2_hint_vasca';
+}
+
 function hint(){
+  if (S.chapter === 2) return hint2();
   if (!has('candela') && !F.candleTaken) return 'hint_candle';
   if (has('elisir')) return 'hint_mirror';
   if (!F.keyTaken) return 'hint_key';
@@ -1330,6 +1841,8 @@ async function runFx(f){
     case 'red': redA = 1; break;
     case 'shake': shakeT = .8; vibrate(300); break;
     case 'young': F.young = 1; break;
+    case 'hunger': redA = Math.max(redA, .75); sfx.heartbeat(2); break;
+    case 'choir': sfx.choir(); break;
     case 'drink': sfx.drink(); await sleep(800); break;
     case 'stinger': sfx.stinger(); shakeT = .35; break;
     default: if (sfx[f]) sfx[f]();
@@ -1350,6 +1863,10 @@ const ICONS = {
   ampolla: '<path d="M20 5h8v11c7 3 10 8 10 14a14 14 0 0 1-28 0c0-6 3-11 10-14z" fill="rgba(200,230,255,.12)" stroke="#cfe0ea" stroke-width="2"/><rect x="18" y="3" width="12" height="4" fill="#6b4a2a"/>',
   rugiada: '<path d="M20 5h8v11c7 3 10 8 10 14a14 14 0 0 1-28 0c0-6 3-11 10-14z" fill="rgba(200,230,255,.12)" stroke="#cfe0ea" stroke-width="2"/><path d="M11 28a13 13 0 0 0 26 0z" fill="#b8c8ee"/><circle cx="20" cy="33" r="1.5" fill="#fff"/><rect x="18" y="3" width="12" height="4" fill="#6b4a2a"/>',
   rosa: '<path d="M24 26l3 18" stroke="#2a3a20" stroke-width="2.5"/><circle cx="24" cy="18" r="10" fill="#120006"/><path d="M18 16c3-4 9-4 12 0M17 21c4 3 10 3 14 0" stroke="#3a0010" stroke-width="2" fill="none"/><circle cx="31" cy="22" r="2.2" fill="#b8202e"/><circle cx="30" cy="27" r="1.4" fill="#b8202e"/>',
+  chiavetta: '<circle cx="15" cy="15" r="7" fill="none" stroke="#c9a24a" stroke-width="3"/><path d="M20 20l17 17M31 31l-4 4M35 35l-4 4" stroke="#c9a24a" stroke-width="3.2" fill="none" stroke-linecap="round"/>',
+  anello: '<ellipse cx="24" cy="29" rx="12" ry="11" fill="none" stroke="#d4ac54" stroke-width="4"/><rect x="16" y="9" width="16" height="12" rx="3" fill="#b8902e"/><circle cx="24" cy="15" r="3.5" fill="#8b1a2b"/><path d="M24 12v6" stroke="#2a3a20" stroke-width="1.2"/>',
+  pugnale: '<path d="M24 3l4 8v20h-8V11z" fill="#d8dce2"/><path d="M24 5v25" stroke="#8a9098" stroke-width="1"/><rect x="14" y="30" width="20" height="4" rx="2" fill="#a8843f"/><path d="M24 34c-3 3 3 5 0 8 3 1 0 4 0 4" stroke="#a8843f" stroke-width="3.5" fill="none"/>',
+  calice: '<path d="M12 7h24c0 11-5 18-12 18S12 18 12 7z" fill="#a9a398" stroke="#e0dacb" stroke-width="1.5"/><ellipse cx="24" cy="8" rx="12" ry="2.5" fill="#5a0710"/><rect x="22" y="25" width="4" height="12" fill="#a9a398"/><ellipse cx="24" cy="40" rx="10" ry="3" fill="#a9a398"/>',
   elisir: '<path d="M20 5h8v11c7 3 10 8 10 14a14 14 0 0 1-28 0c0-6 3-11 10-14z" fill="rgba(255,90,110,.18)" stroke="#f0c8c8" stroke-width="2"/><path d="M11 27a13 13 0 0 0 26 0z" fill="#e8e4ff" opacity=".85"/><circle cx="24" cy="31" r="6" fill="#c0283f" opacity=".5"/><rect x="18" y="3" width="12" height="4" fill="#8a1424"/>'
 };
 function renderInv(newId){
@@ -1367,7 +1884,7 @@ function renderInv(newId){
   });
 }
 function actionBar(){ const a = $('actionbar'); if (selected) { a.textContent = `Usa ${itemName(selected)} su…`; a.classList.add('on'); } else a.classList.remove('on'); }
-function addItem(id){ if (!has(id)) S.inv.push(id); renderInv(id); sfx.pickup(); toast(`Hai ottenuto: <b>${itemName(id)}</b>`); save(); }
+function addItem(id){ if (S.chapter === 1 && !F.tutInv) invTutPending = true; if (!has(id)) S.inv.push(id); renderInv(id); sfx.pickup(); toast(`Hai ottenuto: <b>${itemName(id)}</b>`); save(); }
 function removeItem(id){ S.inv = S.inv.filter(x => x !== id); if (selected === id) selected = null; renderInv(); actionBar(); }
 
 // =====================================================================
@@ -1375,7 +1892,7 @@ function removeItem(id){ S.inv = S.inv.filter(x => x !== id); if (selected === i
 // =====================================================================
 function toWorld(e){ const r = cv.getBoundingClientRect(); return { x: (e.clientX - r.left - ox) / s, y: (e.clientY - r.top - oy) / s }; }
 function hit(p){
-  const list = (HS[S.scene] || []).filter(h => (!h.vis || h.vis()) && p.x >= h.r[0] && p.x <= h.r[0] + h.r[2] && p.y >= h.r[1] && p.y <= h.r[1] + h.r[3]);
+  const list = hsCur().filter(h => (!h.vis || h.vis()) && p.x >= h.r[0] && p.x <= h.r[0] + h.r[2] && p.y >= h.r[1] && p.y <= h.r[1] + h.r[3]);
   list.sort((a, b) => a.r[2] * a.r[3] - b.r[2] * b.r[3]); return list[0] || null;
 }
 function walkTo(x){ const sc = SCENES[S.scene]; luc.tx = clamp(x, sc.minX, sc.maxX); }
@@ -1405,7 +1922,10 @@ async function arrive(h){
       if (h.guard && !(await h.guard())) return;
       sfx.door(); await goScene(h.exit.to, h.exit.x, h.exit.face);
     } else if (h.act) await h.act();
-  } finally { busy = false; save(); }
+  } finally {
+    if (invTutPending && mode === 'play') { invTutPending = false; F.tutInv = 1; await runTut([TUT_INV]); }
+    busy = false; save();
+  }
 }
 async function goScene(id, x, face){
   $('fade').style.opacity = 1; await sleep(650);
@@ -1415,7 +1935,8 @@ async function goScene(id, x, face){
   getStatic(id);
   $('fade').style.opacity = 0; showSceneName(id);
   const fk = 'seen_' + id;
-  if (!F[fk]) { F[fk] = 1; if (ENTER[id]) { await sleep(700); await say(ENTER[id]); } }
+  const EN = S.chapter === 2 ? ENTER2 : ENTER;
+  if (!F[fk]) { F[fk] = 1; if (EN[id]) { await sleep(700); await say(EN[id]); } }
   save();
 }
 addEventListener('keydown', e => {
@@ -1453,6 +1974,11 @@ function update(dt){
     sfx.whisper(); setTimeout(async () => { await say('corridor_scare'); busy = false; save(); }, 1500);
   }
   if (shadowT >= 0) { shadowT += dt; if (shadowT > 1.6) shadowT = -1; }
+  isaA += ((isaOn ? .9 : 0) - isaA) * Math.min(1, dt * (isaOn ? 1.2 : 2.5));
+  if (agneseHere() && mode === 'play') {
+    hungerT -= dt;
+    if (hungerT <= 0 && Math.abs(luc.x - AGX[S.scene]) < 280) { hungerT = rand(4, 7); sfx.heartbeat(1); redA = Math.max(redA, .3); }
+  }
   flashA = Math.max(0, flashA - dt * 1.6); redA = Math.max(0, redA - dt * .35); shakeT = Math.max(0, shakeT - dt);
   revealT = Math.max(0, revealT - dt); crowsT = Math.max(0, crowsT - dt); brewT = Math.max(0, brewT - dt);
   for (const d of dust) { d.y -= d.v * dt * .3; d.x += Math.sin(T * .5 + d.p) * dt * 6; if (d.y < 0) { d.y = H; d.x = rand(0, W); } }
@@ -1495,7 +2021,7 @@ function render(){
   if (revealT > 0 && mode === 'play') {
     const a = Math.min(1, revealT);
     c.font = '20px "IM Fell English SC", serif'; c.textAlign = 'center';
-    for (const h of HS[S.scene]) {
+    for (const h of hsCur()) {
       if ((h.vis && !h.vis()) || h.nolabel) continue;
       const x = h.r[0] + h.r[2] / 2, y = h.r[1] + h.r[3] / 2, pr = 14 + Math.sin(T * 6) * 4;
       c.fillStyle = `rgba(192,40,63,${.35 * a})`; c.beginPath(); c.arc(x, y, pr + 8, 0, 7); c.fill();
@@ -1534,18 +2060,88 @@ function syncFsLabel(){ $('mFull').textContent = 'Schermo intero: ' + (isFS() ? 
 document.addEventListener('pointerup', () => { enterFS(); auInit(); }, true);
 document.addEventListener('click', () => enterFS(), true);
 
+// ---------------- TUTORIAL ----------------
+const TUT_MAIN = [
+  { t: 'luc', k: 'tut_luc' },
+  { t: 'bReveal', k: 'tut_eye', wait: 1, go: "Tocca l'Occhio", act: () => { revealT = 3.4; } },
+  { t: null, k: 'tut_eye2', bottom: 1 },
+  { t: 'bHint', k: 'tut_hint' },
+  { t: 'bMenu', k: 'tut_menu' },
+  { t: null, k: 'tut_end' }
+];
+const TUT_INV = { t: 'inv', k: 'tut_inv' };
+function tutRect(t){
+  if (!t) return null;
+  if (t === 'luc') { const fy = SCENES[S.scene].floorY, x = ox + luc.x * s, y = oy + fy * s; return { x: x - 70 * s, y: y - 300 * s, w: 140 * s, h: 320 * s }; }
+  const r = $(t).getBoundingClientRect(); const p = 8; return { x: r.left - p, y: r.top - p, w: r.width + p * 2, h: r.height + p * 2 };
+}
+function runTut(steps){
+  return new Promise(res => {
+    const L = $('tut'), ring = $('tutRing'), box = $('tutBox');
+    let i = -1, shown = 0, lock = false;
+    L.classList.add('on'); $('tip').classList.remove('on');
+    const end = () => { L.classList.remove('on'); box.classList.remove('on'); L.onpointerup = null; $('tutSkip').onclick = null; res(); };
+    const next = () => {
+      i++; if (i >= steps.length) return end();
+      const st = steps[i], r = tutRect(st.t);
+      box.classList.remove('on');
+      setTimeout(() => {
+        $('tutH').textContent = TX(st.k + '_h'); $('tutP').textContent = TX(st.k);
+        $('tutN').textContent = steps.length > 1 ? `${i + 1} / ${steps.length}` : '';
+        $('tutGo').textContent = st.wait ? st.go : 'tocca per continuare';
+        if (r) { ring.className = ''; Object.assign(ring.style, { left: r.x + 'px', top: r.y + 'px', width: r.w + 'px', height: r.h + 'px' }); }
+        else { ring.className = 'none'; Object.assign(ring.style, { left: cw / 2 + 'px', top: ch / 2 + 'px', width: '0px', height: '0px' }); }
+        const bw = box.offsetWidth, bh = box.offsetHeight, m = 14;
+        let bx, by;
+        if (!r) { bx = (cw - bw) / 2; by = st.bottom ? ch - bh - 20 : (ch - bh) / 2; }
+        else {
+          const cx = r.x + r.w / 2;
+          const hx = clamp(cx - bw / 2, 8, cw - bw - 8), vy = clamp(r.y + r.h / 2 - bh / 2, 8, ch - bh - 8);
+          const opts = [
+            [hx, r.y + r.h + m], [hx, r.y - bh - m],
+            [r.x + r.w + m, vy], [r.x - bw - m, vy]
+          ];
+          const fit = o => o[0] >= 8 && o[1] >= 8 && o[0] + bw <= cw - 8 && o[1] + bh <= ch - 8;
+          const sideFirst = r.h > ch * .45;
+          const o = (sideFirst ? [opts[2], opts[3], opts[0], opts[1]] : opts).find(fit) || opts[0];
+          bx = o[0]; by = o[1];
+        }
+        box.style.left = clamp(bx, 8, cw - bw - 8) + 'px'; box.style.top = clamp(by, 8, ch - bh - 8) + 'px';
+        box.classList.add('on'); shown = performance.now(); lock = false;
+      }, i === 0 ? 50 : 380);
+    };
+    L.onpointerup = e => {
+      e.stopPropagation(); auInit();
+      if (lock || performance.now() - shown < 450) return;
+      const st = steps[i];
+      if (st && st.wait) {
+        const r = tutRect(st.t);
+        if (r && e.clientX >= r.x && e.clientX <= r.x + r.w && e.clientY >= r.y && e.clientY <= r.y + r.h) { lock = true; st.act && st.act(); sfx.chime && tone('sine', 880, 0, 1.2, .05); setTimeout(next, 700); }
+        return;
+      }
+      lock = true; next();
+    };
+    $('tutSkip').onclick = e => { e.stopPropagation(); F.tutInv = 1; invTutPending = false; end(); };
+    next();
+  });
+}
+
 async function startPlay(fromSave){
   mode = 'play'; selected = null; busy = true;
   $('title').classList.remove('on'); $('hud').classList.add('on');
-  renderInv(); actionBar();
+  setChapLabel(); renderInv(); actionBar();
   getStatic(S.scene); setAmb(S.scene); presence();
   $('fade').style.opacity = 0; showSceneName(S.scene);
-  if (!fromSave && !F.seen_bedroom) { F.seen_bedroom = 1; await sleep(900); await say('bedroom_start'); }
+  if (!fromSave && !F.seen_bedroom) {
+    F.seen_bedroom = 1; await sleep(900);
+    await say(S.chapter === 2 ? 'c2_bedroom_start' : 'bedroom_start');
+    if (S.chapter === 1 && !F.tutDone) { await sleep(300); await runTut(TUT_MAIN); F.tutDone = 1; }
+  }
   busy = false; save();
 }
 async function newGame(){
   auInit(); enterFS();
-  S.scene = 'bedroom'; S.inv = []; S.flags = {}; F = S.flags; luc.x = 300; luc.face = 1; luc.tx = null;
+  S.chapter = 1; S.scene = 'bedroom'; S.inv = []; S.flags = {}; F = S.flags; luc.x = 300; luc.face = 1; luc.tx = null;
   fbInc('starts'); logEv('chapter_start', { chapter: 1 });
   $('fade').style.opacity = 1; await sleep(600);
   $('title').classList.remove('on');
@@ -1554,12 +2150,26 @@ async function newGame(){
   for (const k in cache) delete cache[k];
   await startPlay(false);
 }
+async function newGame2(){
+  auInit(); enterFS();
+  S.chapter = 2; S.scene = 'bedroom'; S.inv = ['lettera', 'candela']; S.flags = { ...C2_START }; F = S.flags;
+  luc.x = 560; luc.face = 1; luc.tx = null; selected = null;
+  fbInc('starts2'); logEv('chapter_start', { chapter: 2 });
+  $('fade').style.opacity = 1; await sleep(600);
+  $('title').classList.remove('on'); $('chapters').classList.remove('on');
+  const e = $('ending'); e.classList.remove('show', 'on');
+  $('card').classList.add('on'); $('fade').style.opacity = 0;
+  await showCard('c2_intro');
+  for (const k in cache) delete cache[k];
+  await startPlay(false);
+}
 async function continueGame(){
   auInit(); enterFS();
   const d = await loadSave(); if (!d || !d.scene) return newGame();
-  S.scene = d.scene; S.inv = Array.isArray(d.inv) ? d.inv : (d.inv ? Object.values(d.inv) : []);
+  if ((d.chapter || 1) === 1 && d.flags?.ch1done) return newGame2();
+  if (d.chapter === 2 && d.flags?.ch2done) return newGame2();
+  S.chapter = d.chapter || 1; S.scene = SCENES[d.scene] ? d.scene : 'bedroom'; S.inv = Array.isArray(d.inv) ? d.inv : (d.inv ? Object.values(d.inv) : []);
   S.flags = d.flags || {}; F = S.flags; luc.x = d.x || 300; luc.face = d.face || 1; luc.tx = null;
-  if (F.ch1done) { S.scene = 'bedroom'; }
   $('fade').style.opacity = 1; await sleep(600);
   for (const k in cache) delete cache[k];
   await startPlay(true);
@@ -1569,12 +2179,29 @@ async function ending(){
   removeItem('elisir');
   await say('ending');
   F.ch1done = 1; save(); fbInc('completions'); logEv('chapter_complete', { chapter: 1 });
+  showEnding(1, TX('ending_card'));
+}
+function showEnding(n, text){
   mode = 'ending'; $('hud').classList.remove('on');
-  const c2 = CONTENT.chapters?.c2 || DEF.chapters.c2;
-  $('endText').textContent = TX('ending_card');
-  $('endNext').textContent = `Capitolo ${c2.num} — ${c2.title} · ${c2.available ? 'disponibile' : 'prossimamente'}`;
+  const chs = CONTENT.chapters || DEF.chapters, cur = chs['c' + n], nx = chs['c' + (n + 1)];
+  $('endChap').textContent = `FINE DEL CAPITOLO ${cur.num}`; $('endTitle').textContent = cur.title;
+  $('endText').textContent = text;
+  $('endNext').textContent = nx ? `Capitolo ${nx.num} — ${nx.title} · ${nx.available ? 'disponibile' : 'prossimamente'}` : '';
+  const nb = $('eNext'), playable = nx && nx.available && n + 1 === 2;
+  nb.style.display = playable ? '' : 'none'; if (playable) nb.textContent = `Capitolo ${nx.num} ❧`;
   updateInfo();
   const e = $('ending'); e.classList.add('on'); requestAnimationFrame(() => e.classList.add('show'));
+}
+async function ending2(){
+  luc.face = 1;
+  removeItem('calice'); removeItem('pugnale');
+  await say('c2_final');
+  $('fade').style.transition = 'opacity .15s'; $('fade').style.opacity = 1; await sleep(1800);
+  F.agneseGone = 1; S.scene = 'bedroom'; luc.x = 330; luc.face = 1; setAmb('bedroom');
+  $('fade').style.transition = ''; $('fade').style.opacity = 0; await sleep(700);
+  await say('c2_dawn');
+  F.ch2done = 1; save(); fbInc('completions2'); logEv('chapter_complete', { chapter: 2 });
+  showEnding(2, TX('c2_card'));
 }
 function toTitle(){
   doSave(); mode = 'title'; busy = false; pending = null;
@@ -1587,13 +2214,14 @@ function toTitle(){
 function renderChapters(){
   const box = $('chapList'); if (!box) return; box.innerHTML = '';
   const ch = CONTENT.chapters || DEF.chapters;
-  let done = false; try { done = !!JSON.parse(LS.get(LS_SAVE) || '{}').flags?.ch1done; } catch(e){}
+  let done = false, done2 = false; try { const sv = JSON.parse(LS.get(LS_SAVE) || '{}'); done = !!sv.flags?.ch1done; done2 = !!sv.flags?.ch2done; } catch(e){}
   Object.keys(ch).sort().forEach(k => {
     const c = ch[k], row = document.createElement('div');
-    const playable = c.available && k === 'c1';
+    const playable = c.available && (k === 'c1' || k === 'c2');
     row.className = 'chap ' + (playable ? 'play' : 'lock');
-    row.innerHTML = `<div class="n">${c.num}</div><div class="t">${c.title}</div><div class="s">${k === 'c1' && done ? 'Completato ✦' : playable ? 'Gioca' : k === 'c5' ? 'Il finale' : 'In arrivo'}</div>`;
-    if (playable) row.onclick = () => { $('chapters').classList.remove('on'); newGame(); };
+    const isDone = (k === 'c1' && done) || (k === 'c2' && done2);
+    row.innerHTML = `<div class="n">${c.num}</div><div class="t">${c.title}</div><div class="s">${isDone ? 'Completato ✦' : playable ? 'Gioca' : k === 'c5' ? 'Il finale' : 'In arrivo'}</div>`;
+    if (playable) row.onclick = () => { $('chapters').classList.remove('on'); k === 'c2' ? newGame2() : newGame(); };
     box.appendChild(row);
   });
 }
@@ -1626,6 +2254,7 @@ $('mFull').onclick = () => {
 };
 $('mTitle').onclick = toTitle;
 $('eTitle').onclick = toTitle;
+$('eNext').onclick = () => newGame2();
 
 // ---------------- boot ----------------
 resize(); makeGrain(); setMuted(A.muted);
