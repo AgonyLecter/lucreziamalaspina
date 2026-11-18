@@ -1217,7 +1217,8 @@ async function initFirebase(){
       const v = snap.exists() ? (snap.val().version || 0) : -1;
       if (v < DEF.version) await set(cRef, DEF).catch(e => console.warn('[seed] scrittura negata', e.message));
     } catch(e){ console.warn('[content]', e.message); }
-    onValue(cRef, s => { if (s.exists()) applyContent(s.val()); }, e => console.warn('[content listen]', e.message));
+    // usa i testi del database solo se sono aggiornati almeno quanto quelli del gioco
+    onValue(cRef, s => { if (s.exists() && (s.val().version || 0) >= DEF.version) applyContent(s.val()); }, e => console.warn('[content listen]', e.message));
 
     onValue(ref(db, `${ROOT}/presence`), s => { FB.souls = s.size || 0; updateInfo(); }, () => {});
     onValue(ref(db, `${ROOT}/stats/completions`), s => { FB.completions = s.val() || 0; updateInfo(); }, () => {});

@@ -1,0 +1,36 @@
+{
+  "rules": {
+    "reservations": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["date"]
+    },
+    "horrorGame": {
+      "content": {
+        ".read": true,
+        ".write": false
+      },
+      "presence": {
+        ".read": true,
+        "$pid": {
+          ".write": "$pid.matches(/^p_[a-z0-9]{6,20}$/)",
+          ".validate": "!newData.exists() || newData.hasChildren(['scene', 'at'])"
+        }
+      },
+      "players": {
+        "$pid": {
+          ".read": true,
+          ".write": "$pid.matches(/^p_[a-z0-9]{6,20}$/)",
+          ".validate": "newData.hasChildren(['scene', 'chapter'])"
+        }
+      },
+      "stats": {
+        ".read": true,
+        "$k": {
+          ".write": true,
+          ".validate": "newData.isNumber() && newData.val() === (data.exists() ? data.val() : 0) + 1"
+        }
+      }
+    }
+  }
+}
