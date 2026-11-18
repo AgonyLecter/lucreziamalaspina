@@ -1,9 +1,15 @@
 {
   "rules": {
+    "marea_nera": {
+      ".read": true,
+      ".write": true
+    },
     "reservations": {
       ".read": true,
       ".write": true,
-      ".indexOn": ["date"]
+      ".indexOn": [
+        "date"
+      ]
     },
     "horrorGame": {
       "content": {
