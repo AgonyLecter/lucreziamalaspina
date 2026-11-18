@@ -305,6 +305,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
           <button class="mbtn" id="bCont" disabled data-i18n="cont">Continua</button>
           <button class="mbtn" id="bChaps" data-i18n="chapters">Capitoli</button>
           <button class="mbtn" id="bLang">Lingua · Italiano</button>
+          <button class="mbtn" id="bQuit" style="display:none" data-i18n="quit">Esci dal gioco</button>
           <button class="mbtn" id="bInstall" style="display:none" data-i18n="install">Installa il gioco</button>
         </div>
         <div id="motd"></div>
@@ -1884,7 +1885,7 @@ const UI = {
     souls: 'Anime nella villa ora', c1done: 'Capitolo I completato {n} volte', pid: 'ID giocatore', drank: "Anime che hanno bevuto l'elisir",
     price: 'Il prezzo pagato alla Strega', pr_reflect: 'il riflesso', pr_memory: 'il ricordo di Edoardo', pr_voice: 'la voce',
     agBring: 'Agnese ha portato lo sposo alla bestia', agWarn: 'Agnese ha provato ad avvertirlo', fed: 'La bestia si è nutrita {n} {v} prima del banchetto', fed1: 'volta', fedN: 'volte', fast: 'La bestia ha digiunato fino al banchetto',
-    flee: ['«Scappa, amo...»', '«Sca...»', '«...»'] },
+    flee: ['«Scappa, amo...»', '«Sca...»', '«...»'], quit: 'Esci dal gioco' },
   en: { newGame: 'New game', cont: 'Continue', chapters: 'Chapters', install: 'Install the game', lang: 'Language · English',
     iosTip: 'On iPhone: tap <b>Share → Add to Home Screen</b> and open the game from its icon to play full screen.',
     connecting: 'Connecting to the villa…', netOk: 'Villa connected · Firebase Realtime', netOff: 'Offline mode · local save', netRe: 'Reconnecting to the villa…',
@@ -1901,7 +1902,7 @@ const UI = {
     souls: 'Souls in the villa now', c1done: 'Chapter I completed {n} times', pid: 'Player ID', drank: 'Souls who drank the elixir',
     price: 'The price paid to the Witch', pr_reflect: 'the reflection', pr_memory: 'the memory of Edoardo', pr_voice: 'the voice',
     agBring: 'Agnese brought the bridegroom to the beast', agWarn: 'Agnese tried to warn him', fed: 'The beast fed {n} {v} before the banquet', fed1: 'time', fedN: 'times', fast: 'The beast fasted until the banquet',
-    flee: ['“Run, my lo...”', '“Ru...”', '“...”'] }
+    flee: ['“Run, my lo...”', '“Ru...”', '“...”'], quit: 'Quit game' }
 };
 const tr = k => (UI[LANG] && UI[LANG][k] !== undefined) ? UI[LANG][k] : UI.it[k];
 function applyLang(){
@@ -4671,6 +4672,10 @@ $('bMirror').onclick = e => { e.stopPropagation(); if (!busy && mode === 'play')
 $('mResume').onclick = () => toggleMenu(false);
 $('mHint').onclick = () => { toggleMenu(false); doHint(); };
 $('mAudio').onclick = () => setMuted(!A.muted);
+// versione desktop (Windows): pulsante per uscire
+const desktopQuit = () => { if (typeof window.lmQuit === 'function') { $('bQuit').style.display = ''; return true; } return false; };
+if (!desktopQuit()) { let n = 0; const iv = setInterval(() => { if (desktopQuit() || ++n > 20) clearInterval(iv); }, 250); }
+$('bQuit').onclick = () => { doSave(); setTimeout(() => window.lmQuit && window.lmQuit(), 300); };
 $('bLang').onclick = () => setLang(LANG === 'it' ? 'en' : 'it');
 $('mLang').onclick = () => setLang(LANG === 'it' ? 'en' : 'it');
 $('mFull').onclick = () => {
@@ -4698,7 +4703,7 @@ addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = 
 addEventListener('appinstalled', () => { $('bInstall').style.display = 'none'; installEvt = null; });
 $('bInstall').onclick = async () => { if (!installEvt) return; installEvt.prompt(); try { await installEvt.userChoice; } catch(e){} installEvt = null; $('bInstall').style.display = 'none'; };
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
-if (/[?&]debug\b/.test(location.search)) window.__G = { S, L3, get F(){ return F; } };
+if (/[?&]debug\b/.test(location.search)) window.__G = { S, L3, luc, get F(){ return F; } };
 </script>
 </body>
 </html>
